@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -u
+
 cd "$(dirname "$(realpath "$0")")" || exit 1
 
 if test -d './backup'; then
@@ -18,17 +20,20 @@ fi
 HOME="/home/$ACTUAL_USER"
 
 back_up() {
-  test -e "$2" && \
-  ! test -L "$2" && \
-  mv -vf "$2" "$1"
+  test -e "$2" && ! test -L "$2" && mv -vf "$2" "$1"
+}
+
+link_dotfile() {
+  # src, target, file
+  back_up "./backup/$1" "$2/$3"
+  ln -sfv "$(realpath "./$1/$3")" "$2/"
 }
 
 mkdir -p './backup/dotfiles'
 for F in ./dotfiles/.*; do
   F="$(basename "$F")"
   test -f "./dotfiles/$F" || continue
-  back_up "./backup/dotfiles" "$HOME/$F"
-  ln -sfv "$(realpath "./dotfiles/$F")" "$HOME/"
+  link_dotfile "dotfiles" "$HOME" "$F"
 done
 
 back_up "./backup/dotfiles" "$HOME/.clang-format"
@@ -37,15 +42,36 @@ ln -sfv "$HOME/.clang-format-google" "$HOME/.clang-format"
 mkdir -p './backup/.config'
 for F in ./.config/*; do
   F="$(basename "$F")"
-  back_up "./backup/.config" "$HOME/.config/$F"
-  ln -sfv "$(realpath "./.config/$F")" "$HOME/.config/"
+  case "$F" in
+    # copy the individual files as to not interfere with crap software puts in
+    # it's config folder.
+    'vscode')
+      FF="$(cd ./.config/ && find "./$F" -type f)"
+      for FFF in $FF; do
+        D="$(dirname "$HOME/.config/$FFF")"
+        mkdir -p "$D"
+        back_up "./backup/.config/" "$HOME/.config/$FFF"
+        ln -sfv "$(realpath "./.config/$FFF")" "$HOME/.config/$FFF"
+      done
+      chown -R "$ACTUAL_USER":"$ACTUAL_USER" "$HOME/.config/$F"
+      ;;
+    *)
+      link_dotfile ".config" "$HOME/.config" "$F"
+      ;;
+  esac
 done
+
+if test -L "$HOME/.config/Code - OSS"; then
+  unlink "$HOME/.config/Code - OSS"
+else
+  back_up "./backup/.config" "$HOME/.config/Code - OSS"
+fi
+ln -sfv "$HOME/.config/vscode" "$HOME/.config/Code - OSS"
 
 mkdir -p './backup/usr-local-bin'
 for F in ./bin/*; do
   F="$(basename "$F")"
-  back_up "./backup/usr-local-bin/" "/usr/local/bin/$F"
-  ln -sfv "$(realpath "./bin/$F")" "/usr/local/bin/"
+  link_dotfile "bin" "/usr/local/bin" "$F"
 done
 
 chown -R "$ACTUAL_USER" './backup'

@@ -1,0 +1,53 @@
+#!/bin/sh
+
+A="$(getopt b: $*)"
+R="$?"
+
+set -- $A
+
+for i
+do
+  case "$i"
+  in
+    -b)
+      B="$2"
+      shift;
+      shift;;
+    --)
+      shift;
+      break;;
+  esac
+done
+
+if test "$R" -ne 0 -o -z "$1"; then
+  echo "USAGE: git-url [-b branch] <file> [start line] [end line]" >&2
+  exit 0
+fi
+
+A="$(readlink -f "$1")"
+if ! test -f "$A"; then
+  echo "ERROR: '$1' does not exist or is not a file." >&2
+  exit 1
+fi
+
+R="$(git remote | head -n 1)"
+U="$(git remote get-url "$R" | sed -E 's/git@([^:]+):([^/]+)\/([^ ]+)\.git/https:\/\/\1\/\2\/\3/')"
+
+if test -z "$B"; then
+  C="$(git rev-parse HEAD)"
+else
+  C="$(git rev-parse "$B")"
+fi
+
+P="$(git rev-parse --show-toplevel)"
+
+F="${A##"$P/"}"
+
+if ! test -z "$2"; then
+  L="#L$2"
+fi
+if ! test -z "$3"; then
+  L2="-L$3"
+fi
+
+echo "$U/blob/$C/$F$L$L2"

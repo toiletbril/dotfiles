@@ -1,0 +1,31 @@
+#!/bin/sh
+
+if test -z $1; then
+  echo "USAGE: $0 <size in bytes>"
+  exit 1
+fi
+
+if ! calc -v > /dev/null 2>&1; then
+  echo "ERROR: 'calc' is not found in the path."
+  exit 1
+fi
+
+for arg in $@; do
+  if test $(($arg)) -ge $((1024 * 1024 * 1024 * 1024 * 10)); then
+    U="TB"
+    S=`calc "trunc($arg / 1024 / 1024 / 1024 / 1024, 2)"`
+  elif test $(($arg)) -ge $((1024 * 1024 * 1024 * 10)); then
+    U="GB"
+    S=`calc "trunc($arg / 1024 / 1024 / 1024, 2)"`
+  elif test $(($arg)) -ge $((1024 * 1024)); then
+    U="MB"
+    S=`calc "trunc($arg / 1024 / 1024, 2)"`
+  elif test $(($arg)) -ge $((1024)); then
+    U="kB"
+    S=`calc "trunc($arg / 1024, 2)"`
+  else
+    U="B"
+    S="$arg"
+  fi
+  echo `numfmt --grouping $S` $U
+done

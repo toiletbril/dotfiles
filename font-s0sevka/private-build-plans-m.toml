@@ -1,0 +1,92 @@
+[buildPlans.s0sevka-m]
+family = "s0sevka m"
+spacing = "normal"
+serifs = "sans"
+no-cv-ss = true
+export-glyph-names = false
+
+  [buildPlans.s0sevka-m.variants]
+  inherits = "ss04" # Menlo style
+
+    [buildPlans.s0sevka-m.variants.design]
+    capital-d = "standard-serifless"
+    capital-g = "toothed-serifless-hooked"
+    capital-q = "crossing-curly-tailed"
+    a = "double-storey-tailed"
+    b = "toothed-serifless"
+    c = "serifless"
+    d = "toothed-serifless"
+    f = "flat-hook-serifless"
+    g = "double-storey"
+    j = "flat-hook-serifed"
+    l = "serifed-flat-tailed"
+    m = "short-leg-serifless"
+    r = "serifless"
+    t = "flat-hook"
+    w = "straight-serifless"
+    y = "cursive-serifless"
+    cyrl-ef = "serifless"
+    cyrl-che = "standard"
+    punctuation-dot = "round"
+    tilde = "high"
+    asterisk = "penta-low"
+    caret = "high"
+    paren = "large-contour"
+    lig-ltgteq = "slanted"
+    lig-neq = "more-slanted"
+    lig-hyphen-chain = "with-notch"
+
+  [buildPlans.s0sevka-m.ligations] # this has no Haskell ligatures :c
+  inherits = "dlig"
+
+[buildPlans.s0sevka-m.widths.normal] # s0sevka m
+shape = 560
+menu = 5
+css = "normal"
+
+[buildPlans.s0sevka-m.widths.extended] # s0sevka m expanded
+shape = 600
+menu = 7
+css = "expanded"
+
+[buildPlans.s0sevka-m.weights.extralight]
+shape = 200
+menu = 200
+css = 200
+
+[buildPlans.s0sevka-m.weights.light]
+shape = 300
+menu = 300
+css = 300
+
+[buildPlans.s0sevka-m.weights.regular]
+shape = 400
+menu = 400
+css = 400
+
+[buildPlans.s0sevka-m.weights.book]
+shape = 450
+menu = 450
+css = 450
+
+[buildPlans.s0sevka-m.weights.bold]
+shape = 750
+menu = 700
+css = 700
+
+[buildPlans.s0sevka-m.weights.heavy]
+shape = 900
+menu = 900
+css = 900
+
+[buildPlans.s0sevka-m.slopes.upright]
+angle = 0
+shape = "upright"
+menu = "upright"
+css = "normal"
+
+[buildPlans.s0sevka-m.slopes.italic]
+angle = 9.4
+shape = "italic"
+menu = "italic"
+css = "italic"

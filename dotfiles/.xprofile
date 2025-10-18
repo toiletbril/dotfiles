@@ -1,0 +1,12 @@
+#!/bin/sh
+return # DISABLED FOR NOW
+setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle -option compose:ralt 2>/dev/null
+xset r rate 300 35 2>/dev/null
+xrandr --rate 144 2>/dev/null
+SET_MOUSE='
+MOUSE_DEVICES=$(xinput --list | grep "pointer" | sed "s/.*id=\([0-9]*\).*/\1/")
+for M in $MOUSE_DEVICES; do
+  xinput set-prop $M "libinput Accel Speed" -0.93 2> /dev/null
+done;
+'
+sh -c $SET_MOUSE 2>/dev/null

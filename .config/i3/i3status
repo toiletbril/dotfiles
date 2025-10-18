@@ -1,0 +1,54 @@
+general {
+        colors = true
+        interval = 5
+}
+
+order += "path_exists VPN"
+order += "ethernet eth0"
+order += "disk /"
+order += "disk /home"
+order += "memory"
+order += "load"
+order += "tztime berlin"
+
+wireless wlan0 {
+        format_up = " W: (%quality at %essid, %bitrate) %ip "
+        format_down = " W: down "
+}
+
+ethernet eth0 {
+        format_up = " E: %ip (%speed) "
+        format_down = " E: down "
+}
+
+path_exists VPN {
+        format = "vpn: %status "
+        path = "/proc/sys/net/ipv4/conf/tun0"
+}
+
+tztime berlin {
+        format = " %H:%M, %Y/%m/%d "
+        timezone = "Europe/Moscow"
+}
+
+load {
+        format = " load: %1min "
+}
+
+memory {
+        format = " mem: %used/%total "
+        threshold_degraded = "10%"
+        format_degraded = " MEM: %free "
+}
+
+disk "/" {
+        format = " root: %free "
+}
+
+disk "/home" {
+        format = " home: %free "
+}
+
+read_file uptime {
+        path = "/proc/uptime"
+}

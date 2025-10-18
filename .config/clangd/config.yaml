@@ -1,0 +1,60 @@
+Diagnostics:
+  MissingIncludes: None
+  ClangTidy:
+    FastCheckFilter: None
+    Add: [
+      clang-diagnostic-*,
+      clang-analyzer-*,
+      abseil-*,
+      readability-*,
+      google-*,
+      performance-*,
+      bugprone-*,
+      modernize-*,
+      misc-*,
+    ]
+    Remove: [
+      readability-avoid-unconditional-preprocessor-if,
+      google-readability-braces-around-statements,
+      readability-braces-around-statements,
+      readability-function-cognitive-complexity,
+      readability-identifier-length,
+      readability-implicit-bool-conversion,
+      readability-magic-numbers,
+      readability-math-missing-parentheses,
+      readability-named-parameter,
+      readability-static-definition-in-anonymous-namespace,
+      readability-uppercase-literal-suffix,
+      readability-use-anyofallof,
+      modernize-avoid-c-arrays,
+      modernize-make-unique,
+      modernize-use-auto,
+      modernize-use-designated-initializers,
+      modernize-use-nodiscard,
+      modernize-use-ranges,
+      modernize-use-std-format,
+      modernize-use-std-print,
+      modernize-use-trailing-return-type,
+      misc-no-recursion,
+      misc-unused-parameters,
+      misc-use-anonymous-namespace,
+      google-readability-casting,
+      google-readability-todo,
+      google-readability-avoid-underscore-in-googletest-name,
+    ]
+
+---
+CompileFlags:
+  Add: [
+    -Wall,
+    -Wextra,
+    -Wdouble-promotion,
+    -ferror-limit=0
+  ]
+  Remove: -Wformat*
+
+---
+If:
+  PathExclude: [.*\.c, .*\.h]
+CompileFlags:
+  Add: ["-std=c++23"]

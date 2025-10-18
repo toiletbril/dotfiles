@@ -1,0 +1,21 @@
+BasedOnStyle: Microsoft
+
+IndentWidth: 4
+TabWidth: 4
+ColumnLimit: 80
+AccessModifierOffset: -4
+
+AlignConsecutiveMacros: true
+AlignArrayOfStructures: Left
+AllowShortLambdasOnASingleLine: Inline
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: WithoutElse
+
+SpaceAfterCStyleCast: true
+AlwaysBreakAfterReturnType: AllDefinitions
+
+BraceWrapping:
+  AfterExternBlock: false
+
+IncludeBlocks: Regroup
+AlignEscapedNewlines: Left

@@ -20,6 +20,7 @@ fi
 HOME="/home/$ACTUAL_USER"
 
 back_up() {
+  # backup dir, file/dir to backup
   test -e "$2" && ! test -L "$2" && mv -vf "$2" "$1"
 }
 
@@ -73,5 +74,7 @@ for F in ./bin/*; do
   F="$(basename "$F")"
   link_dotfile "bin" "/usr/local/bin" "$F"
 done
+
+link_dotfile ".cargo" "$HOME/.cargo" "config.toml"
 
 chown -R "$ACTUAL_USER" './backup'

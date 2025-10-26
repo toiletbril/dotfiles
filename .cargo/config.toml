@@ -1,0 +1,22 @@
+[target.x86_64-unknown-linux-gnu]
+linker = "clang"
+rustflags = ["-C", "link-arg=--ld-path=/usr/bin/mold"]
+
+[target.x86_64-unknown-linux-musl]
+linker = "clang"
+rustflags = ["-C", "link-arg=--ld-path=/usr/bin/mold"]
+
+# xwin --accept-license splat --output /opt/msvc
+[target.x86_64-pc-windows-msvc]
+linker = "lld"
+rustflags = [
+  "-Lnative=/opt/msvc/crt/lib/x86_64",
+  "-Lnative=/opt/msvc/sdk/lib/um/x86_64",
+  "-Lnative=/opt/msvc/sdk/lib/ucrt/x86_64"
+]
+
+[env]
+CFLAGS_x86_64_pc_windows_msvc = "-I/opt/msvc/crt/include -I/opt/msvc/sdk/include/ucrt -I/opt/msvc/sdk/include/um -I/opt/msvc/sdk/include/shared"
+CC_x86_64_pc_windows_msvc = "clang-cl"
+CXX_x86_64_pc_windows_msvc = "clang-cl"
+AR_x86_64_pc_windows_msvc = "llvm-ar"

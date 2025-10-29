@@ -10,7 +10,7 @@ export EDITOR="nvim"
 export BROWSER="zen"
 
 export WINEDEBUG="-all"
-export LESS="-+X"
+export LESS="-+X -R"
 
 export CCACHE_DIR='/public/ccache'
 

@@ -31,8 +31,19 @@ require("lazy").setup({
     lazy = true
   },
 
+  {
+     "amitds1997/remote-nvim.nvim",
+     version = "*", -- Pin to GitHub releases
+     dependencies = {
+         "nvim-lua/plenary.nvim", -- For standard functions
+         "MunifTanjim/nui.nvim", -- To build the plugin UI
+         "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
+     },
+     config = true,
+  },
+
   -- LSP and completion
-  { 'nvim-lsp/nvim-lspconfig' },
+  { 'neovim/nvim-lspconfig' },
   { 'hrsh7th/nvim-cmp' },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'hrsh7th/cmp-buffer' },

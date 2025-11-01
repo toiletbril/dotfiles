@@ -931,46 +931,53 @@ local default_telemetry = {
 
 local default_servers = {
   -- "biome",
-  "ts_ls",
+  -- "ts_ls",
   "pylsp",
   "ruff",
   "zls",
   "clangd",
   "rust_analyzer",
-  "texlab",
+  -- "texlab",
   "gopls",
   "bashls"
 }
 
 -- disable lsp on demand
 if true then
-  for _, lsp in ipairs(default_servers) do
-    vim.lsp.enable(lsp, {
-      on_init = default_on_init,
-      flags = default_flags,
-      telemetry = default_telemetry,
-      root_dir = lspconfigutil.root_pattern(".git", "Makefile")
-    })
-  end
 
-  vim.lsp.enable("lua_ls", {
+for _, lsp in ipairs(default_servers) do
+  vim.lsp.enable(lsp, {
     on_init = default_on_init,
-    telemetry = default_telemetry,
     flags = default_flags,
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = {
-            "vim",
-            "require"
-          }
+    telemetry = default_telemetry,
+    root_dir = lspconfigutil.root_pattern(".git", "Makefile")
+  })
+end
+
+vim.lsp.enable("lua_ls", {
+  on_init = default_on_init,
+  telemetry = default_telemetry,
+  flags = default_flags,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = {
+          "vim",
+          "require"
         }
       }
-    },
-    workspace = {
-      library = vim.api.nvim_get_runtime_file("", true),
-    },
-  })
+    }
+  },
+  workspace = {
+    library = vim.api.nvim_get_runtime_file("", true),
+  },
+})
+
+vim.lsp.config("powershell_es", {
+  bundle_path = '/home/sd/External/powershell-eds',
+})
+vim.lsp.enable("powershell_es")
+
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {

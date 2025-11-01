@@ -19,7 +19,10 @@ export PATH="$HOME/.local/bin:$PATH"
 # ccache, my beloved.
 export PATH="/usr/lib/ccache/bin:$PATH"
 
-export COSMO_DIR="$HOME/External/cosmopolitan/.cosmocc/current/bin"
+# external components!!!
+export EXTERNAL_DIR="$HOME/External"
+
+export COSMO_DIR="$EXTERNAL_DIR/cosmopolitan/.cosmocc/current/bin"
 export PATH="$PATH:$COSMO_DIR"
 
 export BUN_INSTALL="$HOME/.bun"
@@ -29,9 +32,12 @@ export PATH="$PATH:$BUN_DIR/bin"
 export GOPATH="$HOME/.go"
 export PATH="$PATH:$GOPATH/bin"
 
-export ANDROID_HOME="$HOME/External/android-sdk"
+export ANDROID_HOME="$EXTERNAL_DIR/android-sdk"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+
+export PWSH_DIR="$EXTERNAL_DIR/powershell-bin"
+export PATH="$PATH:$PWSH_DIR"
 
 test -f "$HOME/.cargo/env" && . "$HOME/.cargo/env"
 

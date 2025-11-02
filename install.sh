@@ -77,4 +77,7 @@ done
 
 link_dotfile ".cargo" "$HOME/.cargo" "config.toml"
 
+mkdir -p "$HOME/.claude"
+link_dotfile ".claude" "$HOME/.claude" "CLAUDE.md"
+
 chown -R "$ACTUAL_USER" './backup'

@@ -931,7 +931,9 @@ local default_telemetry = {
 
 local default_servers = {
   -- "biome",
-  -- "ts_ls",
+  "ts_ls",
+  "svelte",
+  -- "eslint",
   "pylsp",
   "ruff",
   "zls",
@@ -939,20 +941,12 @@ local default_servers = {
   "rust_analyzer",
   -- "texlab",
   "gopls",
-  "bashls"
+  "bashls",
+  "powershell_es",
 }
 
 -- disable lsp on demand
 if true then
-
-for _, lsp in ipairs(default_servers) do
-  vim.lsp.enable(lsp, {
-    on_init = default_on_init,
-    flags = default_flags,
-    telemetry = default_telemetry,
-    root_dir = lspconfigutil.root_pattern(".git", "Makefile")
-  })
-end
 
 vim.lsp.enable("lua_ls", {
   on_init = default_on_init,
@@ -976,7 +970,15 @@ vim.lsp.enable("lua_ls", {
 vim.lsp.config("powershell_es", {
   bundle_path = '/home/sd/External/powershell-eds',
 })
-vim.lsp.enable("powershell_es")
+
+for _, lsp in ipairs(default_servers) do
+  vim.lsp.enable(lsp, {
+    on_init = default_on_init,
+    flags = default_flags,
+    telemetry = default_telemetry,
+    root_dir = lspconfigutil.root_pattern(".git", "Makefile")
+  })
+end
 
 end
 

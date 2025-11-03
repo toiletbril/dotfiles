@@ -672,18 +672,18 @@ local treesittercontext = require("treesitter-context")
 
 treesitterconfigs.setup {
   ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
-  auto_install = false,
+  auto_install = true,
   sync_install = false,
 
   highlight = {
-    enable = false,
-    -- disable = function(lang, bufnr)
-    --   if vim.api.nvim_buf_line_count(bufnr) > 4000 then
-    --     print("Treesitter disabled for this file, because it's too large")
-    --     return true
-    --   end
-    --   return false
-    -- end,
+    enable = true,
+    disable = function(lang, bufnr)
+      if vim.api.nvim_buf_line_count(bufnr) > 3333 then
+        print("Treesitter disabled for this file, because it's too large")
+        return true
+      end
+      return false
+    end,
   }
 }
 
@@ -691,7 +691,7 @@ treesittercontext.setup{
   mode = "topline",
   max_lines = 6,
   trim_scope = "inner",
-  enable = false
+  enable = true
   -- separator = "─",
 }
 
@@ -965,7 +965,7 @@ vim.lsp.enable("lua_ls", {
   },
 })
 
-vim.lsp.config("powershell_es", {
+lspconfig("powershell_es", {
   bundle_path = '/home/sd/External/powershell-eds',
 })
 

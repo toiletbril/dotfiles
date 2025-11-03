@@ -396,10 +396,10 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 })
 
 -- Theme
--- vim.cmd.colorscheme 'duskfox'
+vim.cmd.colorscheme 'duskfox'
 -- vim.cmd.colorscheme 'nightfox'
 -- vim.cmd.colorscheme 'dawnfox' -- light theme
-vim.cmd.colorscheme 'terafox'
+-- vim.cmd.colorscheme 'terafox'
 -- vim.cmd.colorscheme 'carbonfox'
 -- vim.cmd.colorscheme 'gruvbox'
 -- vim.cmd.colorscheme 'kanagawa-wave'
@@ -812,6 +812,8 @@ end
 local HEIGHT_RATIO = 0.8
 local WIDTH_RATIO = 0.5
 
+local nvimtree_enable_float = false
+
 -- Close nvim-tree and exit if it's the last buffer remaining.
 vim.api.nvim_create_autocmd("QuitPre", {
   callback = function()
@@ -841,7 +843,7 @@ nvimtree.setup({
   },
   view = {
     float = {
-      enable = false,
+      enable = nvimtree_enable_float,
       open_win_config = function()
         local screen_w = vim.opt.columns:get()
         local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()

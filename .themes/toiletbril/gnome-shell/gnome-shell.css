@@ -1,0 +1,14 @@
+@import url("resource:///org/gnome/shell/theme/gnome-shell.css");
+
+/* shadow under text and icons */
+#panel * {
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.35);
+  icon-shadow: 0px 0px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* rounded panel */
+#panel {
+  background-color: rgba(111, 74, 66, 0.8);
+  border-radius: 32px;
+  margin: 4px;
+}

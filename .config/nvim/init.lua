@@ -1,5 +1,5 @@
 -- So, imagine your editor requires 1K line settings file.
---
+
 -- It just happens that every fucking setting is utterly awful by default in
 -- this fucking stupid terminal application and every terribly atrocious plugin
 -- written by a greasy nerd requires a thousand line confuguration to behave
@@ -11,7 +11,7 @@
 -- mercilessly horibble bullshit in vimscript and lua it's actually pretty
 -- useful and nice to use, althrough consumes as much memory as CLion now.
 
--- Install lazy.nvim if not already installed
+-- Install lazy.nvim if not already installed.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -31,14 +31,11 @@ require("lazy").setup({
     lazy = true
   },
 
+  -- SSH
   {
      "amitds1997/remote-nvim.nvim",
-     version = "*", -- Pin to GitHub releases
-     dependencies = {
-         "nvim-lua/plenary.nvim", -- For standard functions
-         "MunifTanjim/nui.nvim", -- To build the plugin UI
-         "nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
-     },
+     version = "*",
+     dependencies = { "MunifTanjim/nui.nvim" },
      config = true,
   },
 
@@ -54,7 +51,6 @@ require("lazy").setup({
   { 'rmagatti/goto-preview' },
 
   -- Telescope and utilities
-  { 'nvim-lua/plenary.nvim' },
   { 'nvim-telescope/telescope.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Treesitter
@@ -403,8 +399,8 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 -- vim.cmd.colorscheme 'duskfox'
 -- vim.cmd.colorscheme 'nightfox'
 -- vim.cmd.colorscheme 'dawnfox' -- light theme
--- vim.cmd.colorscheme 'terafox'
-vim.cmd.colorscheme 'carbonfox'
+vim.cmd.colorscheme 'terafox'
+-- vim.cmd.colorscheme 'carbonfox'
 -- vim.cmd.colorscheme 'gruvbox'
 -- vim.cmd.colorscheme 'kanagawa-wave'
 -- vim.cmd.colorscheme 'nordfox'

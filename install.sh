@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "rewrite this shit in GNU stow" >&2
+exit 1
+
 set -u
 
 cd "$(dirname "$(realpath "$0")")" || exit 1
@@ -20,17 +23,16 @@ fi
 HOME="/home/$ACTUAL_USER"
 
 back_up() {
-  # backup dir, file/dir to backup
-  test -e "$2" && ! test -L "$2" && mv -vf "$2" "$1"
+  # backup directory, file/dir to backup
+  test -e "$2" && ! test -L "$2" && mkdir -p "$1" && mv -vf "$2" "$1" 
 }
 
 link_dotfile() {
-  # src, target, file
+  # source file, target directory, file inside target directory to replace
   back_up "./backup/$1" "$2/$3"
   ln -sfv "$(realpath "./$1/$3")" "$2/"
 }
 
-mkdir -p './backup/dotfiles'
 for F in ./dotfiles/.*; do
   F="$(basename "$F")"
   test -f "./dotfiles/$F" || continue
@@ -40,7 +42,6 @@ done
 back_up "./backup/dotfiles" "$HOME/.clang-format"
 ln -sfv "$HOME/.clang-format-google" "$HOME/.clang-format"
 
-mkdir -p './backup/.config'
 for F in ./.config/*; do
   F="$(basename "$F")"
   case "$F" in
@@ -69,7 +70,6 @@ else
 fi
 ln -sfv "$HOME/.config/vscode" "$HOME/.config/Code - OSS"
 
-mkdir -p './backup/usr-local-bin'
 for F in ./bin/*; do
   F="$(basename "$F")"
   link_dotfile "bin" "/usr/local/bin" "$F"
@@ -77,7 +77,8 @@ done
 
 link_dotfile ".cargo" "$HOME/.cargo" "config.toml"
 
-mkdir -p "$HOME/.claude"
 link_dotfile ".claude" "$HOME/.claude" "CLAUDE.md"
+
+link_dotfile ".themes" "$HOME/.themes" "toiletbril"
 
 chown -R "$ACTUAL_USER" './backup'

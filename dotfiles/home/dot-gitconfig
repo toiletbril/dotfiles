@@ -7,7 +7,7 @@
 [credential "https://gist.github.com"]
     helper = !/usr/bin/gh auth git-credential
 [credential]
-    helper = /usr/libexec/git-credential-libsecret
+    helper = /usr/libexec/git-core/git-credential-libsecret
 [init]
     defaultBranch = master
 [include]

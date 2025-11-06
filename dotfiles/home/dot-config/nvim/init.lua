@@ -679,7 +679,6 @@ treesitterconfigs.setup {
     enable = true,
     disable = function(lang, bufnr)
       if vim.api.nvim_buf_line_count(bufnr) > 3333 then
-        print("Treesitter disabled for this file, because it's too large")
         return true
       end
       return false

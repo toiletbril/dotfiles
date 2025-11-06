@@ -97,7 +97,8 @@
                     "platform connect connect://${input:IP-port}",
                     "platform process attach --pid ${input:PID-on-host}",
                     "settings set target.source-map /home/gpadmin/gpdb_src ${workspaceFolder}"
-            },
+                ]
+            }
         ],
         "inputs": [
             {
@@ -109,9 +110,12 @@
                 "id": "PID",
                 "type": "promptString",
                 "description": "Enter a PID"
-            },
-        ],
+            }
+        ]
     },
     "editor.inlayHints.enabled": "offUnlessPressed",
-    "editor.cursorStyle": "line-thin"
+    "editor.cursorStyle": "block",
+    "workbench.editor.showTabs": "none",
+    "zenMode.showTabs": "none",
+    "editor.cursorSmoothCaretAnimation": "on"
 }

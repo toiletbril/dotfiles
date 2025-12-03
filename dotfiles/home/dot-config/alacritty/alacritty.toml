@@ -24,7 +24,7 @@ size = 14.0
 
 [font.normal]
 family = "Jetbrains Mono"
-style = "Light"
+style = "Extralight"
 
 [scrolling]
 history = 10000

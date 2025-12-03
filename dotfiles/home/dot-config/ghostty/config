@@ -3,19 +3,20 @@
 
 #font-family = Sudo
 #font-family = Source Code Pro
-#font-family = Jetbrains Mono
+font-family = Jetbrains Mono
 #font-family = s0sevka t
 #font-family = s0sevka m
 #font-family = Fira Code
 #font-family = monospace
 #font-family = Roboto Mono
-font-family = Hack
+#font-family = Hack
 #font-family = Input Mono
 #font-family = Fragment Mono
 #font-family = Ubuntu Mono
 
 adjust-cell-height = 2
-font-size = 14
+font-size = 12
+font-style = Extralight
 
 font-codepoint-map = U+e5fa-U+e6b7=SymbolsNerdFont,U+e700-U+e8ef=SymbolsNerdFont,U+ed00-U+f2ff=SymbolsNerdFont,U+e200-U+e2a9=SymbolsNerdFont,U+f0001-U+f1af0=SymbolsNerdFont,U+e300-U+e3e3=SymbolsNerdFont,U+f400-U+f533=SymbolsNerdFont,U+2665=SymbolsNerdFont,U+26a1=SymbolsNerdFont,U+e0a0-U+e0a2=SymbolsNerdFont,U+e0b0-U+e0b3=SymbolsNerdFont,U+23fb-U+23fe=SymbolsNerdFont,U+2b58=SymbolsNerdFont,U+f300-U+f381=SymbolsNerdFont,U+e000-U+e00a=SymbolsNerdFont,U+ea60-U+ec1e=SymbolsNerdFont,U+ee00-U+ee0b=SymbolsNerdFont,U+21b5=Terminus
 

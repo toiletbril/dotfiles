@@ -58,7 +58,7 @@
     "workbench.list.smoothScrolling": true,
     "workbench.reduceMotion": "off",
     "workbench.colorTheme": "Owokai",
-    "editor.cursorWidth": 3,
+    "editor.cursorWidth": 2,
     "search.actionsPosition": "auto",
     "search.showLineNumbers": true,
     "search.smartCase": true,
@@ -114,7 +114,7 @@
         ]
     },
     "editor.inlayHints.enabled": "offUnlessPressed",
-    "editor.cursorStyle": "block",
+    "editor.cursorStyle": "line",
     "workbench.editor.showTabs": "none",
     "zenMode.showTabs": "none",
     "editor.cursorSmoothCaretAnimation": "on"

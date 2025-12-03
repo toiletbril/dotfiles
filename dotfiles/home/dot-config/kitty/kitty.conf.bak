@@ -53,6 +53,6 @@ visual_bell_duration        1.0
 # visual_bell_color           #111111
 
 # BEGIN_KITTY_THEME
-# Vibrant Ink
+# Blueberry Mango
 include current-theme.conf
 # END_KITTY_THEME

@@ -54,8 +54,8 @@ require("lazy").setup({
   { 'nvim-telescope/telescope.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Treesitter
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-  { 'nvim-treesitter/nvim-treesitter-context' },
+  -- { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  -- { 'nvim-treesitter/nvim-treesitter-context' },
 
   -- { 'folke/trouble.nvim', cmd = "Trouble" },
 
@@ -396,10 +396,10 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 })
 
 -- Theme
-vim.cmd.colorscheme 'duskfox'
+-- vim.cmd.colorscheme 'duskfox'
 -- vim.cmd.colorscheme 'nightfox'
 -- vim.cmd.colorscheme 'dawnfox' -- light theme
--- vim.cmd.colorscheme 'terafox'
+vim.cmd.colorscheme 'terafox'
 -- vim.cmd.colorscheme 'carbonfox'
 -- vim.cmd.colorscheme 'gruvbox'
 -- vim.cmd.colorscheme 'kanagawa-wave'
@@ -667,36 +667,34 @@ kanagawa.setup({
 -- trouble.setup {}
 
 -- Laggy and buggy
-local treesitterconfigs = require("nvim-treesitter.configs")
-local treesittercontext = require("treesitter-context")
-
-treesitterconfigs.setup {
-  ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
-  auto_install = true,
-  sync_install = false,
-
-  highlight = {
-    enable = true,
-    disable = function(lang, bufnr)
-      if vim.api.nvim_buf_line_count(bufnr) > 3333 then
-        return true
-      end
-      return false
-    end,
-  }
-}
-
-treesittercontext.setup{
-  mode = "topline",
-  max_lines = 6,
-  trim_scope = "inner",
-  enable = true
-  -- separator = "─",
-}
-
-vim.keymap.set("n", "<C-t>", treesittercontext.toggle)
-
-vim.g.lazygit_floating_window_winblend = 30
+-- local treesitterconfigs = require("nvim-treesitter.configs")
+-- local treesittercontext = require("treesitter-context")
+-- 
+-- treesitterconfigs.setup {
+--   ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
+--   auto_install = true,
+--   sync_install = false,
+-- 
+--   highlight = {
+--     enable = true,
+--     disable = function(lang, bufnr)
+--       if vim.api.nvim_buf_line_count(bufnr) > 3333 then
+--         return true
+--       end
+--       return false
+--     end,
+--   }
+-- }
+-- 
+-- treesittercontext.setup{
+--   mode = "topline",
+--   max_lines = 6,
+--   trim_scope = "inner",
+--   enable = true
+--   -- separator = "─",
+-- }
+-- 
+-- vim.keymap.set("n", "<C-t>", treesittercontext.toggle)
 
 function trans_border()
   local w = cmp.config.window.bordered()
@@ -811,7 +809,7 @@ end
 local HEIGHT_RATIO = 0.8
 local WIDTH_RATIO = 0.5
 
-local nvimtree_enable_float = false
+local nvimtree_enable_float = true
 
 -- Close nvim-tree and exit if it's the last buffer remaining.
 vim.api.nvim_create_autocmd("QuitPre", {

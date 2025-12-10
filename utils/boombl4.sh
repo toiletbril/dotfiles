@@ -17,7 +17,7 @@ test -d "$ROOT" || { printf '%s\n' "ERROR: '$ROOT' is not a directory" >&2; exit
 find "$ROOT" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r DIR; do
   printf 'entering %s\n' "$DIR"
 
-  FIRST_AUDIO=$(find "$DIR" -type f \( -iname '*.flac' -o -iname '*.mp3' \) | head -n 1)
+  FIRST_AUDIO=$(find "$DIR" -type f \( -iname '*.flac' -o -iname '*.mp3' -o -iname '*.m4a' \) | head -n 1)
   test -n "$FIRST_AUDIO" || continue
 
   ALBUM=$(ffprobe -v error -show_entries format_tags=album  -of default=nw=1:nk=1 "$FIRST_AUDIO")

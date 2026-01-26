@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- So, imagine your editor requires 1K line settings file.
 
 -- It just happens that every fucking setting is utterly awful by default in
@@ -116,9 +118,9 @@ vim.opt.listchars = { tab = '┊ ', space = '·' }
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.clipboard = 'unnamed'
--- vim.opt.cursorline = true
 vim.opt.cursorline = false
-vim.opt.cursorlineopt = 'number'
+-- vim.opt.cursorline = true
+vim.opt.cursorlineopt = 'both'
 vim.opt.omnifunc = 'syntaxcomplete#Complete'
 vim.opt.colorcolumn = '80'
 vim.opt.textwidth = 0
@@ -131,8 +133,8 @@ vim.opt.statusline = ' '
 vim.opt.fillchars = { stl = ' ', stlnc = ' ' }
 vim.opt.laststatus = 2
 vim.opt.winbar = ''
-vim.opt.guicursor='n-sm:block,i-c-ci-ve:ver25,r-cr-o-v:hor20'
--- vim.opt.guicursor='n-sm:block,i-c-ci-ve:block,r-cr-o-v:hor20'
+-- vim.opt.guicursor='n-sm:block,i-c-ci-ve:ver25,r-cr-o-v:hor20'
+vim.opt.guicursor='n-sm:block,i-c-ci-ve:block,r-cr-o-v:hor20'
 vim.opt.swapfile = false
 vim.opt.redrawtime = 1111
 -- vim.opt.keymap = 'russian-jcuken'
@@ -399,10 +401,10 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 -- vim.cmd.colorscheme 'duskfox'
 -- vim.cmd.colorscheme 'nightfox'
 -- vim.cmd.colorscheme 'dawnfox' -- light theme
-vim.cmd.colorscheme 'terafox'
+-- vim.cmd.colorscheme 'terafox'
 -- vim.cmd.colorscheme 'carbonfox'
 -- vim.cmd.colorscheme 'gruvbox'
--- vim.cmd.colorscheme 'kanagawa-wave'
+vim.cmd.colorscheme 'kanagawa-wave'
 -- vim.cmd.colorscheme 'nordfox'
 -- vim.cmd.colorscheme 'iceberg'
 -- vim.cmd.colorscheme 'default'

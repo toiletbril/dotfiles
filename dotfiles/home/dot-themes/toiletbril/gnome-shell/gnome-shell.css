@@ -20,8 +20,8 @@
 
 /* promenient shadow under text and icons */
 #panel * {
-  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
-  icon-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 1);
+  icon-shadow: 1px 1px 6px rgba(0, 0, 0, 1);
 }
 
 /* no panel */

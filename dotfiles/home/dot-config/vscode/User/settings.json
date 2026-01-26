@@ -117,5 +117,6 @@
     "editor.cursorStyle": "line",
     "workbench.editor.showTabs": "none",
     "zenMode.showTabs": "none",
-    "editor.cursorSmoothCaretAnimation": "on"
+    "editor.cursorSmoothCaretAnimation": "on",
+    "svelte.ask-to-enable-ts-plugin": false
 }

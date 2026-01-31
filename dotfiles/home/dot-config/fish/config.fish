@@ -4,4 +4,4 @@ alias less=moar
 alias ls="lsd --group-directories-first -AF"
 alias ll="lsd --group-directories-first -lAhXZF"
 
-thefuck --alias | source
+# thefuck --alias | source

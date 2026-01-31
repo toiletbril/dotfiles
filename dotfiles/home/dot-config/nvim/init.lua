@@ -133,8 +133,8 @@ vim.opt.statusline = ' '
 vim.opt.fillchars = { stl = ' ', stlnc = ' ' }
 vim.opt.laststatus = 2
 vim.opt.winbar = ''
--- vim.opt.guicursor='n-sm:block,i-c-ci-ve:ver25,r-cr-o-v:hor20'
-vim.opt.guicursor='n-sm:block,i-c-ci-ve:block,r-cr-o-v:hor20'
+vim.opt.guicursor='n-sm:block,i-c-ci-ve:ver25,r-cr-o-v:hor20'
+-- vim.opt.guicursor='n-sm:block,i-c-ci-ve:block,r-cr-o-v:hor20'
 vim.opt.swapfile = false
 vim.opt.redrawtime = 1111
 -- vim.opt.keymap = 'russian-jcuken'

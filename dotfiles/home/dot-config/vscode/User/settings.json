@@ -94,8 +94,8 @@
                 "platformName": "remote-linux",
                 "attachCommands": [
                     "platform select remote-linux",
-                    "platform connect connect://${input:IP-port}",
-                    "platform process attach --pid ${input:PID-on-host}",
+                    "platform connect connect://${input:IP}",
+                    "platform process attach --pid ${input:PID}",
                     "settings set target.source-map /home/gpadmin/gpdb_src ${workspaceFolder}"
                 ]
             }
@@ -104,7 +104,7 @@
             {
                 "id": "IP",
                 "type": "promptString",
-                "description": "Enter IP"
+                "description": "Enter IP:PORT"
             },
             {
                 "id": "PID",

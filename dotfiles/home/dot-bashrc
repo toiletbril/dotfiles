@@ -12,3 +12,5 @@ if [ -z "$NO_FISH" ] && [ -z "$SSH_CONNECTION" ]; then
   echo "Replacing bash..."
   exec fish
 fi
+
+alias claude="/home/sd/.claude/local/claude"

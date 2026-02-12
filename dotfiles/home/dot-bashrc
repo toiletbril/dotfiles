@@ -1,16 +1,15 @@
 #!/bin/bash
 
-[[ $- != *i* ]] && return
-[[ $TERM != *xterm* ]] && return
+. "$HOME/.profile" # environment
 
-alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
-. "$HOME/.profile"
+[[ $- = *i* ]] || [[ $TERM = *xterm* ]] || return
 
 # If this is not an ssh connection and NO_FISH isn't defined, replace!
 if [ -z "$NO_FISH" ] && [ -z "$SSH_CONNECTION" ]; then
-  echo "Replacing bash..."
+  echo "hi, normal terminal! replacing bash..."
   exec fish
 fi
 
-alias claude="/home/sd/.claude/local/claude"
+PS1='\u@\h \W $ '
+
+echo "bourne again shell."

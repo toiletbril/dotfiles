@@ -1,0 +1,5 @@
+#zen-media-controls-toolbar {
+  & #zen-media-focus-button::after {
+    display: none !important;
+  }
+]

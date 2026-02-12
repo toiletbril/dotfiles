@@ -13,5 +13,15 @@ case "${1:-}" in
   exit 1
 esac
 
-stow "$F" -v --dotfiles -t "$HOME" 'home'
-sudo stow "$F" -v -t '/usr/local/bin' 'bin'
+stow "$F" -v 2 --dotfiles -t "$HOME" 'home'
+
+# special case: zen profiles and userChrome.css
+(
+  set -x
+  cd "$HOME"/.zen/
+  # cp dereferences the symlink.
+  find . -maxdepth 2 -name 'chrome' -exec cp ./userChrome.css {} \;
+  unlink ./userChrome.css
+)
+
+sudo stow "$F" -v 2 -t '/usr/local/bin' 'bin'

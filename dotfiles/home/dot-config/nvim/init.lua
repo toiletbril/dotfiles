@@ -56,7 +56,7 @@ require("lazy").setup({
   { 'nvim-telescope/telescope.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Treesitter
-  -- { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   -- { 'nvim-treesitter/nvim-treesitter-context' },
 
   -- { 'folke/trouble.nvim', cmd = "Trouble" },
@@ -400,11 +400,11 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 -- Theme
 -- vim.cmd.colorscheme 'duskfox'
 -- vim.cmd.colorscheme 'nightfox'
--- vim.cmd.colorscheme 'dawnfox' -- light theme
+vim.cmd.colorscheme 'dawnfox' -- light theme
 -- vim.cmd.colorscheme 'terafox'
 -- vim.cmd.colorscheme 'carbonfox'
 -- vim.cmd.colorscheme 'gruvbox'
-vim.cmd.colorscheme 'kanagawa-wave'
+-- vim.cmd.colorscheme 'kanagawa-wave'
 -- vim.cmd.colorscheme 'nordfox'
 -- vim.cmd.colorscheme 'iceberg'
 -- vim.cmd.colorscheme 'default'
@@ -509,7 +509,6 @@ autotag.setup {
   },
 }
 
-
 kanagawa.setup({
   colors = {
     theme = {
@@ -525,25 +524,26 @@ kanagawa.setup({
 -- trouble.setup {}
 
 -- Laggy and buggy
--- local treesitterconfigs = require("nvim-treesitter.configs")
+local treesitterconfigs = require("nvim-treesitter.configs")
+
+treesitterconfigs.setup {
+  ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
+  auto_install = true,
+  sync_install = false,
+
+  highlight = {
+    enable = true,
+    disable = function(lang, bufnr)
+      if vim.api.nvim_buf_line_count(bufnr) > 3333 then
+        return true
+      end
+      return false
+    end,
+  }
+}
+
 -- local treesittercontext = require("treesitter-context")
--- 
--- treesitterconfigs.setup {
---   ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
---   auto_install = true,
---   sync_install = false,
--- 
---   highlight = {
---     enable = true,
---     disable = function(lang, bufnr)
---       if vim.api.nvim_buf_line_count(bufnr) > 3333 then
---         return true
---       end
---       return false
---     end,
---   }
--- }
--- 
+
 -- treesittercontext.setup{
 --   mode = "topline",
 --   max_lines = 6,

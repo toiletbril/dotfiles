@@ -109,5 +109,8 @@
     "env": {
       "NO_FISH": "1"
     }
+  },
+  "auto_install_extensions": {
+    "wakatime": true
   }
 }

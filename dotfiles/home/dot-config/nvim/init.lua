@@ -33,6 +33,9 @@ require("lazy").setup({
     lazy = true
   },
 
+  -- lol
+  { "wakatime/vim-wakatime", lazy = false },
+
   -- SSH
   {
      "amitds1997/remote-nvim.nvim",

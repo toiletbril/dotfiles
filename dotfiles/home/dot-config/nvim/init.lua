@@ -799,6 +799,7 @@ local default_servers = {
   "gopls",
   "bashls",
   "powershell_es",
+  "tinymist",
 }
 
 -- disable lsp on demand

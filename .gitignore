@@ -1,1 +1,29 @@
 backup/
+/dotfiles/home/dot-config/vscode/Cache/Cache_Data
+/dotfiles/home/dot-config/vscode/CachedExtensionVSIXs/.trash
+/dotfiles/home/dot-config/vscode/CachedProfilesData/__default__profile__
+/dotfiles/home/dot-config/vscode/Code Cache
+/dotfiles/home/dot-config/vscode/Crashpad
+/dotfiles/home/dot-config/vscode/DawnGraphiteCache
+/dotfiles/home/dot-config/vscode/DawnWebGPUCache
+/dotfiles/home/dot-config/vscode/Dictionaries
+/dotfiles/home/dot-config/vscode/GPUCache
+/dotfiles/home/dot-config/vscode/Local Storage/leveldb
+/dotfiles/home/dot-config/vscode/Service Worker
+/dotfiles/home/dot-config/vscode/Shared Dictionary
+/dotfiles/home/dot-config/vscode/User
+/dotfiles/home/dot-config/vscode/WebStorage
+/dotfiles/home/dot-config/vscode/logs/20260201T191218
+/dotfiles/home/dot-config/vscode/DIPS
+/dotfiles/home/dot-config/vscode/DIPS-shm
+/dotfiles/home/dot-config/vscode/DIPS-wal
+/dotfiles/home/dot-config/vscode/Network Persistent State
+/dotfiles/home/dot-config/vscode/Preferences
+/dotfiles/home/dot-config/vscode/SharedStorage
+/dotfiles/home/dot-config/vscode/SharedStorage-wal
+/dotfiles/home/dot-config/vscode/TransportSecurity
+/dotfiles/home/dot-config/vscode/Trust Tokens
+/dotfiles/home/dot-config/vscode/Trust Tokens-journal
+/dotfiles/home/dot-config/vscode/code.lock
+/dotfiles/home/dot-config/vscode/languagepacks.json
+/dotfiles/home/dot-config/vscode/machineid

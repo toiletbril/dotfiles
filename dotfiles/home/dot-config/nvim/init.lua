@@ -400,17 +400,43 @@ vim.api.nvim_create_autocmd("InsertEnter", {
   end
 })
 
--- Theme
--- vim.cmd.colorscheme 'duskfox'
--- vim.cmd.colorscheme 'nightfox'
-vim.cmd.colorscheme 'dawnfox' -- light theme
--- vim.cmd.colorscheme 'terafox'
--- vim.cmd.colorscheme 'carbonfox'
--- vim.cmd.colorscheme 'gruvbox'
--- vim.cmd.colorscheme 'kanagawa-wave'
--- vim.cmd.colorscheme 'nordfox'
--- vim.cmd.colorscheme 'iceberg'
--- vim.cmd.colorscheme 'default'
+local function get_system_theme()
+  local handle = io.popen([[
+    dbus-send --session --print-reply=literal --dest=org.freedesktop.portal.Desktop \
+      /org/freedesktop/portal/desktop \
+      org.freedesktop.portal.Settings.Read \
+      string:org.freedesktop.appearance string:color-scheme 2>/dev/null | \
+      grep -oP '(?<=uint32 )\d+'
+  ]])
+
+  if handle then
+    local result = handle:read("*a")
+    handle:close()
+
+    -- 1 = prefer-dark, 2 = prefer-light, 0 = no-preference
+    if result:match("1") then
+      return "dark"
+    elseif result:match("2") then
+      return "light"
+    end
+  end
+
+  return "light"
+end
+
+if get_system_theme() == "dark" then
+  vim.cmd.colorscheme 'duskfox'
+  -- vim.cmd.colorscheme 'nightfox'
+  -- vim.cmd.colorscheme 'terafox'
+  -- vim.cmd.colorscheme 'carbonfox'
+  -- vim.cmd.colorscheme 'gruvbox'
+  -- vim.cmd.colorscheme 'kanagawa-wave'
+  -- vim.cmd.colorscheme 'nordfox'
+  -- vim.cmd.colorscheme 'iceberg'
+else
+  -- vim.cmd.colorscheme 'dawnfox'
+  vim.cmd.colorscheme 'kanagawa-lotus'
+end
 
 function get_bg_color(highlight_name)
   local success, hl = pcall(function () return vim.api.nvim_get_hl_by_name(highlight_name, true) end)

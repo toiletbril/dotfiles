@@ -34,8 +34,8 @@ adjust-cursor-thickness = 1
 cursor-invert-fg-bg = true
 mouse-hide-while-typing = true
 
-theme = ayu
-background = #111111
+theme = Adwaita
+#background = #111111
 # I cannot believe how buggy this terminal is
 #background-opacity = 0.9
 background-blur = 0
@@ -47,7 +47,6 @@ mouse-scroll-multiplier = 1
 
 quit-after-last-window-closed = true
 
-theme = Adwaita Dark
 shell-integration = fish
 
 keybind = ctrl+shift+q=close_surface

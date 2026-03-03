@@ -3,9 +3,12 @@
 . "$HOME/.profile" # environment
 
 # fuck you
+unset all_proxy
 unset http_proxy
 unset https_proxy
 unset ALL_PROXY
+unset HTTP_PROXY
+unset HTTPS_PROXY
 
 [[ $- = *i* ]] || [[ $TERM = *xterm* ]] || return
 

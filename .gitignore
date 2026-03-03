@@ -27,3 +27,4 @@ backup/
 /dotfiles/home/dot-config/vscode/code.lock
 /dotfiles/home/dot-config/vscode/languagepacks.json
 /dotfiles/home/dot-config/vscode/machineid
+/dotfiles/home/dot-config/nvim/lazy-lock.json

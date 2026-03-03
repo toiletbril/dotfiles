@@ -434,8 +434,8 @@ if get_system_theme() == "dark" then
   -- vim.cmd.colorscheme 'nordfox'
   -- vim.cmd.colorscheme 'iceberg'
 else
-  -- vim.cmd.colorscheme 'dawnfox'
-  vim.cmd.colorscheme 'kanagawa-lotus'
+  vim.cmd.colorscheme 'dawnfox'
+  -- vim.cmd.colorscheme 'kanagawa-lotus'
 end
 
 function get_bg_color(highlight_name)

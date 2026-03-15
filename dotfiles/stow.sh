@@ -4,6 +4,8 @@ set -eu
 
 cd "$(dirname "$(realpath "$0")")" || exit 1
 
+V="-v"
+
 case "${1:-}" in
   'install')   F='-S';;
   'delete')    F='-D';;
@@ -13,7 +15,7 @@ case "${1:-}" in
   exit 1
 esac
 
-stow "$F" -v 2 --dotfiles -t "$HOME" 'home'
+stow "$F" "$V" --dotfiles -t "$HOME" 'home'
 
 # special case: zen profiles and userChrome.css
 (
@@ -23,5 +25,11 @@ stow "$F" -v 2 --dotfiles -t "$HOME" 'home'
   find . -maxdepth 2 -name 'chrome' -exec cp ./userChrome.css {} \;
   unlink ./userChrome.css
 )
+# special case: Code - OSS
+(
+  set -x
+  cd "$HOME"/.config
+  ln -sf vscode 'Code - OSS'
+)
 
-sudo stow "$F" -v 2 -t '/usr/local/bin' 'bin'
+sudo stow "$F" "$V" -t '/usr/local/bin' 'bin'

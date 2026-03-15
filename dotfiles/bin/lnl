@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if test -z "$1"; then
+  echo "$0 <binary1> [binary2..]" >&2
+  echo "link a binary to /usr/local/bin" >&2
+  exit 1
+fi
+
+T='/usr/local/bin'
+
+if ! test -w "$T"; then
+  echo "no permissions for $T. escalating.."
+  exec sudo "$0" "$@"
+fi
+
+for f in "$@"; do
+  ln -si "$(realpath "$f")" "$T"
+done

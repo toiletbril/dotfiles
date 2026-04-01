@@ -24,6 +24,7 @@ adjust-cursor-thickness = 1
 #font-family = Input Mono
 #font-family = Fragment Mono
 #font-family = Ubuntu Mono
+font-family = Spleen
 
 #adjust-cell-height = 2
 #font-size = 10
@@ -43,6 +44,7 @@ window-step-resize = true
 cursor-invert-fg-bg = true
 mouse-hide-while-typing = true
 
+#theme = Adwaita Dark
 theme = Adwaita
 #theme = Adwaita Dark
 #background = #111111
@@ -53,7 +55,7 @@ theme = Adwaita
 background-blur = 0
 
 # terminal applications have wrong multiplication compared to console
-mouse-scroll-multiplier = 1
+mouse-scroll-multiplier = 3
 
 quit-after-last-window-closed = true
 

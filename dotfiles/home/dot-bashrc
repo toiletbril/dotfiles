@@ -10,12 +10,10 @@ unset ALL_PROXY
 unset HTTP_PROXY
 unset HTTPS_PROXY
 
-[[ $- = *i* ]] || [[ $TERM = *xterm* ]] || return
+[[ $TERM != *xterm* ]] && [[ $- != *i* ]] && return
 
-# override retarded TERM variables
-export TERM=xterm-256color
-
-# If this is not an ssh connection/claude code shell instance and NO_FISH isn't defined, replace!
+# If this is not an ssh connection/claude code shell instance and NO_FISH isn't
+# defined, replace!
 if test -z "$NO_FISH" && test -z "$SSH_CONNECTION" && test -z "$CLAUDECODE"; then
    echo "hi, normal terminal! replacing bash..."
    exec fish

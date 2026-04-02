@@ -8,8 +8,7 @@
     features = some-theme
     side-by-side = true
 [delta "some-theme"]
-    light = true
-    syntax-theme = gruvbox-light
+    light = false
     # File
     file-style = "#ebdbb2" bold
     file-added-label = +++

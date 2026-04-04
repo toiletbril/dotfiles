@@ -8,7 +8,7 @@
     features = some-theme
     side-by-side = true
 [delta "some-theme"]
-    light = false
+    light = true
     # File
     file-style = "#ebdbb2" bold
     file-added-label = +++

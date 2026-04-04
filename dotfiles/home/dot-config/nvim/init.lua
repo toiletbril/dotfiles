@@ -15,7 +15,7 @@
 
 -- Install lazy.nvim if not already installed.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -262,10 +262,6 @@ end
 vim.keymap.set('n', '<C-g>', 'g<C-g>', { silent = true })
 vim.keymap.set('v', '<C-g>', 'g<C-g>', { silent = true })
 
-vim.keymap.set('n', '<C-o>', '<Nop>', { silent = true })
-vim.keymap.set('n', 'gA', '<Plug>(EasyAlign)')
-vim.keymap.set('v', 'gA', '<Plug>(EasyAlign)')
-
 vim.keymap.set('n', '<C-p>', ':Telescope<CR>', { silent = true })
 vim.keymap.set('n', '<C-b>', ':lua NvimTreeToggle2()<CR>', { silent = true })
 
@@ -326,11 +322,6 @@ vim.keymap.set('v', '<C-Down>', '}')
 vim.keymap.set('n', '<C-o>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'gA', '<Plug>(EasyAlign)')
 vim.keymap.set('v', 'gA', '<Plug>(EasyAlign)')
-
-vim.keymap.set('n', '<Space>e',
-  ':lua vim.diagnostic.open_float()<CR>', { silent = true })
-vim.keymap.set('n', '<Space>ll',
-  ':lua vim.diagnostic.setloclist()<CR>', { silent = true })
 
 -- Move lines with ALT + up/down
 vim.api.nvim_set_keymap('n', '<A-Down>', ':m .+1<CR>==', { noremap = true })
@@ -439,15 +430,15 @@ else
 end
 
 function get_bg_color(highlight_name)
-  local success, hl = pcall(function () return vim.api.nvim_get_hl_by_name(highlight_name, true) end)
+  local success, hl = pcall(function () return vim.api.nvim_get_hl(0, { name = highlight_name }) end)
   if not success then return nil end
-  return hl.background and string.format("#%06x", hl.background) or nil
+  return hl.bg and string.format("#%06x", hl.bg) or nil
 end
 
 function get_fg_color(highlight_name)
-  local success, hl = pcall(function () return vim.api.nvim_get_hl_by_name(highlight_name, true) end)
+  local success, hl = pcall(function () return vim.api.nvim_get_hl(0, { name = highlight_name }) end)
   if not success then return nil end
-  return hl.foreground and string.format("#%06x", hl.foreground) or nil
+  return hl.fg and string.format("#%06x", hl.fg) or nil
 end
 
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { undercurl = true, sp = 'red' })
@@ -488,28 +479,11 @@ vim.api.nvim_set_hl(0, 'NvimTreeWinSeparator', { link = 'VertSplit' })
 
 -- Plugins
 local cmp = require("cmp")
--- local cmptypes = require("cmp.types")
-local lspconfig = vim.lsp.config
-local lspconfigutil = require("lspconfig/util")
 local snippy = require("snippy")
--- local fterm = require("FTerm")
-local nvimtree = require("nvim-tree")
-local nvimtreeapi = require("nvim-tree.api")
-local telescope = require("telescope")
-local telescopebuiltin = require("telescope/builtin")
-local guessindent = require("guess-indent")
-local gitsigns = require("gitsigns")
-local gotopreview = require("goto-preview")
-local minisurround = require("mini.surround")
-local kanagawa = require('kanagawa')
--- local trouble = require("trouble")
--- local dap = require('dap')
-local scrollbar = require('scrollbar')
-local autotag = require('/nvim-ts-autotag')
+
+require('scrollbar').setup()
+
 local ccc = require('ccc')
-
-scrollbar.setup()
-
 ccc.setup {
   inputs = {
     ccc.input.hsl,
@@ -525,6 +499,7 @@ ccc.setup {
 
 vim.keymap.set("n", "<C-h>", function() vim.cmd([[:CccPick]]) end)
 
+local autotag = require('/nvim-ts-autotag')
 autotag.setup {
   alias = {
     aliases = {
@@ -538,6 +513,7 @@ autotag.setup {
   },
 }
 
+local kanagawa = require('kanagawa')
 kanagawa.setup({
   colors = {
     theme = {
@@ -549,8 +525,6 @@ kanagawa.setup({
     }
   }
 })
-
--- trouble.setup {}
 
 -- Laggy and buggy
 local treesitterconfigs = require("nvim-treesitter.configs")
@@ -602,6 +576,7 @@ function get_git_toplevel()
   return cwd
 end
 
+local guessindent = require("guess-indent")
 guessindent.setup {
   auto_cmd = true,
   on_tab_options = {
@@ -615,13 +590,15 @@ guessindent.setup {
   }
 }
 
+local gitsigns = require("gitsigns")
 gitsigns.setup {}
 
 vim.keymap.set("n", "<C-c>c", gitsigns.blame_line)
 vim.keymap.set("n", "<C-c>a", gitsigns.blame)
 
-minisurround.setup {}
+require("mini.surround").setup {}
 
+local gotopreview = require("goto-preview")
 gotopreview.setup {
   opacity = 30,
   border = "rounded",
@@ -643,6 +620,7 @@ gotopreview.setup {
 vim.keymap.set("n", "<C-o>", gotopreview.goto_preview_definition)
 vim.keymap.set("i", "<C-o>", gotopreview.goto_preview_definition)
 
+local telescope = require("telescope")
 telescope.setup {
   defaults = {
     winblend = 30,
@@ -654,6 +632,8 @@ telescope.setup {
     },
   }
 }
+
+local telescopebuiltin = require("telescope/builtin")
 
 function live_grep_from_project_git_root()
   local opts = { cwd = get_git_toplevel() }
@@ -677,6 +657,8 @@ end
 --
 -- vim.keymap.set("n", "<C-t>", fterm.toggle)
 -- vim.keymap.set("t", "<C-t>", fterm.toggle)
+
+local nvimtreeapi = require("nvim-tree.api")
 
 function open_tab_silent(node)
   nvimtreeapi.node.open.tab(node)
@@ -721,6 +703,7 @@ vim.api.nvim_create_autocmd("QuitPre", {
   end
 })
 
+local nvimtree = require("nvim-tree")
 nvimtree.setup({
   sort = {
     sorter = "case_sensitive",
@@ -771,12 +754,17 @@ nvimtree.setup({
 vim.g.completion_trigger_character_length = 4
 
 -- this eats memory and makes lsp do weird things. my log was 1.2 GiB =D
-vim.lsp.set_log_level("error")
+vim.lsp.log.set_level("error")
 
-vim.lsp.handlers["textDocument/hover"] =
-  vim.lsp.with(vim.lsp.handlers.hover, trans_border())
-vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(vim.lsp.handlers.signature_help, trans_border())
+local hover_opts = trans_border()
+vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+  return vim.lsp.handlers.hover(err, result, ctx, hover_opts)
+end
+
+local signature_opts = trans_border()
+vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+  return vim.lsp.handlers.signature_help(err, result, ctx, signature_opts)
+end
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -830,6 +818,9 @@ local default_servers = {
 
 -- disable lsp on demand
 if true then
+
+local lspconfig = vim.lsp.config
+local lspconfigutil = require("lspconfig/util")
 
 vim.lsp.enable("lua_ls", {
   on_init = default_on_init,

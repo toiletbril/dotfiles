@@ -1,11 +1,10 @@
 # Bitmap fonts
 
-font-family = Terminus
+#font-family = Terminus
 #font-family = Spleen
 #font-family = Tamzen
-#font-family = Termsyn
-font-size = 22
-font-style = bold
+#font-size = 18
+#font-style = bold
 
 #adjust-underline-position = -6
 adjust-underline-thickness = -1
@@ -15,7 +14,7 @@ adjust-cursor-thickness = 1
 
 #font-family = Sudo
 #font-family = Source Code Pro
-#font-family = Jetbrains Mono
+font-family = Jetbrains Mono
 #font-family = s0sevka t
 #font-family = monospace
 #font-family = Fira Code
@@ -27,8 +26,8 @@ adjust-cursor-thickness = 1
 #font-family = Ubuntu Mono
 #font-family = Spleen
 
-#adjust-cell-height = -2
-#font-size = 10
+#adjust-cell-height = 2
+font-size = 10
 #font-style = Light
 
 #adjust-underline-position = -1
@@ -45,7 +44,8 @@ window-step-resize = true
 cursor-invert-fg-bg = true
 mouse-hide-while-typing = true
 
-theme = Adwaita
+theme = Adwaita Dark
+#theme = Adwaita
 #theme = Adwaita Dark
 #background = #111111
 # minimum-contrast = 1.0

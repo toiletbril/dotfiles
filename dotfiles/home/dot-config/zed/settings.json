@@ -1,6 +1,6 @@
 {
   "edit_predictions": {
-    "provider": "none"
+    "provider": "none",
   },
   "buffer_line_height": "standard",
   "hide_mouse": "never",
@@ -10,22 +10,22 @@
       "username": "login",
       "args": [
         "-o",
-        "ProxyCommand=socat - PROXY:localhost:%h:%p,proxyport=2090"
+        "ProxyCommand=socat - PROXY:localhost:%h:%p,proxyport=2090",
       ],
       "projects": [
         {
-          "paths": ["/home/login"]
-        }
-      ]
-    }
+          "paths": ["/home/login"],
+        },
+      ],
+    },
   ],
 
   "base_keymap": "VSCode",
 
   "git": {
     "inline_blame": {
-      "enabled": false
-    }
+      "enabled": false,
+    },
   },
 
   "vim_mode": true,
@@ -33,20 +33,20 @@
     "cursor_shape": {
       "insert": "bar",
       "replace": "hollow",
-      "visual": "underline"
+      "visual": "underline",
     },
-    "use_smartcase_find": true
+    "use_smartcase_find": true,
   },
 
   "minimap": {
-    "show": "never"
+    "show": "never",
   },
   "cursor_shape": "bar",
 
   "icon_theme": {
     "mode": "light",
     "light": "Zed (Default)",
-    "dark": "Zed (Default)"
+    "dark": "Zed (Default)",
   },
 
   "ui_font_family": "Inter",
@@ -58,32 +58,32 @@
   "theme": {
     "mode": "light",
     "light": "One Light",
-    "dark": "Gruvbox Dark"
+    "dark": "Gruvbox Dark",
   },
-  
+
   "agent_ui_font_size": 16.0,
 
   "session": {
-    "trust_all_worktrees": true
+    "trust_all_worktrees": true,
   },
   "project_panel": {
-    "auto_fold_dirs": false
+    "auto_fold_dirs": false,
   },
   "preview_tabs": {
     "enabled": false,
   },
   "tab_bar": {
-    "show": false
+    "show": false,
   },
   "use_smartcase_search": true,
   "vertical_scroll_margin": 5.0,
   "max_tabs": 16,
   "autosave": {
     "after_delay": {
-      "milliseconds": 1000
-    }
+      "milliseconds": 1000,
+    },
   },
-  "tab_size": 2,
+  "tab_size": 4,
   "colorize_brackets": true,
   "lsp_document_colors": "background",
   "buffer_font_weight": 420.0,
@@ -92,27 +92,27 @@
   "ensure_final_newline_on_save": false,
   "remove_trailing_whitespace_on_save": false,
   "indent_guides": {
-    "enabled": false
+    "enabled": false,
   },
   "soft_wrap": "editor_width",
   "scroll_beyond_last_line": "one_page",
   "agent": {
     "default_model": {
       "provider": "openrouter",
-      "model": "openai/gpt-5-codex"
-    }
+      "model": "openai/gpt-5-codex",
+    },
   },
   "telemetry": {
     "metrics": false,
-    "diagnostics": false
+    "diagnostics": false,
   },
   "terminal": {
     "font_family": "JetBrains Mono",
     "env": {
-      "NO_FISH": "1"
-    }
+      "NO_FISH": "1",
+    },
   },
   "auto_install_extensions": {
-    "wakatime": true
-  }
+    "wakatime": true,
+  },
 }

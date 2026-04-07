@@ -59,7 +59,7 @@ require("lazy").setup({
   { 'nvim-telescope/telescope.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Treesitter
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  -- { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', branch = 'master' },
   -- { 'nvim-treesitter/nvim-treesitter-context' },
 
   -- { 'folke/trouble.nvim', cmd = "Trouble" },
@@ -481,7 +481,15 @@ vim.api.nvim_set_hl(0, 'NvimTreeWinSeparator', { link = 'VertSplit' })
 local cmp = require("cmp")
 local snippy = require("snippy")
 
-require('scrollbar').setup()
+local scrollbar = require('scrollbar')
+scrollbar.setup({
+  handlers = {
+    cursor = false,
+    diagnostic = false,
+    gitsigns = true,
+    ale = false,
+  }
+})
 
 local ccc = require('ccc')
 ccc.setup {
@@ -527,23 +535,22 @@ kanagawa.setup({
 })
 
 -- Laggy and buggy
-local treesitterconfigs = require("nvim-treesitter.configs")
-
-treesitterconfigs.setup {
-  ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
-  auto_install = true,
-  sync_install = false,
-
-  highlight = {
-    enable = true,
-    disable = function(lang, bufnr)
-      if vim.api.nvim_buf_line_count(bufnr) > 3333 then
-        return true
-      end
-      return false
-    end,
-  }
-}
+-- local treesitterconfigs = require("nvim-treesitter.configs")
+-- treesitterconfigs.setup {
+--   ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
+--   auto_install = true,
+--   sync_install = false,
+-- 
+--   highlight = {
+--     enable = true,
+--     disable = function(lang, bufnr)
+--       if vim.api.nvim_buf_line_count(bufnr) > 3333 then
+--         return true
+--       end
+--       return false
+--     end,
+--   }
+-- }
 
 -- local treesittercontext = require("treesitter-context")
 
@@ -558,7 +565,7 @@ treesitterconfigs.setup {
 -- vim.keymap.set("n", "<C-t>", treesittercontext.toggle)
 
 function trans_border()
-  local w = cmp.config.window.bordered()
+  local w = cmp.config.window.bordered({ border = 'solid' })
   w.winblend = 30
   return w
 end

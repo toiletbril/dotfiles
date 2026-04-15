@@ -59,7 +59,7 @@ require("lazy").setup({
   { 'nvim-telescope/telescope.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Treesitter
-  -- { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', branch = 'master' },
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
   -- { 'nvim-treesitter/nvim-treesitter-context' },
 
   -- { 'folke/trouble.nvim', cmd = "Trouble" },
@@ -82,7 +82,7 @@ require("lazy").setup({
   { 'junegunn/vim-easy-align' },
   { 'echasnovski/mini.surround' },
   { 'nvim-tree/nvim-tree.lua' },
-  { 'windwp/nvim-ts-autotag' },
+  -- { 'windwp/nvim-ts-autotag' },
   { 'uga-rosa/ccc.nvim' },
 
   { 'petertriho/nvim-scrollbar' },
@@ -216,6 +216,10 @@ vim.g.loaded_gzip = 1
 vim.g.loaded_tarPlugin = 1
 vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_sql_completion = 1
+
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
 
 -- Neovide :3
 if vim.g.neovide then
@@ -507,19 +511,19 @@ ccc.setup {
 
 vim.keymap.set("n", "<C-h>", function() vim.cmd([[:CccPick]]) end)
 
-local autotag = require('/nvim-ts-autotag')
-autotag.setup {
-  alias = {
-    aliases = {
-    -- ["typescriptreact"] = "html",
-    }
-  },
-  opts = {
-    enable_close = true,
-    enable_rename = true,
-    enable_close_on_slash = false,
-  },
-}
+-- local autotag = require('/nvim-ts-autotag')
+-- autotag.setup {
+--   alias = {
+--     aliases = {
+--     -- ["typescriptreact"] = "html",
+--     }
+--   },
+--   opts = {
+--     enable_close = true,
+--     enable_rename = true,
+--     enable_close_on_slash = false,
+--   },
+-- }
 
 local kanagawa = require('kanagawa')
 kanagawa.setup({
@@ -535,22 +539,32 @@ kanagawa.setup({
 })
 
 -- Laggy and buggy
--- local treesitterconfigs = require("nvim-treesitter.configs")
--- treesitterconfigs.setup {
---   ensure_installed = { "c", "lua", "cpp", "javascript", "python", "rust", "go", "make", "bash", "vimdoc" },
---   auto_install = true,
---   sync_install = false,
--- 
---   highlight = {
---     enable = true,
---     disable = function(lang, bufnr)
---       if vim.api.nvim_buf_line_count(bufnr) > 3333 then
---         return true
---       end
---       return false
---     end,
---   }
--- }
+local treesitter = require("nvim-treesitter")
+treesitter.setup {
+  auto_install = true,
+  sync_install = false,
+
+  init = function()
+      vim.api.nvim_create_autocmd('FileType', {
+      callback = function()
+      -- Enable treesitter highlighting and disable regex syntax
+      pcall(vim.treesitter.start)
+      -- Enable treesitter-based indentation
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+  })
+  end,
+
+  highlight = {
+    enable = true,
+    disable = function(lang, bufnr)
+      if vim.api.nvim_buf_line_count(bufnr) > 3333 then
+        return true
+      end
+      return false
+    end,
+  }
+}
 
 -- local treesittercontext = require("treesitter-context")
 
@@ -561,7 +575,7 @@ kanagawa.setup({
 --   enable = true
 --   -- separator = "─",
 -- }
--- 
+--
 -- vim.keymap.set("n", "<C-t>", treesittercontext.toggle)
 
 function trans_border()

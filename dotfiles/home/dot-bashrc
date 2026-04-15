@@ -12,11 +12,17 @@ unset HTTPS_PROXY
 
 [[ $TERM != *xterm* ]] && [[ $- != *i* ]] && return
 
+export TERM=xterm-256color # fucking
+
 # If this is not an ssh connection/claude code shell instance and NO_FISH isn't
 # defined, replace!
 if test -z "$NO_FISH" && test -z "$SSH_CONNECTION" && test -z "$CLAUDECODE"; then
    echo "hi, normal terminal! replacing bash..."
    exec fish
 fi
+
+# java.
+export SDKMAN_DIR="$HOME/.sdkman/"
+source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 PS1='\u@\h \W $ '

@@ -1,4 +1,10 @@
 {
+  "proxy": "http://127.0.0.1:2080",
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    }
+  },
   "edit_predictions": {
     "provider": "none",
   },

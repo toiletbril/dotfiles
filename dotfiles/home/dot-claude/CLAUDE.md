@@ -14,18 +14,18 @@ confirm conventions.
 NULL check via != NULL not !
 
 FORBIDDEN
-Obvious comments. Restructure imports. Abstractions. Split merge files. Upgrade
+"What?" comments. Restructure imports. Abstractions. Split merge files. Upgrade
 deps. Extra formatting. Unsolicited alternatives error-handling tests. Never
 say classic textbook worth-noting important-to-remember dive-in key-takeaway
-needless-to-say broadly-speaking that-said with-that-in-mind to-be-fair. No
-paren comments.
+needless-to-say broadly-speaking that-said with-that-in-mind to-be-fair.
+
+No paren comments. No unicode, ever.
 
 COMMITS
-Analyze git log -20. Subject imperative no-period 50-70ch verb Refactor Add Fix
-Update Remove Improve Extract Rename. Body blank-line why-not-what
-numbered-if-multi impact-statement. Simple 1line multi numbered refactor
-numbered+detail+impact arch numbered+strategy. Mention files funcs when
-clarity. Technical terms expected never mention AI. Examples "Clarify log
-verbosity" "Improve metrics endpoint robustness add metric metadata". Body
-"Changes:\n\n1. X\n2. Y\n3. Z\n\n[component] now [improvement]" or flowing
-paragraph. Use heredoc.
+Subject imperative no-period 50-70ch verb Refactor Add Fix Update Remove
+Improve Extract Rename. Body blank-line why-not-what numbered-if-multi
+impact-statement. Simple 1line multi numbered refactor numbered+detail+impact
+arch numbered+strategy. Mention files funcs when clarity. Technical terms
+expected never mention AI. Examples "Clarify log verbosity" "Improve metrics
+endpoint robustness add metric metadata". Body "Changes:\n\n1. X\n2. Y\n3.
+Z\n\n[component] now [improvement]" or flowing paragraph. Use heredoc.

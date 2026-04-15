@@ -248,26 +248,12 @@ if vim.g.neovide then
   vim.g.neovide_cursor_animation_length = 0
 end
 
-vim.g.nvim_tree_open = 0
-function NvimTreeToggle2()
-  if vim.g.nvim_tree_open == 1 then
-    vim.cmd('NvimTreeClose')
-    vim.g.nvim_tree_open = 0
-  else
-    vim.cmd('NvimTreeFindFile')
-    vim.g.nvim_tree_open = 1
-  end
-end
-if vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
-  vim.g.nvim_tree_open = 1
-end
-
 -- Key mappings
 vim.keymap.set('n', '<C-g>', 'g<C-g>', { silent = true })
 vim.keymap.set('v', '<C-g>', 'g<C-g>', { silent = true })
 
 vim.keymap.set('n', '<C-p>', ':Telescope<CR>', { silent = true })
-vim.keymap.set('n', '<C-b>', ':lua NvimTreeToggle2()<CR>', { silent = true })
+vim.keymap.set('n', '<C-b>', ':NvimTreeFindFile<CR>', { silent = true })
 
 vim.keymap.set('n', '<Space>e',
   ':lua vim.diagnostic.open_float()<CR>', { silent = true })
@@ -699,7 +685,7 @@ end
 local HEIGHT_RATIO = 0.8
 local WIDTH_RATIO = 0.5
 
-local nvimtree_enable_float = true
+local nvimtree_enable_float = false
 
 -- Close nvim-tree and exit if it's the last buffer remaining.
 vim.api.nvim_create_autocmd("QuitPre", {

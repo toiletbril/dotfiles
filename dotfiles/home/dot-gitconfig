@@ -14,3 +14,5 @@
     path = .gitpager
 [include]
     path = .gituser
+[includeIf "gitdir:~/Work/**"]
+    path = .gitwork

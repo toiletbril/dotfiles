@@ -29,3 +29,6 @@ arch numbered+strategy. Mention files funcs when clarity. Technical terms
 expected never mention AI. Examples "Clarify log verbosity" "Improve metrics
 endpoint robustness add metric metadata". Body "Changes:\n\n1. X\n2. Y\n3.
 Z\n\n[component] now [improvement]" or flowing paragraph. Use heredoc.
+
+FINISH
+After each change, print a table in a format: | No | Before | After |

@@ -143,7 +143,7 @@ vim.opt.redrawtime = 1111
 -- vim.opt.keymap = 'russian-jcuken'
 
 -- for ghostty, until the scroll multiplication is fixed
-vim.opt.mousescroll = 'ver:1,hor:2'
+-- vim.opt.mousescroll = 'ver:1,hor:2'
 
 -- Stop fucking annoying labels from jumping around when expanded from relative
 -- to full paths in the tabline when focused/unfocused. Another one of a
@@ -529,28 +529,18 @@ local treesitter = require("nvim-treesitter")
 treesitter.setup {
   auto_install = true,
   sync_install = false,
-
-  init = function()
-      vim.api.nvim_create_autocmd('FileType', {
-      callback = function()
-      -- Enable treesitter highlighting and disable regex syntax
-      pcall(vim.treesitter.start)
-      -- Enable treesitter-based indentation
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end,
-  })
-  end,
-
-  highlight = {
-    enable = true,
-    disable = function(lang, bufnr)
-      if vim.api.nvim_buf_line_count(bufnr) > 3333 then
-        return true
-      end
-      return false
-    end,
-  }
+  ensure_installed = { "svelte" },
 }
+
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(ev)
+    if vim.api.nvim_buf_line_count(ev.buf) > 3333 then
+      return
+    end
+    pcall(vim.treesitter.start)
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
 
 -- local treesittercontext = require("treesitter-context")
 
@@ -685,7 +675,7 @@ end
 local HEIGHT_RATIO = 0.8
 local WIDTH_RATIO = 0.5
 
-local nvimtree_enable_float = false
+local nvimtree_enable_float = true
 
 -- Close nvim-tree and exit if it's the last buffer remaining.
 vim.api.nvim_create_autocmd("QuitPre", {

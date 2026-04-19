@@ -31,7 +31,7 @@ if ! test -f "$A"; then
 fi
 
 R="$(git remote | head -n 1)"
-U="$(git remote get-url "$R" | sed -E 's/git@([^:]+):([^/]+)\/([^ ]+)\.git/https:\/\/\1\/\2\/\3/')"
+U="$(git remote get-url "$R" | sed -E 's|git@([^:]+):([^/]+)/|https://\1/\2/|; s|\.git$||')"
 
 if test -z "$B"; then
   C="$(git rev-parse HEAD)"

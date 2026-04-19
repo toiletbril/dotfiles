@@ -1,60 +1,52 @@
 #!/usr/bin/env bash
 
-# USAGE:
-# setclang.sh <LLVM version> <priority>
-
-#     --slave /usr/bin/$1 $1 /usr/bin/$1-\${version} \\
+# USAGE: clang-choose-version <LLVM version>
 
 function register_clang_version {
     local version=$1
-    local priority=$2
 
-    update-alternatives \
-        --verbose \
-        --install /usr/bin/llvm-config       llvm-config      /usr/bin/llvm-config-${version} ${priority} \
-        --slave   /usr/bin/llvm-ar           llvm-ar          /usr/bin/llvm-ar-${version} \
-        --slave   /usr/bin/llvm-as           llvm-as          /usr/bin/llvm-as-${version} \
-        --slave   /usr/bin/llvm-bcanalyzer   llvm-bcanalyzer  /usr/bin/llvm-bcanalyzer-${version} \
-        --slave   /usr/bin/llvm-cov          llvm-cov         /usr/bin/llvm-cov-${version} \
-        --slave   /usr/bin/llvm-diff         llvm-diff        /usr/bin/llvm-diff-${version} \
-        --slave   /usr/bin/llvm-dis          llvm-dis         /usr/bin/llvm-dis-${version} \
-        --slave   /usr/bin/llvm-dwarfdump    llvm-dwarfdump   /usr/bin/llvm-dwarfdump-${version} \
-        --slave   /usr/bin/llvm-extract      llvm-extract     /usr/bin/llvm-extract-${version} \
-        --slave   /usr/bin/llvm-link         llvm-link        /usr/bin/llvm-link-${version} \
-        --slave   /usr/bin/llvm-mc           llvm-mc          /usr/bin/llvm-mc-${version} \
-        --slave   /usr/bin/llvm-nm           llvm-nm          /usr/bin/llvm-nm-${version} \
-        --slave   /usr/bin/llvm-objdump      llvm-objdump     /usr/bin/llvm-objdump-${version} \
-        --slave   /usr/bin/llvm-ranlib       llvm-ranlib      /usr/bin/llvm-ranlib-${version} \
-        --slave   /usr/bin/llvm-readobj      llvm-readobj     /usr/bin/llvm-readobj-${version} \
-        --slave   /usr/bin/llvm-rtdyld       llvm-rtdyld      /usr/bin/llvm-rtdyld-${version} \
-        --slave   /usr/bin/llvm-size         llvm-size        /usr/bin/llvm-size-${version} \
-        --slave   /usr/bin/llvm-stress       llvm-stress      /usr/bin/llvm-stress-${version} \
-        --slave   /usr/bin/llvm-symbolizer   llvm-symbolizer  /usr/bin/llvm-symbolizer-${version} \
-        --slave   /usr/bin/llvm-tblgen       llvm-tblgen      /usr/bin/llvm-tblgen-${version} \
-        --slave   /usr/bin/llvm-objcopy      llvm-objcopy     /usr/bin/llvm-objcopy-${version} \
-        --slave   /usr/bin/llvm-strip	     llvm-strip       /usr/bin/llvm-strip-${version}
+    ln -sf /usr/bin/llvm-config-${version}       /usr/local/bin/llvm-config
+    ln -sf /usr/bin/llvm-ar-${version}            /usr/local/bin/llvm-ar
+    ln -sf /usr/bin/llvm-as-${version}            /usr/local/bin/llvm-as
+    ln -sf /usr/bin/llvm-bcanalyzer-${version}    /usr/local/bin/llvm-bcanalyzer
+    ln -sf /usr/bin/llvm-cov-${version}           /usr/local/bin/llvm-cov
+    ln -sf /usr/bin/llvm-diff-${version}          /usr/local/bin/llvm-diff
+    ln -sf /usr/bin/llvm-dis-${version}           /usr/local/bin/llvm-dis
+    ln -sf /usr/bin/llvm-dwarfdump-${version}     /usr/local/bin/llvm-dwarfdump
+    ln -sf /usr/bin/llvm-extract-${version}       /usr/local/bin/llvm-extract
+    ln -sf /usr/bin/llvm-link-${version}          /usr/local/bin/llvm-link
+    ln -sf /usr/bin/llvm-mc-${version}            /usr/local/bin/llvm-mc
+    ln -sf /usr/bin/llvm-nm-${version}            /usr/local/bin/llvm-nm
+    ln -sf /usr/bin/llvm-objdump-${version}       /usr/local/bin/llvm-objdump
+    ln -sf /usr/bin/llvm-ranlib-${version}        /usr/local/bin/llvm-ranlib
+    ln -sf /usr/bin/llvm-readobj-${version}       /usr/local/bin/llvm-readobj
+    ln -sf /usr/bin/llvm-rtdyld-${version}        /usr/local/bin/llvm-rtdyld
+    ln -sf /usr/bin/llvm-size-${version}          /usr/local/bin/llvm-size
+    ln -sf /usr/bin/llvm-stress-${version}        /usr/local/bin/llvm-stress
+    ln -sf /usr/bin/llvm-symbolizer-${version}    /usr/local/bin/llvm-symbolizer
+    ln -sf /usr/bin/llvm-tblgen-${version}        /usr/local/bin/llvm-tblgen
+    ln -sf /usr/bin/llvm-objcopy-${version}       /usr/local/bin/llvm-objcopy
+    ln -sf /usr/bin/llvm-strip-${version}         /usr/local/bin/llvm-strip
 
-    update-alternatives \
-        --verbose \
-        --install /usr/bin/clang                 clang                 /usr/bin/clang-${version} ${priority} \
-        --slave   /usr/bin/clang++               clang++               /usr/bin/clang++-${version}  \
-        --slave   /usr/bin/asan_symbolize        asan_symbolize        /usr/bin/asan_symbolize-${version} \
-        --slave   /usr/bin/clang-cpp             clang-cpp             /usr/bin/clang-cpp-${version} \
-        --slave   /usr/bin/clang-check           clang-check           /usr/bin/clang-check-${version} \
-        --slave   /usr/bin/clang-cl              clang-cl              /usr/bin/clang-cl-${version} \
-        --slave   /usr/bin/ld.lld		         ld.lld		           /usr/bin/ld.lld-${version} \
-        --slave   /usr/bin/lld		             lld	               /usr/bin/lld-${version} \
-        --slave   /usr/bin/lld-link		         lld-link	           /usr/bin/lld-link-${version} \
-        --slave   /usr/bin/clang-format          clang-format          /usr/bin/clang-format-${version} \
-        --slave   /usr/bin/clang-format-diff     clang-format-diff     /usr/bin/clang-format-diff-${version} \
-        --slave   /usr/bin/clang-include-fixer   clang-include-fixer   /usr/bin/clang-include-fixer-${version} \
-        --slave   /usr/bin/clang-offload-bundler clang-offload-bundler /usr/bin/clang-offload-bundler-${version} \
-        --slave   /usr/bin/clang-query           clang-query           /usr/bin/clang-query-${version} \
-        --slave   /usr/bin/clang-rename          clang-rename          /usr/bin/clang-rename-${version} \
-        --slave   /usr/bin/clang-reorder-fields  clang-reorder-fields  /usr/bin/clang-reorder-fields-${version} \
-        --slave   /usr/bin/clang-tidy            clang-tidy            /usr/bin/clang-tidy-${version} \
-        --slave   /usr/bin/lldb                  lldb                  /usr/bin/lldb-${version} \
-        --slave   /usr/bin/lldb-server           lldb-server           /usr/bin/lldb-server-${version}
+    ln -sf /usr/bin/clang-${version}                  /usr/local/bin/clang
+    ln -sf /usr/bin/clang++-${version}                /usr/local/bin/clang++
+    ln -sf /usr/bin/asan_symbolize-${version}         /usr/local/bin/asan_symbolize
+    ln -sf /usr/bin/clang-cpp-${version}              /usr/local/bin/clang-cpp
+    ln -sf /usr/bin/clang-check-${version}            /usr/local/bin/clang-check
+    ln -sf /usr/bin/clang-cl-${version}               /usr/local/bin/clang-cl
+    ln -sf /usr/bin/ld.lld-${version}                 /usr/local/bin/ld.lld
+    ln -sf /usr/bin/lld-${version}                    /usr/local/bin/lld
+    ln -sf /usr/bin/lld-link-${version}               /usr/local/bin/lld-link
+    ln -sf /usr/bin/clang-format-${version}           /usr/local/bin/clang-format
+    ln -sf /usr/bin/clang-format-diff-${version}      /usr/local/bin/clang-format-diff
+    ln -sf /usr/bin/clang-include-fixer-${version}    /usr/local/bin/clang-include-fixer
+    ln -sf /usr/bin/clang-offload-bundler-${version}  /usr/local/bin/clang-offload-bundler
+    ln -sf /usr/bin/clang-query-${version}            /usr/local/bin/clang-query
+    ln -sf /usr/bin/clang-rename-${version}           /usr/local/bin/clang-rename
+    ln -sf /usr/bin/clang-reorder-fields-${version}   /usr/local/bin/clang-reorder-fields
+    ln -sf /usr/bin/clang-tidy-${version}             /usr/local/bin/clang-tidy
+    ln -sf /usr/bin/lldb-${version}                   /usr/local/bin/lldb
+    ln -sf /usr/bin/lldb-server-${version}            /usr/local/bin/lldb-server
 }
 
-register_clang_version $1 $2
+register_clang_version $1

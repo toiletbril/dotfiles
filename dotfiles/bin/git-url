@@ -31,7 +31,19 @@ if ! test -f "$A"; then
 fi
 
 R="$(git remote | head -n 1)"
-U="$(git remote get-url "$R" | sed -E 's|git@([^:]+):([^/]+)/|https://\1/\2/|; s|\.git$||')"
+U="$(git remote get-url "$R")"
+
+while IFS=' ' read -r cfgkey cfgval; do
+    pfx="${cfgkey#url.}"
+    pfx="${pfx%.insteadof}"
+    case "$U" in
+        "$pfx"*) U="${cfgval}${U#$pfx}"; break;;
+    esac
+done <<GITCFG
+$(git config --get-regexp 'url\..*\.insteadOf' 2>/dev/null)
+GITCFG
+
+U="$(printf '%s' "$U" | sed -E 's|git@([^:]+):([^/]+)/|https://\1/\2/|; s|\.git$||')"
 
 if test -z "$B"; then
   C="$(git rev-parse HEAD)"

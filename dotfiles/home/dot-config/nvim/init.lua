@@ -114,10 +114,8 @@ vim.opt.pumheight = 6
 vim.opt.lazyredraw = true
 vim.opt.wrap = false
 vim.opt.scrolloff = 4
-vim.opt.tabstop = 4
 vim.opt.autoindent = true
 vim.opt.smartindent = true
-vim.opt.shiftwidth = 2
 vim.opt.fileformat = 'unix'
 vim.opt.expandtab = true
 vim.opt.smarttab = true
@@ -585,11 +583,18 @@ local function trans_border()
   return { border = 'solid', winblend = 30 }
 end
 
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 0
+
 local guessindent = require("guess-indent")
 guessindent.setup {
   auto_cmd = true,
   on_tab_options = {
     ["expandtab"] = false,
+    ["tabstop"] = 4,
+    ["softtabstop"] = 0,
+    ["shiftwidth"] = 0,
   },
   on_space_options = {
     ["expandtab"] = true,

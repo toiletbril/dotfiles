@@ -17,25 +17,22 @@ Diagnostics:
       google-readability-braces-around-statements,
       readability-braces-around-statements,
       readability-identifier-length,
-      readability-named-parameter,
       readability-static-definition-in-anonymous-namespace,
       readability-uppercase-literal-suffix,
       readability-use-anyofallof,
       modernize-avoid-c-arrays,
       modernize-make-unique,
-      modernize-use-auto,
-      modernize-use-designated-initializers,
-      modernize-use-nodiscard,
       modernize-use-ranges,
       modernize-use-std-format,
       modernize-use-std-print,
-      modernize-use-trailing-return-type,
       misc-no-recursion,
       misc-use-anonymous-namespace,
       google-readability-casting,
       google-readability-todo,
       google-readability-avoid-underscore-in-googletest-name,
     ]
+    CheckOptions:
+      readability-function-cognitive-complexity.Threshold: 150
 
 ---
 CompileFlags:
@@ -57,6 +54,9 @@ CompileFlags:
   Add: [-std=c23, -xc]
 Diagnostics:
   ClangTidy:
+    Remove: [
+      modernize-use-nullptr,
+    ]
     Add: [readability-identifier-naming]
     CheckOptions:
       readability-identifier-naming.FunctionCase: lower_case

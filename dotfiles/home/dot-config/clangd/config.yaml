@@ -5,7 +5,6 @@ Diagnostics:
     Add: [
       clang-diagnostic-*,
       clang-analyzer-*,
-      abseil-*,
       readability-*,
       google-*,
       performance-*,
@@ -17,11 +16,7 @@ Diagnostics:
       readability-avoid-unconditional-preprocessor-if,
       google-readability-braces-around-statements,
       readability-braces-around-statements,
-      readability-function-cognitive-complexity,
       readability-identifier-length,
-      readability-implicit-bool-conversion,
-      readability-magic-numbers,
-      readability-math-missing-parentheses,
       readability-named-parameter,
       readability-static-definition-in-anonymous-namespace,
       readability-uppercase-literal-suffix,
@@ -36,7 +31,6 @@ Diagnostics:
       modernize-use-std-print,
       modernize-use-trailing-return-type,
       misc-no-recursion,
-      misc-unused-parameters,
       misc-use-anonymous-namespace,
       google-readability-casting,
       google-readability-todo,
@@ -49,12 +43,61 @@ CompileFlags:
     -Wall,
     -Wextra,
     -Wdouble-promotion,
-    -ferror-limit=0
+    -Wconversion,
+    -Wsign-conversion,
+    -Wshorten-64-to-32,
+    -ferror-limit=0,
   ]
   Remove: -Wformat*
 
 ---
 If:
+  PathMatch: [.*\.c, .*\.h]
+CompileFlags:
+  Add: [-std=c23, -xc]
+Diagnostics:
+  ClangTidy:
+    Add: [readability-identifier-naming]
+    CheckOptions:
+      readability-identifier-naming.FunctionCase: lower_case
+      readability-identifier-naming.VariableCase: lower_case
+      readability-identifier-naming.ParameterCase: lower_case
+      readability-identifier-naming.StaticVariableCase: UPPER_CASE
+      readability-identifier-naming.GlobalVariableCase: UPPER_CASE
+      readability-identifier-naming.GlobalConstantCase: UPPER_CASE
+      readability-identifier-naming.EnumConstantCase: UPPER_CASE
+      readability-identifier-naming.StructCase: CamelCase
+      readability-identifier-naming.UnionCase: CamelCase
+      readability-identifier-naming.EnumCase: CamelCase
+      readability-identifier-naming.MacroDefinitionCase: UPPER_CASE
+
+---
+# C++ sources. Style follows External/oo: types/funcs/methods/vars in
+# lower_case; private/protected/class members prefixed m_; globals,
+# constants, constexpr, class constants, static constants in UPPER_CASE;
+# enum constants in lower_case; macros in lower_case.
+If:
   PathExclude: [.*\.c, .*\.h]
 CompileFlags:
-  Add: ["-std=c++23"]
+  Add: [-std=c++23]
+Diagnostics:
+  ClangTidy:
+    Add: [readability-identifier-naming]
+    CheckOptions:
+      readability-identifier-naming.PrivateMemberPrefix: m_
+      readability-identifier-naming.ProtectedMemberPrefix: m_
+      readability-identifier-naming.ClassMemberPrefix: m_
+      readability-identifier-naming.GlobalVariableCase: UPPER_CASE
+      readability-identifier-naming.GlobalConstantCase: UPPER_CASE
+      readability-identifier-naming.ConstexprVariableCase: UPPER_CASE
+      readability-identifier-naming.StaticConstantCase: UPPER_CASE
+      readability-identifier-naming.ClassConstantCase: UPPER_CASE
+      readability-identifier-naming.EnumConstantCase: lower_case
+      readability-identifier-naming.ClassCase: CamelCase
+      readability-identifier-naming.StructCase: lower_case
+      readability-identifier-naming.FunctionCase: lower_case
+      readability-identifier-naming.MethodCase: lower_case
+      readability-identifier-naming.VariableCase: lower_case
+      readability-identifier-naming.ParameterCase: lower_case
+      readability-identifier-naming.NamespaceCase: lower_case
+      readability-identifier-naming.MacroDefinitionCase: UPPER_CASE

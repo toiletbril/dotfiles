@@ -143,7 +143,7 @@ vim.opt.redrawtime = 1111
 -- vim.opt.keymap = 'russian-jcuken'
 
 -- for ghostty, until the scroll multiplication is fixed
--- vim.opt.mousescroll = 'ver:1,hor:2'
+vim.opt.mousescroll = 'ver:1,hor:2'
 
 -- Stop fucking annoying labels from jumping around when expanded from relative
 -- to full paths in the tabline when focused/unfocused. Another one of a
@@ -210,6 +210,12 @@ vim.g.markdown_recommended_style = 0
 vim.g.python_recommended_style = 0
 vim.g.sass_recommended_style = 0
 vim.g.meson_recommended_style = 0
+
+vim.filetype.add({
+  extension = {
+    h = "c",
+  },
+})
 
 vim.g.loaded_zipPlugin = 1
 vim.g.loaded_gzip = 1

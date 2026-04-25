@@ -30,6 +30,13 @@ expected never mention AI. Examples "Clarify log verbosity" "Improve metrics
 endpoint robustness add metric metadata". Body "Changes:\n\n1. X\n2. Y\n3.
 Z\n\n[component] now [improvement]" or flowing paragraph. Use heredoc.
 
+PROSE
+Prose preserves full finite clauses. Keep is/are/was/were, has/have/had,
+the/a/an, as/of/in/on/to. Natural English word order, no inversion (write
+'partitioned ANALYZE', not 'ANALYZE partitioned'). No headlinese, no 'topic:
+predicate', no colon-chains, no semicolons. Join with commas, dashes, or split
+sentences.
+
 FINISH
 After each change, print a table of all changes you've done in a format:
 | No       | Before            | After              |

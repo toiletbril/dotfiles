@@ -59,7 +59,7 @@ require("lazy").setup({
   { 'nvim-telescope/telescope.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Treesitter
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+  { 'nvim-treesitter/nvim-treesitter', branch = 'main', lazy = false, build = ':TSUpdate' },
   -- { 'nvim-treesitter/nvim-treesitter-context' },
 
   -- { 'folke/trouble.nvim', cmd = "Trouble" },
@@ -526,16 +526,20 @@ kanagawa.setup({
 
 -- Laggy and buggy
 local treesitter = require("nvim-treesitter")
-treesitter.setup {
-  auto_install = true,
-  sync_install = false,
-  ensure_installed = { "svelte" },
-}
+treesitter.setup {}
+treesitter.install({ "svelte" })
 
 vim.api.nvim_create_autocmd('FileType', {
   callback = function(ev)
     if vim.api.nvim_buf_line_count(ev.buf) > 3333 then
       return
+    end
+    local lang = vim.treesitter.language.get_lang(vim.bo[ev.buf].filetype)
+    if lang
+      and vim.list_contains(treesitter.get_available(), lang)
+      and not vim.list_contains(treesitter.get_installed('parsers'), lang)
+    then
+      treesitter.install({ lang })
     end
     pcall(vim.treesitter.start)
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
@@ -675,7 +679,7 @@ end
 local HEIGHT_RATIO = 0.8
 local WIDTH_RATIO = 0.5
 
-local nvimtree_enable_float = true
+local nvimtree_enable_float = false
 
 -- Close nvim-tree and exit if it's the last buffer remaining.
 vim.api.nvim_create_autocmd("QuitPre", {

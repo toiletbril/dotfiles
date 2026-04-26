@@ -100,7 +100,7 @@ require("lazy").setup({
   -- { 'windwp/nvim-ts-autotag' },
   { 'uga-rosa/ccc.nvim' },
 
-  { 'lewis6991/satellite.nvim' },
+  -- { 'lewis6991/satellite.nvim' },
 })
 
 vim.cmd([[
@@ -243,7 +243,8 @@ vim.g.loaded_perl_provider = 0
 
 -- Neovide :3
 if vim.g.neovide then
-  vim.opt.guifont = "Hack:h12"
+  vim.opt.guifont = "Terminess:h12"
+  vim.opt.mousescroll = 'ver:3,hor:3'
 
   vim.g.terminal_color_0  = "#3b4252"
   vim.g.terminal_color_1  = "#BF616A"
@@ -262,10 +263,10 @@ if vim.g.neovide then
   vim.g.terminal_color_14 = "#88C0D0"
   vim.g.terminal_color_15 = "#E5E9F0"
 
-  vim.g.neovide_refresh_rate = 144
+  vim.g.neovide_refresh_rate = 120
   vim.g.neovide_scroll_animation_length = 0.05
-  vim.g.neovide_hide_mouse_when_typing = true
-  vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_hide_mouse_when_typing = false
+  vim.g.neovide_cursor_animation_length = 0.01
 end
 
 -- Key mappings
@@ -489,17 +490,17 @@ vim.api.nvim_set_hl(0, 'NvimTreeWinSeparator', { link = 'VertSplit' })
 -- ]]
 
 -- Plugins
-local satellite = require('satellite')
-satellite.setup({
-  handlers = {
-    cursor = { enable = false },
-    search = { enable = true },
-    diagnostic = { enable = true },
-    gitsigns = { enable = true },
-    marks = { enable = false },
-    quickfix = { enable = false },
-  },
-})
+-- local satellite = require('satellite')
+-- satellite.setup({
+--   handlers = {
+--     cursor = { enable = false },
+--     search = { enable = true },
+--     diagnostic = { enable = true },
+--     gitsigns = { enable = true },
+--     marks = { enable = false },
+--     quickfix = { enable = false },
+--   },
+-- })
 
 local ccc = require('ccc')
 ccc.setup {

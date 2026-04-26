@@ -156,7 +156,7 @@ vim.opt.redrawtime = 1111
 -- vim.opt.keymap = 'russian-jcuken'
 
 -- for ghostty, until the scroll multiplication is fixed
-vim.opt.mousescroll = 'ver:1,hor:2'
+-- vim.opt.mousescroll = 'ver:1,hor:2'
 
 -- Stop fucking annoying labels from jumping around when expanded from relative
 -- to full paths in the tabline when focused/unfocused. Another one of a
@@ -295,20 +295,34 @@ vim.keymap.set('v', '*',
   '"0y | :let @/ = "<C-r>0" | set hlsearch<CR>',
   { silent = true })
 
+local fff = require('fff')
+
+-- autochdir is on, so cwd follows the open buffer. Anchor fff to the git
+-- repo root (or the original cwd) so pickers index the whole project.
+local function fff_root()
+  local start = vim.fn.expand('%:p:h')
+  if start == '' then start = vim.fn.getcwd() end
+  local found = vim.fs.find('.git', { upward = true, path = start })[1]
+  if found then return vim.fs.dirname(found) end
+  return vim.fn.getcwd()
+end
+
 vim.keymap.set('n', '<C-s>', function()
   vim.fn.setreg('/', vim.fn.expand('<cword>'))
-  require('fff').live_grep({ query = vim.fn.expand('<cword>') })
+  fff.live_grep({ cwd = fff_root(), query = vim.fn.expand('<cword>') })
 end, { silent = true })
 vim.keymap.set('v', '<C-s>', function()
   vim.cmd('normal! "0y')
   local q = vim.fn.getreg('0')
   vim.fn.setreg('/', q)
-  require('fff').live_grep({ query = q })
+  fff.live_grep({ cwd = fff_root(), query = q })
 end, { silent = true })
 
-vim.keymap.set('n', '<S-Tab>', function() require('fff').find_files() end,
+vim.keymap.set('n', '<S-Tab>',
+  function() fff.find_files({ cwd = fff_root() }) end,
   { silent = true })
-vim.keymap.set('n', '<Tab>', function() require('fff').live_grep() end,
+vim.keymap.set('n', '<Tab>',
+  function() fff.live_grep({ cwd = fff_root() }) end,
   { silent = true })
 
 -- Telescope-backed alternates (telescope is kept only for these and <C-p>).
@@ -616,7 +630,7 @@ require("mini.align").setup {}
 
 require("trim").setup({ trim_on_write = false })
 
-require("fff").setup({})
+fff.setup({})
 
 local gotopreview = require("goto-preview")
 gotopreview.setup {
@@ -654,7 +668,7 @@ telescope.setup {
 }
 
 function _G.live_grep_from_project_git_root(query)
-  require("fff").live_grep({ query = query })
+  fff.live_grep({ cwd = fff_root(), query = query })
 end
 
 -- fterm.setup({

@@ -1,124 +1,138 @@
 {
-  "proxy": "http://127.0.0.1:2080",
-  "agent_servers": {
-    "claude-acp": {
-      "type": "registry"
-    }
-  },
-  "edit_predictions": {
-    "provider": "none",
-  },
-  "buffer_line_height": "standard",
-  "hide_mouse": "never",
-  "ssh_connections": [
-    {
-      "host": "adbm-2843-host",
-      "username": "login",
-      "args": [
-        "-o",
-        "ProxyCommand=socat - PROXY:localhost:%h:%p,proxyport=2090",
-      ],
-      "projects": [
-        {
-          "paths": ["/home/login"],
+    "outline_panel": {
+        "dock": "left"
+    },
+    "collaboration_panel": {
+        "dock": "left"
+    },
+    "git_panel": {
+        "dock": "left"
+    },
+    "proxy": "http://127.0.0.1:2080",
+    "agent_servers": {
+        "claude-acp": {
+            "type": "registry",
         },
-      ],
     },
-  ],
-
-  "base_keymap": "VSCode",
-
-  "git": {
-    "inline_blame": {
-      "enabled": false,
+    "edit_predictions": {
+        "provider": "none",
     },
-  },
+    "buffer_line_height": "standard",
+    "hide_mouse": "never",
+    "ssh_connections": [
+        {
+            "host": "adbm-2843-host",
+            "username": "login",
+            "args": [
+                "-o",
+                "ProxyCommand=socat - PROXY:localhost:%h:%p,proxyport=2090",
+            ],
+            "projects": [
+                {
+                    "paths": ["/home/login"],
+                },
+            ],
+        },
+    ],
 
-  "vim_mode": true,
-  "vim": {
-    "cursor_shape": {
-      "insert": "bar",
-      "replace": "hollow",
-      "visual": "underline",
+    "base_keymap": "VSCode",
+
+    "git": {
+        "inline_blame": {
+            "enabled": false,
+        },
     },
-    "use_smartcase_find": true,
-  },
 
-  "minimap": {
-    "show": "never",
-  },
-  "cursor_shape": "bar",
-
-  "icon_theme": {
-    "mode": "light",
-    "light": "Zed (Default)",
-    "dark": "Zed (Default)",
-  },
-
-  "ui_font_family": "Inter",
-  "ui_font_size": 16.0,
-
-  "buffer_font_family": "JetBrains Mono",
-  "buffer_font_size": 16.0,
-
-  "theme": {
-    "mode": "light",
-    "light": "One Light",
-    "dark": "Gruvbox Dark",
-  },
-
-  "agent_ui_font_size": 16.0,
-
-  "session": {
-    "trust_all_worktrees": true,
-  },
-  "project_panel": {
-    "auto_fold_dirs": false,
-  },
-  "preview_tabs": {
-    "enabled": false,
-  },
-  "tab_bar": {
-    "show": false,
-  },
-  "use_smartcase_search": true,
-  "vertical_scroll_margin": 5.0,
-  "max_tabs": 16,
-  "autosave": {
-    "after_delay": {
-      "milliseconds": 1000,
+    "vim_mode": true,
+    "vim": {
+        "cursor_shape": {
+            "insert": "bar",
+            "replace": "hollow",
+            "visual": "underline",
+        },
+        "use_smartcase_find": true,
     },
-  },
-  "tab_size": 4,
-  "colorize_brackets": true,
-  "lsp_document_colors": "background",
-  "buffer_font_weight": 420.0,
-  "show_completions_on_input": false,
-  "show_whitespaces": "all",
-  "ensure_final_newline_on_save": false,
-  "remove_trailing_whitespace_on_save": false,
-  "indent_guides": {
-    "enabled": false,
-  },
-  "soft_wrap": "editor_width",
-  "scroll_beyond_last_line": "one_page",
-  "agent": {
-    "default_model": {
-      "provider": "openrouter",
-      "model": "openai/gpt-5-codex",
+
+    "minimap": {
+        "show": "never",
     },
-  },
-  "telemetry": {
-    "metrics": false,
-    "diagnostics": false,
-  },
-  "terminal": {
-    "font_family": "JetBrains Mono",
-    "env": {
-      "NO_FISH": "1",
+    "cursor_shape": "bar",
+
+    "icon_theme": {
+        "mode": "light",
+        "light": "Zed (Default)",
+        "dark": "Zed (Default)",
     },
-  },
-  "auto_install_extensions": {
-    "wakatime": true,
-  },
+
+    "ui_font_family": "Inter",
+    "ui_font_size": 16.0,
+
+    "buffer_font_family": "JetBrains Mono",
+    "buffer_font_size": 16.0,
+
+    "theme": {
+        "mode": "light",
+        "light": "One Light",
+        "dark": "Gruvbox Dark",
+    },
+
+    "agent_ui_font_size": 16.0,
+
+    "session": {
+        "trust_all_worktrees": true,
+    },
+    "project_panel": {
+        "dock": "left",
+        "auto_fold_dirs": false,
+    },
+    "preview_tabs": {
+        "enabled": false,
+    },
+    "tab_bar": {
+        "show": false,
+    },
+    "use_smartcase_search": true,
+    "vertical_scroll_margin": 5.0,
+    "max_tabs": 16,
+    "autosave": {
+        "after_delay": {
+            "milliseconds": 1000,
+        },
+    },
+    "tab_size": 4,
+    "colorize_brackets": true,
+    "lsp_document_colors": "background",
+    "buffer_font_weight": 420.0,
+    "show_completions_on_input": false,
+    "show_whitespaces": "all",
+    "ensure_final_newline_on_save": false,
+    "remove_trailing_whitespace_on_save": false,
+    "indent_guides": {
+        "enabled": false,
+    },
+    "soft_wrap": "editor_width",
+    "scroll_beyond_last_line": "one_page",
+    "agent": {
+        "dock": "right",
+        "default_model": {
+            "provider": "openrouter",
+            "model": "openai/gpt-5-codex",
+        },
+    },
+    "telemetry": {
+        "metrics": false,
+        "diagnostics": false,
+    },
+    "terminal": {
+        "shell": {
+            "program": "bash",
+        },
+        "font_family": "JetBrains Mono",
+        "env": {
+            "NO_FISH": "1",
+        },
+    },
+    "auto_install_extensions": {
+        "wakatime": true,
+    },
 }

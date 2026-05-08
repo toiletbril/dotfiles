@@ -36,11 +36,14 @@ Arguments: `$ARGUMENTS` (optional count, e.g. `2` to reword last 2)
    commit style (check `git log --oneline -10` for conventions).
 
    Message format per CLAUDE.md:
-   - Subject: imperative, no period, 50-70 chars
-   - Body: blank line separator, why-not-what, numbered if multi-step
+   - Subject: imperative, no period, <= 50 chars
+   - Body: blank line separator, why-not-what, numbered if multi-step.
+           Wrap lines to 72 chars.
    - Reference functions with `()` suffix
 
 3. **Write an editor script**
+
+   Remove temporary files from previous skill runs if they are present first.
 
    Use the Write tool to create `/tmp/edit_msg.sh`. The script receives the
    commit message file path as its first shell positional argument. It reads

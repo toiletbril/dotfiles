@@ -1,7 +1,7 @@
 ---
 name: pr
 description: Create a pull request into a target branch with a well-crafted description. Use when the user wants to open a PR or says "make a PR into X".
-argument-hint: <target-branch>
+argument-hint: <target-branch> [wrap=true/false]
 allowed-tools:
   - Bash(git log *)
   - Bash(git diff *)
@@ -16,7 +16,9 @@ allowed-tools:
 
 Creates a pull request from the current branch into `$ARGUMENTS` (the target branch).
 
-Arguments: `$ARGUMENTS` -- the target branch, e.g. `master` or `staging`.
+Arguments: `$ARGUMENTS` -- the target branch, e.g. `master` or `staging`,
+           `wrap=true` to wrap the PR description by 72 characters, `wrap=false`
+           to avoid wrapping.
 
 ---
 
@@ -35,8 +37,8 @@ Arguments: `$ARGUMENTS` -- the target branch, e.g. `master` or `staging`.
 
 2. **Draft the title**
 
-   - Imperative verb, no period, 50-70 chars.
-   - Describes the change, not the mechanism.
+   - Imperative verb.
+   - Describes the change, not the mechanism, why, how. Not what.
    - Match the register of these examples:
      - "Detect filesystem-level WAL duplicates"
      - "Report resource groups to pg_stat_activity for segment backends"

@@ -2,7 +2,7 @@
 draw_bold_text_with_bright_colors = true
 
 [mouse]
-hide_when_typing = true
+hide_when_typing = false
 
 [cursor]
 blink_interval = 750
@@ -20,13 +20,14 @@ shape = "Block"
 TERM = "xterm-256color"
 
 [font]
+#size = 10.0
 size = 11.0
 offset = { y = -1, x = 0 }
 
 [font.normal]
-family = "Jetbrains Mono"
+family = "Terminess"
 #family = "Hack"
-#family = "papyrus"
+#family = "Luxi Mono"
 style = "Light"
 
 [scrolling]
@@ -44,7 +45,7 @@ blur = true
 
 [window.dimensions]
 columns = 102
-lines = 26
+lines = 42
 
 [window.padding]
 x = 8

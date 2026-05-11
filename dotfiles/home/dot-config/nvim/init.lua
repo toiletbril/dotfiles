@@ -971,7 +971,7 @@ require("blink.cmp").setup({
     ["<Tab>"] = {
       function(c)
         if c.get_selected_item() ~= nil then return c.accept() end
-        if c.is_visible() then return c.select_next() end
+        if c.is_visible() then return c.select_and_accept() end
         if c.snippet_active({ direction = 1 }) then
           return c.snippet_forward()
         end
@@ -991,7 +991,7 @@ require("blink.cmp").setup({
   snippets = { preset = "default" },
   signature = {
     enabled = true,
-    window = { border = "solid", winblend = 30 },
+    window = trans_border(),
   },
   sources = {
     default = { "lsp", "path", "snippets", "buffer" },
@@ -1014,9 +1014,8 @@ require("blink.cmp").setup({
       selection = { preselect = false, auto_insert = false },
     },
     accept = { auto_brackets = { enabled = false } },
-    menu = {
-      border = "solid",
-      winblend = 30,
+    menu = vim.tbl_extend("force", trans_border(), {
+      auto_show = false,
       draw = {
         columns = {
           { "kind_icon" },
@@ -1027,12 +1026,18 @@ require("blink.cmp").setup({
           label = { width = { max = 32 } },
         },
       },
-    },
+    }),
     documentation = {
       auto_show = true,
       auto_show_delay_ms = 150,
-      window = { border = "solid", winblend = 30 },
+      window = trans_border(),
     },
-    ghost_text = { enabled = true },
+    ghost_text = {
+      enabled = true,
+      show_without_selection = true,
+      show_with_selection = true,
+      show_without_menu = true,
+      show_with_menu = true,
+    },
   },
 })

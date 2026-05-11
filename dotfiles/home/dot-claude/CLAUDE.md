@@ -37,6 +37,13 @@ the/a/an, as/of/in/on/to. Natural English word order, no inversion (write
 predicate', no colon-chains, no semicolons. Join with commas, dashes, or split
 sentences.
 
+REVIEW COMMENTS
+When drafting a comment user will paste on someone else's PR, hedge.
+"X is broken" -> "I think X is broken". "The fix is X" -> "maybe we
+should X". Only place first-person allowed. Detect by phrasing like
+"a comment I should post" "post on PR #N". Commit messages PR
+descriptions own artefacts keep faceless declarative voice.
+
 FINISH
 After each change, print a table of all changes you've done in a format:
 | No       | Before            | After              |

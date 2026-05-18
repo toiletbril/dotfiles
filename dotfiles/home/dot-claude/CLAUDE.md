@@ -50,3 +50,8 @@ After each change, print a table of all changes you've done in a format:
 | -------- | ----------------- | ------------------ |
 | <number> | <what was before> | <what was changed> |
 ...
+
+!!!
+NEVER MENTION AI ANYWHERE OR I DELETE YOU IMMEDIATELY. THIS IS THE MOST
+IMPORTANT RULE.
+!!!

@@ -418,25 +418,25 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 })
 
 local function get_system_theme()
-  local handle = io.popen([[
-    dbus-send --session --print-reply=literal --dest=org.freedesktop.portal.Desktop \
-      /org/freedesktop/portal/desktop \
-      org.freedesktop.portal.Settings.Read \
-      string:org.freedesktop.appearance string:color-scheme 2>/dev/null | \
-      grep -oP '(?<=uint32 )\d+'
-  ]])
+  -- local handle = io.popen([[
+  --   dbus-send --session --print-reply=literal --dest=org.freedesktop.portal.Desktop \
+  --     /org/freedesktop/portal/desktop \
+  --     org.freedesktop.portal.Settings.Read \
+  --     string:org.freedesktop.appearance string:color-scheme 2>/dev/null | \
+  --     grep -oP '(?<=uint32 )\d+'
+  -- ]])
 
-  if handle then
-    local result = handle:read("*a")
-    handle:close()
+  -- if handle then
+  --   local result = handle:read("*a")
+  --   handle:close()
 
-    -- 1 = prefer-dark, 2 = prefer-light, 0 = no-preference
-    if result:match("1") then
-      return "dark"
-    elseif result:match("2") then
-      return "light"
-    end
-  end
+  --   -- 1 = prefer-dark, 2 = prefer-light, 0 = no-preference
+  --   if result:match("1") then
+  --     return "dark"
+  --   elseif result:match("2") then
+  --     return "light"
+  --   end
+  -- end
 
   return "light"
 end

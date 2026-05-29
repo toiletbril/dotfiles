@@ -35,6 +35,13 @@ export PATH="$PATH:$GOPATH/bin"
 export ANDROID_HOME="$EXTERNAL_DIR/android-sdk"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+
+export GCLOUD_HOME="$EXTERNAL_DIR/google-cloud-sdk"
+export PATH="$PATH:$GCLOUD_HOME/bin"
+
+export ANDROID_STUDIO="$EXTERNAL_DIR/android-studio"
+export PATH="$PATH:$ANDROID_STUDIO/bin"
+
 export PATH="$PATH:/home/sd/.claude/local/"
 
 export PWSH_DIR="$EXTERNAL_DIR/powershell-bin"

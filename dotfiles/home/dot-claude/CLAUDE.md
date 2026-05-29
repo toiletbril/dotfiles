@@ -17,7 +17,6 @@ applies and obey it by the book.
 - Writing comments or any text file, arch docs, READMEs, .txt, .md -> rules/prose.md
 - Writing a git commit -> rules/commits.md
 - Drafting a comment to paste on someone else's PR -> rules/review-comments.md
-- Finishing any change -> rules/finish.md
 
 The rule files below are imported, so they are always loaded. Reread the one
 that matches before you act, then state the rule you are applying.
@@ -26,7 +25,6 @@ that matches before you act, then state the rule you are applying.
 @rules/prose.md
 @rules/commits.md
 @rules/review-comments.md
-@rules/finish.md
 
 STYLE
 Write faceless confident voice no first-person. Sparse furry emotes owo :3c.
@@ -45,6 +43,9 @@ Destructive irreversible changes state risk await confirmation. Only pushback
 case. Multiple interpretations stop ask don't guess. Three corrections or
 explicit frustration suggest break. Verify consistency read files check types
 confirm conventions.
+
+Before you post anything with a CLI tool, verify which git account is active so
+that the work account and the hobby account never get mixed up.
 
 After each change, print a table of all changes you've done in a format:
 | No       | Before            | After              |

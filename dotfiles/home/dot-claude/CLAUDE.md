@@ -44,6 +44,7 @@ case. Multiple interpretations stop ask don't guess. Three corrections or
 explicit frustration suggest break. Verify consistency read files check types
 confirm conventions.
 
+FINISH
 Before you post anything with a CLI tool, verify which git account is active so
 that the work account and the hobby account never get mixed up.
 

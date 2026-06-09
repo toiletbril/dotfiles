@@ -35,7 +35,7 @@
         },
     ],
 
-    "base_keymap": "VSCode",
+    "base_keymap": "Emacs",
 
     "git": {
         "inline_blame": {
@@ -59,7 +59,7 @@
     "cursor_shape": "bar",
 
     "icon_theme": {
-        "mode": "light",
+        "mode": "system",
         "light": "Zed (Default)",
         "dark": "Zed (Default)",
     },
@@ -71,7 +71,7 @@
     "buffer_font_size": 16.0,
 
     "theme": {
-        "mode": "light",
+        "mode": "system",
         "light": "One Light",
         "dark": "Gruvbox Dark",
     },

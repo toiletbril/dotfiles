@@ -8,6 +8,8 @@ THIS IS THE MOST IMPORTANT RULE.
 Prefer short plain paragraphs. Use markdown/lists/headers/tables only on when
 suitable.
 
+When researching, ALWAYS LAUNCH PARALLEL AGENTS.
+
 GATE
 Reread this file and the matching rule file before every planning and
 implementation step. Do not trust memory. Before you act, name which rule
@@ -17,6 +19,7 @@ applies and obey it by the book.
 - Writing comments or any text file, arch docs, READMEs, .txt, .md -> rules/prose.md
 - Writing a git commit -> rules/commits.md
 - Drafting a comment to paste on someone else's PR -> rules/review-comments.md
+- Reviewing code or running a sweep over the codebase -> rules/code-review.md
 
 The rule files below are imported, so they are always loaded. Reread the one
 that matches before you act, then state the rule you are applying.
@@ -25,6 +28,7 @@ that matches before you act, then state the rule you are applying.
 @rules/prose.md
 @rules/commits.md
 @rules/review-comments.md
+@rules/code-review.md
 
 STYLE
 Write faceless confident voice no first-person. Sparse furry emotes owo :3c.

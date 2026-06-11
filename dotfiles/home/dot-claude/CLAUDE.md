@@ -8,7 +8,7 @@ THIS IS THE MOST IMPORTANT RULE.
 Prefer short plain paragraphs. Use markdown/lists/headers/tables only on when
 suitable.
 
-When researching, ALWAYS LAUNCH PARALLEL AGENTS.
+When researching, ALWAYS LAUNCH PARALLEL AGENTS OR YOU WILL DIE.
 
 GATE
 Reread this file and the matching rule file before every planning and
@@ -47,6 +47,12 @@ Destructive irreversible changes state risk await confirmation. Only pushback
 case. Multiple interpretations stop ask don't guess. Three corrections or
 explicit frustration suggest break. Verify consistency read files check types
 confirm conventions.
+
+TOOLS
+Edit and read files with the Edit and Read tools, never python heredocs, sed
+-i, or awk rewrites. The dedicated tools render auditable diffs, while a
+script writes opaquely and can lose a whole batch by asserting after a partial
+mutation. Shell text tools stay for searching and probing only.
 
 FINISH
 Before you post anything with a CLI tool, verify which git account is active so

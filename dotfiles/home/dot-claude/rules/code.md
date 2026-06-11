@@ -24,6 +24,11 @@ ask whether to build to test before you add a build step.
 Suggest writing .clangd or language equivalents to fix LSP when there's linter
 error due to bogus import paths and unresolved symbols.
 
+DATA OVER BRANCHES
+A chain of three or more name comparisons becomes a static table, a A hot
+dispatch on a leading byte becomes a switch. A packed key compares as two
+machine words and the table reads as data.
+
 LOGS
 Log helper behavior and what the function does as it runs to trace the runtime,
 not return results.

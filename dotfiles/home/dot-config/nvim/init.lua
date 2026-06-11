@@ -438,20 +438,29 @@ local function get_system_theme()
   --   end
   -- end
 
-  return "dark"
+  return "light"
 end
 
+-- Some terminals re-send an OSC 11 background report on resize. The built-in
+-- TermResponse handler would then flip 'background' and re-source the
+-- colorscheme, wiping the manual highlight overrides below. The group exists
+-- only when nvim runs attached to a tty, so the call is guarded.
+pcall(vim.api.nvim_clear_autocmds, { group = "nvim.tty", event = "TermResponse" })
+
 if get_system_theme() == "dark" then
-  vim.cmd.colorscheme 'duskfox'
+  vim.o.background = "dark"
+  -- vim.cmd.colorscheme 'duskfox'
   -- vim.cmd.colorscheme 'nightfox'
   -- vim.cmd.colorscheme 'terafox'
   -- vim.cmd.colorscheme 'carbonfox'
   -- vim.cmd.colorscheme 'gruvbox'
   -- vim.cmd.colorscheme 'kanagawa-wave'
-  -- vim.cmd.colorscheme 'nordfox'
+  vim.cmd.colorscheme 'nordfox'
   -- vim.cmd.colorscheme 'iceberg'
 else
+  vim.o.background = "light"
   vim.cmd.colorscheme 'dawnfox'
+  -- vim.cmd.colorscheme 'nordfox'
   -- vim.cmd.colorscheme 'kanagawa-lotus'
 end
 

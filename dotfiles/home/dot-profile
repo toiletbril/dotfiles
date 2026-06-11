@@ -22,7 +22,7 @@ export PATH="/usr/lib/ccache/bin:$PATH"
 # external components!!!
 export EXTERNAL_DIR="$HOME/External"
 
-export COSMO_DIR="$EXTERNAL_DIR/cosmopolitan/.cosmocc/current/bin"
+export COSMO_DIR="$EXTERNAL_DIR/cosmo/bin"
 export PATH="$PATH:$COSMO_DIR"
 
 export BUN_INSTALL="$HOME/.bun"

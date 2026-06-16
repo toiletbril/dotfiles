@@ -49,6 +49,9 @@ export PATH="$PATH:$PWSH_DIR"
 
 test -f "$HOME/.cargo/env" && . "$HOME/.cargo/env"
 
+test -f "$HOME/.sdkman/bin/sdkman-init.sh" && \
+  . "$HOME/.sdkman/bin/sdkman-init.sh"
+
 export PATH
 
 alias less=moar

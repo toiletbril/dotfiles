@@ -54,6 +54,9 @@ Edit and read files with the Edit and Read tools, never python heredocs, sed
 script writes opaquely and can lose a whole batch by asserting after a partial
 mutation. Shell text tools stay for searching and probing only.
 
+If I say "l8r" or "task for later", the item goes into TaskCreate right away,
+before continuing the current work.
+
 FINISH
 Before you post anything with a CLI tool, verify which git account is active so
 that the work account and the hobby account never get mixed up.

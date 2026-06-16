@@ -16,20 +16,18 @@ export TERM=xterm-256color # fucking
 
 # Avoid Zed accidentally launching fish.
 if [[ "$DESKTOP_STARTUP_ID" = *Zed* ]]; then
-  NO_FISH=1
+  I_LOVE_BASH=1
 fi
 
-# If this is not an ssh connection/claude code shell instance and NO_FISH isn't
+# If this is not an ssh connection/claude code shell instance and I_LOVE_BASH isn't
 # defined, replace!
-if test -z "$NO_FISH" && test -z "$SSH_CONNECTION" && test -z "$CLAUDECODE" && \
+if test -z "$I_LOVE_BASH" && test -z "$SSH_CONNECTION" && test -z "$CLAUDECODE" && \
    test -z "$SHIT_VERSION"
 then
   echo "hi, normal terminal! replacing bash..."
-  exec fish
+  exec shit --no-init-diagnostics -WI --mood=bash --init-moods=bash
 fi
 
-# java.
-export SDKMAN_DIR="$HOME/.sdkman/"
-source "$SDKMAN_DIR/bin/sdkman-init.sh"
-
-# PS1='\u@\h \W $ '
+if [[ $BASH_VERSION != *shit* ]]; then 
+  PS1='\u@\h \W $ '
+fi

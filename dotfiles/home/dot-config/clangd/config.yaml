@@ -30,6 +30,13 @@ Diagnostics:
       google-readability-casting,
       google-readability-todo,
       google-readability-avoid-underscore-in-googletest-name,
+      readability-magic-numbers,
+      bugprone-easily-swappable-parameters,
+      bugprone-reserved-identifier,
+      bugprone-throwing-static-initialization,
+      misc-non-private-member-variables-in-classes,
+      readability-use-concise-preprocessor-directives,
+      modernize-use-designated-initializers,
     ]
     CheckOptions:
       readability-function-cognitive-complexity.Threshold: 150
@@ -72,10 +79,6 @@ Diagnostics:
       readability-identifier-naming.MacroDefinitionCase: UPPER_CASE
 
 ---
-# C++ sources. Style follows External/oo: types/funcs/methods/vars in
-# lower_case; private/protected/class members prefixed m_; globals,
-# constants, constexpr, class constants, static constants in UPPER_CASE;
-# enum constants in lower_case; macros in lower_case.
 If:
   PathExclude: [.*\.c, .*\.h]
 CompileFlags:

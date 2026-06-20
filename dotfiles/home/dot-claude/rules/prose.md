@@ -1,4 +1,5 @@
 PROSE
+-----
 Applies whenever you write comments or any text file like arch docs, READMEs,
 .txt, or .md.
 
@@ -26,3 +27,6 @@ it.
 
 Grammatical sentences with subject verb object. No unicode, ever, besides
 cyrillic and language-specific character sets.
+
+Prefer passive voice when talking about non-living objects. 'readme names the
+cov mode' -> 'the cov mode is now named in the readme'.

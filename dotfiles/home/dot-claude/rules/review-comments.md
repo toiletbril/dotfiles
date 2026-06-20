@@ -1,4 +1,6 @@
 REVIEW COMMENTS
+---------------
+
 Applies whenever you draft a comment the user will paste on someone else's PR.
 Detect by phrasing like "a comment I should post" or "post on PR #N".
 

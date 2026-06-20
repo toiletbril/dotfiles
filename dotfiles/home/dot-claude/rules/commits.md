@@ -1,4 +1,6 @@
 COMMITS
+-------
+
 Applies whenever you write a git commit message.
 
 Subject imperative no-period 50-70ch verb Refactor Add Fix Update Remove

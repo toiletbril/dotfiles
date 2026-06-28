@@ -1,0 +1,46 @@
+{
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'GATE: reread ~/.claude/CLAUDE.md and the matching file in ~/.claude/rules before planning or implementing. code -> rules/code.md, comments or text files -> rules/prose.md, commits -> rules/commits.md, PR review comments -> rules/review-comments.md, finishing -> rules/finish.md. Name the rule before you act. Never mention AI. Never use unicode.'"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "greptile@claude-plugins-official": true,
+    "remember@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark-daltonized",
+  "editorMode": "vim",
+  "verbose": true,
+  "autoCompactEnabled": true,
+  "remoteControlAtStartup": false,
+  "skipAutoPermissionPrompt": true
+}

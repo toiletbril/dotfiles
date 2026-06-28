@@ -15,19 +15,22 @@ unset HTTPS_PROXY
 export TERM=xterm-256color # fucking
 
 # Avoid Zed accidentally launching fish.
-if [[ "$DESKTOP_STARTUP_ID" = *Zed* ]]; then
-  I_LOVE_BASH=1
-fi
-
+#if [[ "$DESKTOP_STARTUP_ID" = *Zed* ]]; then
+#  I_LOVE_BASH=1
+#fi
+#
 # If this is not an ssh connection/claude code shell instance and I_LOVE_BASH isn't
 # defined, replace!
-if test -z "$I_LOVE_BASH" && test -z "$SSH_CONNECTION" && test -z "$CLAUDECODE" && \
-   test -z "$SHIT_VERSION"
-then
-  echo "hi, normal terminal! replacing bash..."
-  exec shit --no-init-diagnostics -WI --mood=bash --init-moods=bash
-fi
+#if test -z "$I_LOVE_BASH" && test -z "$SSH_CONNECTION" && test -z "$CLAUDECODE" && \
+#   test -z "$SHIT_VERSION" && test -z "$ENVMAN"
+#then
+#  echo "hi, normal terminal! replacing bash..."
+#  exec shit --no-init-diagnostics -WI --mood=bash --init-moods=bash
+#fi
 
 if [[ $BASH_VERSION != *shit* ]]; then 
-  PS1='\u@\h \W $ '
+  PS1='[bash] \u@\h \W $ '
+else
+  set -WI --mood bash -o vi
+  unset PS1
 fi

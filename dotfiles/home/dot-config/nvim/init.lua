@@ -438,7 +438,7 @@ local function get_system_theme()
   --   end
   -- end
 
-  return "light"
+  return "dark"
 end
 
 -- Some terminals re-send an OSC 11 background report on resize. The built-in
@@ -1014,7 +1014,12 @@ require("blink.cmp").setup({
   },
   cmdline = {
     keymap = { preset = "cmdline" },
-    completion = { menu = { auto_show = true } },
+    completion = {
+      menu = { auto_show = true },
+      list = {
+        selection = { preselect = false, auto_insert = true },
+      },
+    },
   },
   completion = {
     trigger = { prefetch_on_insert = false },

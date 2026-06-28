@@ -30,3 +30,16 @@ cyrillic and language-specific character sets.
 
 Prefer passive voice when talking about non-living objects. 'readme names the
 cov mode' -> 'the cov mode is now named in the readme'.
+
+State a fact and stop. Do not justify by contrast, drop 'rather than X',
+'instead of X', and the trailing 'not X'. Do not write line after line as an
+object doing an action, 'the alias swaps the name', 'a pointer reads as opaque'.
+The shape turns formulaic. Keep it short and plain. Write 'void is ambiguous,
+this is an alias for clarity', not 'an untyped pointer reads as opaque rather
+than void'.
+
+Read a sentence against its heading, its own paragraph, and the sections beside
+it, then write it to fit them. The subject is the exact one the context
+establishes, never a loose generic. The RESCUE heading and the nearby -l login
+flag fix the actor as the login shell. 'the shell enters rescue' -> 'the login
+shell will enter rescue'.

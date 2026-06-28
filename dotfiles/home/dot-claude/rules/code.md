@@ -1,6 +1,5 @@
 CODE
 ----
-
 NULL check via != NULL not !, nullptr, or nil where applicable.
 
 Do not write new abstractions without approval. Do not split or merge files,
@@ -33,8 +32,25 @@ reuse it rather than writing a second copy.
 
 COMMENTS
 --------
-
 See @rules/prose.md
+
+Do not write comments unless I explicitly ask. Ever.
+
+When unsure whether a comment earns its place, leave it out. The test is not
+whether the comment is true or helpful, it is whether the code is wrong or
+unreadable without it. Code that stands on its own loses its comment, even an
+accurate one. A comment a reader could infer from the few lines beneath it is
+noise and is removed.
+
+The default is no comment. A comment is added only when the reason for the
+code cannot be recovered from the code itself, and it is deleted on sight when
+the code still reads correctly without it. The bar is a reader who would
+otherwise misread the code, never a reader who wants a tour. Before a comment
+is written, the code is renamed or split so the comment is not needed.
+
+Prefer no comment at all. Reach for a clearer name or a smaller function first,
+and keep a comment only when the why still does not read from the code. A comment
+earns its place by stating a reason, so a line that restates the code is deleted.
 
 Do not write comments that answer "what?", instead answer "why?".
 Avoid repeating and clarifying too much of already known information.
@@ -44,6 +60,11 @@ reason for written code can't be understood from the code itself.
 
 Never write a comment in the "so, ..." shape that tacks a justification clause
 onto a restatement of the code. State the one reason plainly and stop.
+
+Do not justify by contrast. Drop 'rather than X', 'instead of X', and the
+trailing 'not X'. Do not write every comment as an object doing an action ('the
+alias swaps the name', 'a pointer reads as opaque'), the shape turns formulaic.
+Keep it short and human. See @rules/prose.md.
 
 BUILD
 -----

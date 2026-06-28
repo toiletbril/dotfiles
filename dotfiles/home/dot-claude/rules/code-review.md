@@ -1,6 +1,5 @@
 CODE REVIEW
 -----------
-
 Applies when reviewing code or running a sweep over the codebase.
 
 Use subagents as read-only analyzers. They inspect the code and return a large

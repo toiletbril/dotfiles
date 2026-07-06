@@ -12,6 +12,10 @@ thickness = 0.2
 unfocused_hollow = true
 vi_mode_style = "None"
 
+[colors.cursor]
+cursor = '#b3b3b3'
+text = '#000000'
+
 [cursor.style]
 blinking = "On"
 shape = "Block"
@@ -20,13 +24,14 @@ shape = "Block"
 TERM = "xterm-256color"
 
 [font]
-#size = 10.0
-size = 14.0
-offset = { y = -4, x = -1 }
+#size = 14.0
+size = 16.0
+offset = { y = -6, x = -1 }
 glyph_offset = { x = 0, y = -1 }
 
 [font.normal]
-family = "Terminess"
+family = "Terminess Nerd Font"
+#family = "Menlo"
 #family = "Monocraft"
 #family = "monospace"
 #family = "Jetbrains Mono"

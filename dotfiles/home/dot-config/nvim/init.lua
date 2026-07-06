@@ -34,7 +34,7 @@ require("lazy").setup({
   },
 
   -- lol
-  { "wakatime/vim-wakatime", lazy = false },
+  -- { "wakatime/vim-wakatime", lazy = false },
 
   -- SSH
   {
@@ -451,11 +451,11 @@ if get_system_theme() == "dark" then
   vim.o.background = "dark"
   -- vim.cmd.colorscheme 'duskfox'
   -- vim.cmd.colorscheme 'nightfox'
-  -- vim.cmd.colorscheme 'terafox'
+  vim.cmd.colorscheme 'terafox'
   -- vim.cmd.colorscheme 'carbonfox'
   -- vim.cmd.colorscheme 'gruvbox'
   -- vim.cmd.colorscheme 'kanagawa-wave'
-  vim.cmd.colorscheme 'nordfox'
+  -- vim.cmd.colorscheme 'nordfox'
   -- vim.cmd.colorscheme 'iceberg'
 else
   vim.o.background = "light"

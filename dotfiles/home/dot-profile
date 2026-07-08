@@ -12,12 +12,11 @@ export BROWSER="zen"
 export WINEDEBUG="-all"
 export LESS="-+X -R"
 
-export CCACHE_DIR='/public/ccache'
+export CCACHE_DIR="$HOME/.ccache"
 
-# Local path above all.
-export PATH="$HOME/.local/bin:$PATH"
-# ccache, my beloved.
+export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/lib/ccache/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin:"
 
 # external components!!!
 export EXTERNAL_DIR="$HOME/External"
@@ -46,15 +45,23 @@ export PATH="$PATH:/home/sd/.claude/local/"
 
 export PWSH_DIR="$EXTERNAL_DIR/powershell-bin"
 export PATH="$PATH:$PWSH_DIR"
+export PATH="$PATH:/opt/homebrew/bin"
 
 test -f "$HOME/.cargo/env" && . "$HOME/.cargo/env"
 
 test -f "$HOME/.sdkman/bin/sdkman-init.sh" && \
   . "$HOME/.sdkman/bin/sdkman-init.sh"
 
+test -f "$HOME/.zerobrew" &&
+  . "$HOME/.zerobrew"
+
+test -n "$GHOSTTY_RESOURCES_DIR" &&
+  . "$GHOSTTY_RESOURCES_DIR/shell-integration/bash/ghostty.bash"
+
 export PATH
 
 alias less=moar
-alias ls="lsd --group-directories-first -AF"
-alias ll="lsd --group-directories-first -lAhXZF"
+alias ls="lsd --group-directories-first --icon-theme=fancy -AF"
+alias ll="lsd --group-directories-first --icon-theme=fancy -lAhXZF"
 alias t="tailscale"
+alias nproc="sysctl -n hw.logicalcpu"

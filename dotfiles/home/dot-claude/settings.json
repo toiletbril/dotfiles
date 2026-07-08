@@ -35,12 +35,30 @@
     "remember@claude-plugins-official": true
   },
   "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark-daltonized",
-  "editorMode": "vim",
+  "editorMode": "normal",
   "verbose": true,
   "autoCompactEnabled": true,
   "remoteControlAtStartup": false,
-  "skipAutoPermissionPrompt": true
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Calling Mossad",
+      "Fennec and cat are arguing again",
+      "Wasting tokens",
+      "Damned big ears",
+      "Reminding you to take a walk",
+      "Reminging you to stop hyperfocusing",
+      "Running `sleep 10`",
+      "Are you sure this is needed? I'm not",
+      "I wish I was a girl",
+      "Searching fo a good boy",
+      "Dude"
+    ]
+  },
+  "model": "z-ai/glm-5.2"
 }

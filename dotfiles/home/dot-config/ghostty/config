@@ -1,10 +1,10 @@
 # Bitmap fonts
 
 #font-family = Terminus
-font-family = Terminess
+font-family = Terminess Nerd Font
 #font-family = Spleen
 #font-family = Tamzen
-font-size = 12
+font-size = 16
 #font-style = bold
 
 #adjust-underline-position = -6
@@ -39,27 +39,28 @@ adjust-cursor-thickness = 1
 #font-codepoint-map = U+e5fa-U+e6b7=SymbolsNerdFont,U+e700-U+e8ef=SymbolsNerdFont,U+ed00-U+f2ff=SymbolsNerdFont,U+e200-U+e2a9=SymbolsNerdFont,U+f0001-U+f1af0=SymbolsNerdFont,U+e300-U+e3e3=SymbolsNerdFont,U+f400-U+f533=SymbolsNerdFont,U+2665=SymbolsNerdFont,U+26a1=SymbolsNerdFont,U+e0a0-U+e0a2=SymbolsNerdFont,U+e0b0-U+e0b3=SymbolsNerdFont,U+23fb-U+23fe=SymbolsNerdFont,U+2b58=SymbolsNerdFont,U+f300-U+f381=SymbolsNerdFont,U+e000-U+e00a=SymbolsNerdFont,U+ea60-U+ec1e=SymbolsNerdFont,U+ee00-U+ee0b=SymbolsNerdFont,U+21b5=Terminus
 
 resize-overlay = never
-shell-integration = detect
-shell-integration-features = no-cursor,no-sudo,title
 window-step-resize = true
+
+shell-integration = bash
+shell-integration-features = no-title,no-cursor,ssh-env,sudo,path
 
 cursor-invert-fg-bg = true
 mouse-hide-while-typing = true
+window-inherit-working-directory = true
 
-#theme = Adwaita Dark
-theme = Adwaita
-#theme = Adwaita Dark
+theme = Adwaita Dark
+#theme = Adwaita
 #background = #111111
 #minimum-contrast = 1.0
 
 # I cannot believe how buggy this terminal is
-#background-opacity = 0.9
+background-opacity = 0.9
 background-blur = 0
 
 # terminal applications have wrong multiplication compared to console
-mouse-scroll-multiplier = 3
+mouse-scroll-multiplier = 1
 
 quit-after-last-window-closed = true
 
-keybind = ctrl+shift+q=close_surface
-keybind = ctrl+q=quit
+keybind = shift+enter=text:\x1b\r
+keybind = shift+backspace=text:\x17

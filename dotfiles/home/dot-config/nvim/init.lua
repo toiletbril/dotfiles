@@ -449,9 +449,9 @@ pcall(vim.api.nvim_clear_autocmds, { group = "nvim.tty", event = "TermResponse" 
 
 if get_system_theme() == "dark" then
   vim.o.background = "dark"
-  -- vim.cmd.colorscheme 'duskfox'
+  vim.cmd.colorscheme 'duskfox'
   -- vim.cmd.colorscheme 'nightfox'
-  vim.cmd.colorscheme 'terafox'
+  -- vim.cmd.colorscheme 'terafox'
   -- vim.cmd.colorscheme 'carbonfox'
   -- vim.cmd.colorscheme 'gruvbox'
   -- vim.cmd.colorscheme 'kanagawa-wave'

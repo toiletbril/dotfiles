@@ -12,11 +12,11 @@ unset HTTPS_PROXY
 
 [[ $TERM != *xterm* ]] && [[ $- != *i* ]] && return
 
-export TERM=xterm-256color # fucking
+#export TERM=xterm-256color # fucking
 
 if [[ $BASH_VERSION != *shit* ]]; then 
   PS1='[bash] \u@\h \W $ '
 else
-  set -WI --mood bash -o emacs
+  set -WI -o emacs
   unset PS1
 fi

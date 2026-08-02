@@ -8,8 +8,12 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
+    "deny": [
+      "Bash(rm:*)"
+    ],
     "defaultMode": "auto"
   },
+  "model": "z-ai/glm-5.2",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -34,16 +38,6 @@
     "greptile@claude-plugins-official": true,
     "remember@claude-plugins-official": true
   },
-  "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
-  "tui": "fullscreen",
-  "skipWorkflowUsageWarning": true,
-  "theme": "dark-daltonized",
-  "editorMode": "normal",
-  "verbose": true,
-  "autoCompactEnabled": true,
-  "remoteControlAtStartup": false,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -60,5 +54,15 @@
       "Dude"
     ]
   },
-  "model": "z-ai/glm-5.2"
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "skipFullAccessModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark-daltonized",
+  "editorMode": "normal",
+  "verbose": true,
+  "autoCompactEnabled": true,
+  "remoteControlAtStartup": false
 }

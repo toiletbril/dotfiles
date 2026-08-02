@@ -1,4 +1,4 @@
-# Bitmap fonts
+## Bitmap fonts
 
 #font-family = Terminus
 font-family = Terminess Nerd Font
@@ -7,9 +7,12 @@ font-family = Terminess Nerd Font
 font-size = 16
 #font-style = bold
 
+font-thicken = true
+font-thicken-strength = 50
+
 #adjust-underline-position = -6
 #adjust-underline-thickness = -1
-adjust-cursor-thickness = 1
+adjust-cursor-thickness = 2
 
 # TTF fonts
 
@@ -41,21 +44,20 @@ adjust-cursor-thickness = 1
 resize-overlay = never
 window-step-resize = true
 
-shell-integration = bash
+shell-integration = none
 shell-integration-features = no-title,no-cursor,ssh-env,sudo,path
 
-cursor-invert-fg-bg = true
+cursor-invert-fg-bg = false
+cursor-style = block
 mouse-hide-while-typing = true
 window-inherit-working-directory = true
-
-theme = Adwaita Dark
-#theme = Adwaita
-#background = #111111
-#minimum-contrast = 1.0
+window-theme = dark
+macos-titlebar-style = tabs
+#theme = Alabaster Dark
 
 # I cannot believe how buggy this terminal is
-background-opacity = 0.9
-background-blur = 0
+background-opacity = 0.8
+background-blur = 1
 
 # terminal applications have wrong multiplication compared to console
 mouse-scroll-multiplier = 1
@@ -63,4 +65,5 @@ mouse-scroll-multiplier = 1
 quit-after-last-window-closed = true
 
 keybind = shift+enter=text:\x1b\r
-keybind = shift+backspace=text:\x17
+keybind = ctrl+backspace=text:\x17
+keybind = ctrl++=text:

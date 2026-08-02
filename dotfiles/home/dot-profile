@@ -4,19 +4,24 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 
 export CC="clang"
 export CXX="clang++"
-export LD="mold"
+
+if [ "$(uname -s)" = Linux ]; then
+  export LD="mold"
+fi
+
+export CCACHE_DIR="$HOME/.ccache"
+
+if [ -d /usr/lib/ccache/bin ]; then
+  export PATH="/usr/lib/ccache/bin:$PATH"
+fi
+
+export PATH="$PATH:$HOME/.local/bin:"
 
 export EDITOR="nvim"
 export BROWSER="zen"
 
 export WINEDEBUG="-all"
 export LESS="-+X -R"
-
-export CCACHE_DIR="$HOME/.ccache"
-
-export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/lib/ccache/bin:$PATH"
-export PATH="$PATH:$HOME/.local/bin:"
 
 # external components!!!
 export EXTERNAL_DIR="$HOME/External"
@@ -41,27 +46,65 @@ export PATH="$PATH:$GCLOUD_HOME/bin"
 export ANDROID_STUDIO="$EXTERNAL_DIR/android-studio"
 export PATH="$PATH:$ANDROID_STUDIO/bin"
 
-export PATH="$PATH:/home/sd/.claude/local/"
+export PATH="$PATH:$HOME/.claude/local"
 
 export PWSH_DIR="$EXTERNAL_DIR/powershell-bin"
 export PATH="$PATH:$PWSH_DIR"
-export PATH="$PATH:/opt/homebrew/bin"
+
+if command -v brew >/dev/null 2>&1; then
+  BREW_EXECUTABLE="$(command -v brew)"
+elif [ -x /opt/homebrew/bin/brew ]; then
+  BREW_EXECUTABLE=/opt/homebrew/bin/brew
+elif [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  BREW_EXECUTABLE=/home/linuxbrew/.linuxbrew/bin/brew
+fi
+
+if [ -n "${BREW_EXECUTABLE:-}" ]; then
+  eval "$("$BREW_EXECUTABLE" shellenv sh)"
+  unset BREW_EXECUTABLE
+fi
 
 test -f "$HOME/.cargo/env" && . "$HOME/.cargo/env"
 
-test -f "$HOME/.sdkman/bin/sdkman-init.sh" && \
-  . "$HOME/.sdkman/bin/sdkman-init.sh"
+case ${BASH:-} in
+  bash|*/bash)
+    case ${BASH_VERSION:-} in
+      [4-9]*|[1-9][0-9]*) BASH_SDKMAN_FILE="$HOME/.sdkman/bin/sdkman-init.sh" ;;
+      *) BASH_SDKMAN_FILE= ;;
+    esac
 
-test -f "$HOME/.zerobrew" &&
-  . "$HOME/.zerobrew"
+    for BASH_STARTUP_FILE in \
+      "$BASH_SDKMAN_FILE" \
+      "${GHOSTTY_RESOURCES_DIR:+$GHOSTTY_RESOURCES_DIR/shell-integration/bash/ghostty.bash}" \
+      "${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh}"; do
+      [ -r "$BASH_STARTUP_FILE" ] || continue
 
-test -n "$GHOSTTY_RESOURCES_DIR" &&
-  . "$GHOSTTY_RESOURCES_DIR/shell-integration/bash/ghostty.bash"
+      BASH_STARTUP_HAD_NOUNSET=
+      case $- in
+        *u*) BASH_STARTUP_HAD_NOUNSET=1; set +u ;;
+      esac
 
-export PATH
+      if . "$BASH_STARTUP_FILE"; then :; else :; fi
 
-alias less=moar
+      if [ -n "$BASH_STARTUP_HAD_NOUNSET" ]; then
+        set -u
+      fi
+    done
+
+    unset BASH_SDKMAN_FILE BASH_STARTUP_FILE BASH_STARTUP_HAD_NOUNSET
+    ;;
+esac
+
 alias ls="lsd --group-directories-first --icon-theme=fancy -AF"
 alias ll="lsd --group-directories-first --icon-theme=fancy -lAhXZF"
 alias t="tailscale"
-alias nproc="sysctl -n hw.logicalcpu"
+
+if [ "$(uname -s)" = Darwin ]; then
+  alias less=moor
+  alias nproc="sysctl -n hw.logicalcpu"
+else
+  alias less=moar
+fi
+
+export PATH="/usr/local/bin:$PATH"
+export PATH

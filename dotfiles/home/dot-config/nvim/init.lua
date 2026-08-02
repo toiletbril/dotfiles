@@ -882,7 +882,7 @@ vim.lsp.enable("lua_ls", {
 })
 
 lspconfig("powershell_es", {
-  bundle_path = '/home/sd/External/powershell-eds',
+  bundle_path = vim.env.HOME .. '/External/powershell-eds',
 })
 
 for _, lsp in ipairs(default_servers) do

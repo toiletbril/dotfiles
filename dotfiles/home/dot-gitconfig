@@ -3,11 +3,11 @@
 [pull]
     rebase = true
 [credential "https://github.com"]
-    helper = !/usr/bin/gh auth git-credential
+	helper =
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
-    helper = !/usr/bin/gh auth git-credential
-[credential]
-    helper = /usr/libexec/git-core/git-credential-libsecret
+	helper =
+	helper = !gh auth git-credential
 [init]
     defaultBranch = master
 [include]

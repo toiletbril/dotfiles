@@ -9,14 +9,6 @@ if [ "$(uname -s)" = Linux ]; then
   export LD="mold"
 fi
 
-export CCACHE_DIR="$HOME/.ccache"
-
-if [ -d /usr/lib/ccache/bin ]; then
-  export PATH="/usr/lib/ccache/bin:$PATH"
-fi
-
-export PATH="$PATH:$HOME/.local/bin:"
-
 export EDITOR="nvim"
 export BROWSER="zen"
 
@@ -26,7 +18,7 @@ export LESS="-+X -R"
 # external components!!!
 export EXTERNAL_DIR="$HOME/External"
 
-export COSMO_DIR="$EXTERNAL_DIR/cosmo/bin"
+export COSMO_DIR="$EXTERNAL_DIR/cosmocc/bin"
 export PATH="$PATH:$COSMO_DIR"
 
 export BUN_INSTALL="$HOME/.bun"
@@ -95,8 +87,8 @@ case ${BASH:-} in
     ;;
 esac
 
-alias ls="lsd --group-directories-first --icon-theme=fancy -AF"
-alias ll="lsd --group-directories-first --icon-theme=fancy -lAhXZF"
+alias ls="lsd --group-directories-first --icon-theme=unicode -AF"
+alias ll="lsd --group-directories-first --icon-theme=unicode -lAhXZF"
 alias t="tailscale"
 
 if [ "$(uname -s)" = Darwin ]; then
@@ -106,5 +98,14 @@ else
   alias less=moar
 fi
 
+
+export CCACHE_DIR="$HOME/.ccache"
+
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+
+if [ -d /usr/lib/ccache/bin ]; then
+  export PATH="/usr/lib/ccache/bin:$PATH"
+fi
+
 export PATH

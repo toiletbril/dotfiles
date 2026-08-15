@@ -220,8 +220,21 @@ vim.g.meson_recommended_style = 0
 
 vim.filetype.add({
   extension = {
+    bash = "bash",
+    dash = "dash",
     h = "c",
+    kosh = "kosh",
+    sh = "sh",
+    shit = "shit",
   },
+})
+
+vim.treesitter.language.register("bash", {
+  "bash",
+  "dash",
+  "kosh",
+  "sh",
+  "shit",
 })
 
 local user_augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
@@ -768,7 +781,6 @@ local default_servers = {
   "rust_analyzer",
   -- "texlab",
   "gopls",
-  "bashls",
   "powershell_es",
   "tinymist",
   "ansiblels",
@@ -805,6 +817,24 @@ if enable_lsp then
   lspconfig("powershell_es", {
     bundle_path = vim.env.HOME .. "/External/powershell-eds",
   })
+
+  lspconfig("kosh", {
+    cmd = { "kosh", "--language-server" },
+    filetypes = {
+      "bash",
+      "dash",
+      "kosh",
+      "sh",
+      "shit",
+    },
+    on_init = default_on_init,
+    capabilities = blink_capabilities,
+    flags = default_flags,
+    root_dir = function(bufnr, on_dir)
+      on_dir(vim.fs.root(bufnr, { ".git", "Makefile" }) or vim.fn.getcwd())
+    end,
+  })
+  vim.lsp.enable("kosh")
 
   for _, lsp in ipairs(default_servers) do
     vim.lsp.enable(lsp, {

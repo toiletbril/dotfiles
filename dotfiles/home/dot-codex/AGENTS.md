@@ -26,11 +26,16 @@ Reread this file and the matching guidance file before every planning and
 implementation step. Do not trust memory. Before you act, name which rule
 applies and obey it by the book.
 
-- Writing or editing code -> ~/.codex/guidance/code.md
-- Writing comments or any text file, arch docs, READMEs, .txt, .md -> ~/.codex/guidance/prose.md
-- Writing a git commit -> ~/.codex/guidance/commits.md
-- Drafting a comment to paste on someone else's PR -> ~/.codex/guidance/review-comments.md
-- Reviewing code or running a sweep over the codebase -> ~/.codex/guidance/code-review.md
+- Writing or editing code -> 
+  @guidance/code.md
+- Writing comments or any text file, arch docs, READMEs, .txt, .md ->
+  @guidance/prose.md
+- Writing a git commit ->
+  @guidance/commits.md
+- Drafting a comment to paste on someone else's PR ->
+  @guidance/review-comments.md
+- Reviewing code or running a sweep over the codebase ->
+  @guidance/code-review.md
 
 The guidance files are loaded on demand. Reread the one that matches before
 you act, then state the rule you are applying.

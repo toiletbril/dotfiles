@@ -1,1 +1,1 @@
-../.codex/AGENTS.md
+../dot-codex/AGENTS.md

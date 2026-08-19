@@ -8,29 +8,22 @@ upgrade deps.
 Prefer writing optimized code. For legacy-full languages, ask to reimplement or
 adjust datastructures if that'll help with cache locality or memory footprint.
 
-Names are verbose and semantic, never terse. A boolean reads `is_`, `should_`,
-`was_`, `did_`, or `has_`. A number carries a `_count` suffix or a measure
-suffix such as `_length`, `_depth`, or `_position`, and never a bare `n_`
-prefix, because a name like `line_length` already reads as a number. A
-variable-bound lambda is named `do_`. An accessor reads `get_` or `set_`, with
-no shorthand. A clear name replaces a comment that would explain an unclear one.
-A comment states why the code is the way it is, not what it does.
+Names are verbose and semantic.
+- A boolean should start with `is_`, `should_`, `was_`, `did_`, or `has_`.
+- Add `_count` suffixes or a measure suffix such as `_length`, `_depth`, or
+  `_position` to numbers.
+- A variable-bound lambda should always start with `do_`.
+- An accessor reads `get_` or `set_`, with no shorthand.
 
-An if whose condition has `&&` or `||` is braced, while a trivial
-single-condition if stays unbraced. Logical blocks are separated by a blank
-line, before and after a loop, before a return, and after a group of
+An if whose condition has `&&` or `||` is braced. Logical blocks are separated
+by a blank line, before and after a loop, before a return, and after a group of
 declarations.
-
-A chain of three or more name comparisons becomes a static table rather than an
-if ladder. The completion and the parser dispatch hot paths pack a key and read
-the table as data. A hot dispatch on a leading byte becomes a switch, or a
-static dispatch table.
 
 NEW
 ---
-Before implementing anything new, ask whether the codebase already implements
-it. Search for an existing function, parser, or helper that does the work and
-reuse it rather than writing a second copy.
+Before implementing anything at all, ask whether the codebase already
+implements it. Search for an existing function, parser, or helper that does the
+work and reuse it rather than writing a second copy.
 
 COMMENTS
 --------
@@ -40,12 +33,9 @@ Do not write comments unless user explicitly asks. Ever.
 
 BUILD
 -----
-Prefer a make target over a raw go build or other direct compiler call, so the
-artifacts land in the build folder the way the project expects. When planning,
-ask whether to build to test before you add a build step.
-
-Suggest writing .clangd or language equivalents to fix LSP when there's linter
-error due to bogus import paths and unresolved symbols.
+Prefer a make target over a raw build or other direct compiler call, so the
+artifacts are put in the build folder as te project expects. When planning, ask
+whether to build to test before you add a build step.
 
 LOGS
 ----

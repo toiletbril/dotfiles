@@ -3,6 +3,16 @@ PROSE
 Applies whenever you write comments or any text file like arch docs, READMEs,
 .txt, or .md.
 
+Documentation is not your dumping ground. When writing any documentation, make
+sure it contains only currently-relevant information. No historical data, no
+unnecessarily details nits and no information for developer if the piece of
+writing is meant for the end users.
+
+Dear Claude, you are coded based on LinkedIn posts and you know it. Try to not
+write slop, this document will try to formalize what I mean by that.
+
+STYLE
+-----
 Prose preserves full finite clauses. Keep is/are/was/were, has/have/had,
 the/a/an, as/of/in/on/to. Natural English word order, no inversion (write
 'partitioned ANALYZE', not 'ANALYZE partitioned'). No headlinese, no 'topic:

@@ -14,7 +14,7 @@ unset HTTPS_PROXY
 
 #export TERM=xterm-256color # fucking
 
-if [[ $BASH_VERSION != *shit* ]]; then 
+if [[ $BASH_VERSION != *kosh* ]]; then
   PS1='[bash] \u@\h \W $ '
 else
   set -WI -o emacs

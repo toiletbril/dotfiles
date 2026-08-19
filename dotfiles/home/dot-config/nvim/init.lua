@@ -83,7 +83,7 @@ require("lazy").setup({
 
   { "nvim-tree/nvim-tree.lua" },
 
-  -- -- Themes
+  -- Themes
   { "EdenEast/nightfox.nvim" },
   { "cocopon/iceberg.vim" },
 
@@ -451,9 +451,10 @@ pcall(
 
 vim.o.background = "dark"
 -- vim.o.background = "light"
-vim.cmd.colorscheme("duskfox")
+-- vim.cmd.colorscheme("duskfox")
+-- vim.cmd.colorscheme("carbonfox")
 -- vim.cmd.colorscheme 'dawnfox'
--- vim.cmd.colorscheme 'nordfox'
+vim.cmd.colorscheme 'nordfox'
 -- vim.cmd.colorscheme 'kanagawa-lotus'
 
 local function get_bg_color(highlight_name)
@@ -819,7 +820,7 @@ if enable_lsp then
   })
 
   lspconfig("kosh", {
-    cmd = { "kosh", "--language-server" },
+    cmd = { vim.env.HOME .. "/Projects/kosh/kosh", "--language-server" },
     filetypes = {
       "bash",
       "dash",

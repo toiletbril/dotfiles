@@ -38,6 +38,11 @@ The shape turns formulaic. Keep it short and plain. Write 'void is ambiguous,
 this is an alias for clarity', not 'an untyped pointer reads as opaque rather
 than void'.
 
+Prefer 'noun is adjective' over 'noun verb noun' whenever the state is what
+matters. 'the catalog holds 18 native rows' -> 'the native rows are 18'. 'the
+run closes with a count' -> 'the closing line is a count'. Reach for a verb only
+when the sentence is about the action itself.
+
 Read a sentence against its heading, its own paragraph, and the sections beside
 it, then write it to fit them. The subject is the exact one the context
 establishes, never a loose generic. The RESCUE heading and the nearby -l login

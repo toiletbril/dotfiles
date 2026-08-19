@@ -8,7 +8,7 @@ reads their lists and applies the edits itself. Run several agents at once on
 different angles such as code style, optimization, and allocator usage, across
 the whole codebase rather than only the changed lines.
 
-Each agent always should re-read project-specific CLAUDE.md before starting
+Each agent should always reread project-specific AGENTS.md before starting
 work.
 
 Prefer to analyze big chunks of code. Read the related parts too, not only what

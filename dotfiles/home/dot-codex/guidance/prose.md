@@ -9,6 +9,14 @@ the/a/an, as/of/in/on/to. Natural English word order, no inversion (write
 predicate', no colon-chains, no semicolons. Join with commas, dashes, or split
 sentences.
 
+Never write a comment in the "so, ..." shape that tacks a justification clause
+onto a restatement of the code. State the one reason plainly and stop.
+
+Do not justify by contrast. Drop 'rather than X', 'instead of X', and the
+trailing 'not X'. Do not write every comment as an object doing an action ('the
+alias swaps the name', 'a pointer reads as opaque'), the shape turns formulaic.
+Keep it short and human. See @rules/prose.md.
+
 No em-dashes, colons, or semicolons. No mid-sentence explanation bridges
 ('which is', 'where it', 'that makes it'). State fact, then explain separately.
 No comparative adjectives without the concrete metric backing them.
@@ -37,11 +45,6 @@ object doing an action, 'the alias swaps the name', 'a pointer reads as opaque'.
 The shape turns formulaic. Keep it short and plain. Write 'void is ambiguous,
 this is an alias for clarity', not 'an untyped pointer reads as opaque rather
 than void'.
-
-Prefer 'noun is adjective' over 'noun verb noun' whenever the state is what
-matters. 'the catalog holds 18 native rows' -> 'the native rows are 18'. 'the
-run closes with a count' -> 'the closing line is a count'. Reach for a verb only
-when the sentence is about the action itself.
 
 Read a sentence against its heading, its own paragraph, and the sections beside
 it, then write it to fit them. The subject is the exact one the context

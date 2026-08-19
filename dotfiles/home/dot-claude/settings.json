@@ -20,7 +20,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'GATE: reread ~/.claude/CLAUDE.md and the matching file in ~/.claude/rules before planning or implementing. code -> rules/code.md, comments or text files -> rules/prose.md, commits -> rules/commits.md, PR review comments -> rules/review-comments.md, finishing -> rules/finish.md. Name the rule before you act. Never mention AI. Never use unicode.'"
+            "command": "echo 'GATE: reread ~/.claude/CLAUDE.md and the matching file in @guidance before planning or implementing. Name the rule before you act.'"
           }
         ]
       }

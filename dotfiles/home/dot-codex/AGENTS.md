@@ -37,6 +37,9 @@ applies and obey it by the book.
   @guidance/plan.md
 - Writing comments or any text file, arch docs, READMEs, .txt, .md ->
   @guidance/prose.md
+- Very precise and user-facing writing -> @guidance/prose.md first,
+  THEN @guidance/claudish-to-english.md, after you've finished the
+  meaningful part.
 - Writing a git commit ->
   @guidance/commits.md
 - Drafting a comment to paste on someone else's PR ->

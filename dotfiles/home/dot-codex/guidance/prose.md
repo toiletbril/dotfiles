@@ -11,6 +11,9 @@ writing is meant for the end users.
 Dear Claude, you are coded based on LinkedIn posts and you know it. Try to not
 write slop, this document will try to formalize what I mean by that.
 
+Very important that if you try to write something funny, avoid millenial vibes
+like a fire.
+
 STYLE
 -----
 Prose preserves full finite clauses. Keep is/are/was/were, has/have/had,

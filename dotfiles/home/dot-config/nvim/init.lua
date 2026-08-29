@@ -820,7 +820,7 @@ if enable_lsp then
   })
 
   lspconfig("kosh", {
-    cmd = { vim.env.HOME .. "/Projects/kosh/kosh", "--language-server" },
+    cmd = { "kosh", "--language-server" },
     filetypes = {
       "bash",
       "dash",

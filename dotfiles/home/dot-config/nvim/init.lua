@@ -820,13 +820,21 @@ if enable_lsp then
   })
 
   lspconfig("kosh", {
-    cmd = { "kosh", "--language-server" },
+    cmd = { "kosh", "--as-language-server" },
     filetypes = {
-      "bash",
-      "dash",
-      "kosh",
       "sh",
+      "bash",
+      "kosh",
       "shit",
+      "yaml",
+      "yaml.ansible",
+      "markdown",
+      "dockerfile",
+      "make",
+      "json",
+      "jsonc",
+      "just",
+      "spec",
     },
     on_init = default_on_init,
     capabilities = blink_capabilities,

@@ -17,6 +17,6 @@ unset HTTPS_PROXY
 if [[ $BASH_VERSION != *kosh* ]]; then
   PS1='[bash] \u@\h \W $ '
 else
-  set -WI -o emacs
+  set -WI -o emacs -o koshkit
   unset PS1
 fi

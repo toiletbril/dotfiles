@@ -7,8 +7,9 @@ THESE ARE THE MOST IMPORTANT RULES. THEY ARE TOP YOUR PRIORITY.
 
 GATE
 ----
-Before researching, ask user if you should launch parallel agents to research.
-Apply findings yourself.
+Instead of researching yourself, launch parallel read-only agents if the
+problems seems big enough. Apply findings yourself. If the problem is small,
+research yourself.
 
 If rate-limited, always retry what you/an agent couldn't finish.
 

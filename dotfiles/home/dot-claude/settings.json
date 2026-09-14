@@ -8,12 +8,15 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch"
+    ],
     "deny": [
       "Bash(rm:*)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "dontAsk"
   },
-  "model": "z-ai/glm-5.2",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -50,19 +53,20 @@
       "Running `sleep 10`",
       "Are you sure this is needed? I'm not",
       "I wish I was a girl",
-      "Searching fo a good boy",
+      "Searching for a good boy",
       "Dude"
     ]
   },
   "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true,
-  "skipFullAccessModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
+  "autoCompactWindow": 800000,
   "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark-daltonized",
   "editorMode": "normal",
   "verbose": true,
   "autoCompactEnabled": true,
-  "remoteControlAtStartup": false
+  "remoteControlAtStartup": false,
+  "skipAutoPermissionPrompt": true,
+  "skipFullAccessModePermissionPrompt": true
 }

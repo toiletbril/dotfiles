@@ -22,8 +22,8 @@ stow "$F" "$V" --dotfiles -t "$HOME" 'home'
   set -x
   cd "$HOME"/.zen/
   # cp dereferences the symlink.
-  find . -maxdepth 2 -name 'chrome' -exec cp ./userChrome.css {} \;
-  unlink ./userChrome.css
+  find . -maxdepth 2 -name 'chrome' -exec cp ./userChrome.css {} \; 
+  unlink ./userChrome.css || true
 )
 # special case: Code - OSS
 (

@@ -39,7 +39,7 @@ applies and obey it by the book.
 - Writing comments or any text file, arch docs, READMEs, .txt, .md ->
   @guidance/prose.md
 - Very precise and user-facing writing -> @guidance/prose.md first,
-  THEN @guidance/claudish-to-english.md, after you've finished the
+  THEN @guidance/prose-review.md, after you've finished the
   meaningful part.
 - Writing a git commit ->
   @guidance/commits.md
@@ -47,6 +47,10 @@ applies and obey it by the book.
   @guidance/review-comments.md
 - Reviewing code or running a sweep over the codebase ->
   @guidance/code-review.md
+- Writing, reviewing, or removing tests ->
+  @guidance/test.md
+- Planning or running a subsystem test removal campaign ->
+  @guidance/test-review.md
 
 The guidance files are loaded on demand. Reread the one that matches before
 you act, then state the rule you are applying.

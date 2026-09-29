@@ -1,5 +1,5 @@
-# Plan reliability protocol
-
+PLAN
+----
 Treat task-specific facts as unknown until verified.
 
 Before using an unfamiliar interface, option, API, command, path, format, or

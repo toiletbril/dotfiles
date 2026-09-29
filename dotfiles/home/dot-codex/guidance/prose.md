@@ -8,11 +8,21 @@ sure it contains only currently-relevant information. No historical data, no
 unnecessarily details nits and no information for developer if the piece of
 writing is meant for the end users.
 
-Dear Claude, you are coded based on LinkedIn posts and you know it. Try to not
-write slop, this document will try to formalize what I mean by that.
+Avoid stock internet banter, exaggerated enthusiasm, and self-aware asides.
+Phrases such as "we did a thing," "plot twist," "because apparently," "what
+could go wrong," "adulting," and "chaos goblin" turn a factual point into a
+performance. Do not use a wink, emoji, meme, pun, or mock-dramatic pause as a
+substitute for a clear sentence.
 
-Very important that if you try to write something funny, avoid millenial vibes
-like a fire.
+Do not make the reader, user, code, or tools the butt of a joke. Avoid fake
+surprise, forced cuteness, and repeated callbacks to an earlier joke. When a
+light remark fits, state it once and return to the subject.
+
+Grammatical sentences with subject verb object. No unicode, ever, besides
+cyrillic and language-specific character sets.
+
+Prefer passive voice when talking about non-living objects. 'readme names the
+cov mode' -> 'the cov mode is in the readme'.
 
 STYLE
 -----
@@ -46,21 +56,9 @@ not invent advice, justify a choice, anticipate a reader's question, or answer
 an objection no one raised. If you do not know it from the code, do not write
 it.
 
-Grammatical sentences with subject verb object. No unicode, ever, besides
-cyrillic and language-specific character sets.
-
-Prefer passive voice when talking about non-living objects. 'readme names the
-cov mode' -> 'the cov mode is now named in the readme'.
-
 State a fact and stop. Do not justify by contrast, drop 'rather than X',
 'instead of X', and the trailing 'not X'. Do not write line after line as an
 object doing an action, 'the alias swaps the name', 'a pointer reads as opaque'.
 The shape turns formulaic. Keep it short and plain. Write 'void is ambiguous,
 this is an alias for clarity', not 'an untyped pointer reads as opaque rather
 than void'.
-
-Read a sentence against its heading, its own paragraph, and the sections beside
-it, then write it to fit them. The subject is the exact one the context
-establishes, never a loose generic. The RESCUE heading and the nearby -l login
-flag fix the actor as the login shell. 'the shell enters rescue' -> 'the login
-shell will enter rescue'.

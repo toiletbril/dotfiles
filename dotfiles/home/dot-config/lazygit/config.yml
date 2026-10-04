@@ -1,4 +1,4 @@
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --features="some-theme" --paging=never
+      command: delta --features="some-theme" --paging=never

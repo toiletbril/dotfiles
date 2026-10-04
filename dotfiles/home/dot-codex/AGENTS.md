@@ -40,17 +40,15 @@ applies and obey it by the book.
   @guidance/prose.md
 - Very precise and user-facing writing -> @guidance/prose.md first,
   THEN @guidance/prose-review.md, after you've finished the
-  meaningful part.
+  main part.
 - Writing a git commit ->
   @guidance/commits.md
 - Drafting a comment to paste on someone else's PR ->
   @guidance/review-comments.md
 - Reviewing code or running a sweep over the codebase ->
-  @guidance/code-review.md
+  @guidance/code-review.md, @guidance/test-review.md, @guidance/prose-review.md
 - Writing, reviewing, or removing tests ->
   @guidance/test.md
-- Planning or running a subsystem test removal campaign ->
-  @guidance/test-review.md
 
 The guidance files are loaded on demand. Reread the one that matches before
 you act, then state the rule you are applying.

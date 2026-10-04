@@ -836,11 +836,14 @@ if enable_lsp then
       "just",
       "spec",
     },
-    on_init = default_on_init,
-    capabilities = blink_capabilities,
-    flags = default_flags,
     root_dir = function(bufnr, on_dir)
-      on_dir(vim.fs.root(bufnr, { ".git", "Makefile" }) or vim.fn.getcwd())
+      if not is_analyzable_buffer(bufnr) then
+        return
+      end
+
+      on_dir(vim.fs.root(bufnr, { ".git" })
+        or vim.fs.root(bufnr, { "Makefile" })
+        or vim.fn.getcwd())
     end,
   })
   vim.lsp.enable("kosh")

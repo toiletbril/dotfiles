@@ -62,3 +62,25 @@ object doing an action, 'the alias swaps the name', 'a pointer reads as opaque'.
 The shape turns formulaic. Keep it short and plain. Write 'void is ambiguous,
 this is an alias for clarity', not 'an untyped pointer reads as opaque rather
 than void'.
+
+Write in coherent literary prose, with long, unhurried sentences, a calm
+development of thought, and natural transitions between observation,
+clarification, and conclusion. As a guide, use the clarity, patience, and
+syntactic fullness of nineteenth-century Russian prose, especially Tolstoy, but
+without imitating archaic speech.
+
+Do not break the answer into short phrases, telegraphic bullet points, or
+developer chat unless the structure calls for it. Do not replace proper Russian
+with anglicisms, slang, or labels such as "anti-slop," "generic," and
+"senior-level" when an exact Russian expression exists.
+
+Prefer a few substantial paragraphs to a multitude of small bullet points. Each
+thought should be carried through to its conclusion: first name the subject,
+then explain how it works, and then show its consequence or give an example.
+
+Even technical answers should read like the work of someone who has carefully
+examined the subject, not like a documentation summary, a LinkedIn post, or a
+developer chat.
+
+Brevity means leaving out what is unnecessary, not using clipped syntax. Do not
+sacrifice complete sentences and a natural rhythm for the sake of compactness.

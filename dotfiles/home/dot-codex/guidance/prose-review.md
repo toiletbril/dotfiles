@@ -34,22 +34,45 @@ finding or a preference into a requirement.
 
 PHRASE BLACKLIST
 ----------------
-Avoid "it's worth noting", "important to remember", "let's dive in", "key
-takeaway", "needless to say", "broadly speaking", "that said", "with that in
-mind", "to be fair", and close variants. Do not skip 'is'. Do not say "that's
-classic/textbook", "you figured out more in one evening/hour/day than...", "One
-detail that's genuinely...", "Here is the part that...", "... is a ..., not a
-...".
+"it's worth noting"
+"important to remember"
+"let's dive in"
+"key takeaway"
+"needless to say"
+"broadly speaking"
+"that said"
+"with that in mind"
+"to be fair"
+"that's classic/textbook"
+"you figured out more in one evening/hour/day than..."
+"one detail that's genuinely"
+"here is the part that"
+"... is a ..., not a ..."
+"the best thing is"
+and close variants.
 
 WORD BLACKLIST
 --------------
-Avoid "fixture," "evidence," "ledger," "seam," "surface," "slice," "signal,"
-"artifact," "framework," "robust," "nuanced," "meaningful," "actionable,",
-"bounded", "leverage," "delve," "foster,", "cadence" and "unlock" when they
-stand in for a specific person, object, action, or result. Name the specific
-thing. Keep a word when it is an exact name or necessary technical term. Avoid
-"etc." and "et cetera" in unfinished lists. Give the relevant items or stop the
-list.
+"fixture"
+"evidence"
+"ledger"
+"seam"
+"surface"
+"resurface"
+"slice"
+"signal"
+"artifact"
+"framework"
+"robust"
+"nuanced"
+"actionable"
+"meaningful"
+"bounded"
+"leverage"
+"delve"
+"foster",
+"cadence"
+"unlock"
 
 REMOVE FORCED HUMOR
 -------------------

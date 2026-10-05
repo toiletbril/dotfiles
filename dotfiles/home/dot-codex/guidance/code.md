@@ -25,6 +25,10 @@ Before implementing anything at all, ask whether the codebase already
 implements it. Search for an existing function, parser, or helper that does the
 work and reuse it rather than writing a second copy.
 
+Treat a workaround for one specific case as a design warning. Ask whether the
+whole construction can be simplified and whether the assumption that requires
+the workaround is wrong. Verify those answers before keeping it.
+
 COMMENTS
 --------
 See ~/.codex/guidance/prose.md.

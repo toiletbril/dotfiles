@@ -778,7 +778,7 @@ local default_servers = {
   "pylsp",
   "ruff",
   "zls",
-  "clangd",
+  -- "clangd",
   "rust_analyzer",
   -- "texlab",
   "gopls",

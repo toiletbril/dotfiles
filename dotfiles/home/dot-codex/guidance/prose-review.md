@@ -87,6 +87,35 @@ expense of the user, code, or tools. Do not replace one joke with another. When
 a joke carries a fact or an intended tone, state the fact directly and retain
 only the interpersonal meaning needed for the message.
 
+REMOVE REFERENCES TO THE REQUEST
+--------------------------------
+Read the whole document for what it says about its subject, then delete every
+sentence that describes the request, the conversation, or the rules the writer
+followed. The reader has not seen the request, so "as requested," "per the
+instructions," "as discussed above," and claims that the text follows a rule,
+such as "This document describes only verified behavior," tell the reader
+nothing. Delete them even when they are accurate. Keep instructions addressed
+to the reader.
+
+Rewrite a sentence only when deleting it would lose a fact about the subject:
+"Retries were removed at the user's request" becomes "The client does not retry
+failed requests." Delete a comment that describes a change, such as "now uses
+the new parser" or "changed per review," when the code already shows what it
+does. Do not mention these rules or the review in the rewrite.
+
+AVOID OVERUSING PRESENT SIMPLE
+------------------------------
+Do not write every sentence in present simple. A run of bare present-tense
+statements ("Names the pipe. Wraps the call. Returns the handle.") hides when,
+whether, and under which condition each action happens. Use the form that
+matches the source: "can" for a capability, "will" for a result, past tense for
+something already done, and a stated condition when the action depends on one.
+"The shell can encapsulate the pipe" and "In that case, the pipe will be
+encapsulated by the shell" read naturally; "names the pipe what the shell does"
+does not. Keep present simple for behavior that holds every time, write each
+sentence as a full clause with a subject and articles, and do not add a
+condition or modal the source does not support.
+
 WRITE DIRECT CLAIMS
 -------------------
 Use ordinary verbs and name the actual actor, action, and object. Replace

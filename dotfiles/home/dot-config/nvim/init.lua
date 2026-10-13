@@ -82,6 +82,7 @@ require("lazy").setup({
   { "lewis6991/gitsigns.nvim" },
 
   { "nvim-tree/nvim-tree.lua" },
+  { "fennec-support/kosh.nvim", lazy = false, opts = {} },
 
   -- Themes
   { "EdenEast/nightfox.nvim" },
@@ -217,25 +218,6 @@ vim.g.markdown_recommended_style = 0
 vim.g.python_recommended_style = 0
 vim.g.sass_recommended_style = 0
 vim.g.meson_recommended_style = 0
-
-vim.filetype.add({
-  extension = {
-    bash = "bash",
-    dash = "dash",
-    h = "c",
-    kosh = "kosh",
-    sh = "sh",
-    shit = "shit",
-  },
-})
-
-vim.treesitter.language.register("bash", {
-  "bash",
-  "dash",
-  "kosh",
-  "sh",
-  "shit",
-})
 
 local user_augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
 
@@ -451,10 +433,11 @@ pcall(
 
 vim.o.background = "dark"
 -- vim.o.background = "light"
--- vim.cmd.colorscheme("duskfox")
--- vim.cmd.colorscheme("carbonfox")
+-- vim.cmd.colorscheme "duskfox"
+-- vim.cmd.colorscheme "carbonfox"
 -- vim.cmd.colorscheme 'dawnfox'
-vim.cmd.colorscheme 'nordfox'
+-- vim.cmd.colorscheme 'nordfox'
+vim.cmd.colorscheme 'nightfox'
 -- vim.cmd.colorscheme 'kanagawa-lotus'
 
 local function get_bg_color(highlight_name)
@@ -532,6 +515,9 @@ vim.api.nvim_set_hl(0, "LazyGitFloat", { link = "Normal" })
 vim.api.nvim_set_hl(0, "LazyGitBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", { link = "VertSplit" })
 
+local should_enable_transparent_background = false
+
+if should_enable_transparent_background then
 vim.cmd([[
   highlight Normal guibg=none
   highlight NormalNC guibg=none
@@ -541,6 +527,7 @@ vim.cmd([[
   highlight NonText ctermbg=none
   highlight NvimTreeNormal guibg=none ctermbg=none
 ]])
+end
 
 local ccc = require("ccc")
 ccc.setup({
@@ -818,35 +805,6 @@ if enable_lsp then
   lspconfig("powershell_es", {
     bundle_path = vim.env.HOME .. "/External/powershell-eds",
   })
-
-  lspconfig("kosh", {
-    cmd = { "kosh", "--as-language-server" },
-    filetypes = {
-      "sh",
-      "bash",
-      "kosh",
-      "shit",
-      "yaml",
-      "yaml.ansible",
-      "markdown",
-      "dockerfile",
-      "make",
-      "json",
-      "jsonc",
-      "just",
-      "spec",
-    },
-    root_dir = function(bufnr, on_dir)
-      if not is_analyzable_buffer(bufnr) then
-        return
-      end
-
-      on_dir(vim.fs.root(bufnr, { ".git" })
-        or vim.fs.root(bufnr, { "Makefile" })
-        or vim.fn.getcwd())
-    end,
-  })
-  vim.lsp.enable("kosh")
 
   for _, lsp in ipairs(default_servers) do
     vim.lsp.enable(lsp, {

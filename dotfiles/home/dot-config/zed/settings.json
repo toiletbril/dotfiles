@@ -8,7 +8,6 @@
     "git_panel": {
         "dock": "left"
     },
-    "proxy": "http://127.0.0.1:2080",
     "agent_servers": {
         "claude-acp": {
             "type": "registry",
@@ -19,23 +18,8 @@
     },
     "buffer_line_height": "standard",
     "hide_mouse": "never",
-    "ssh_connections": [
-        {
-            "host": "adbm-2843-host",
-            "username": "login",
-            "args": [
-                "-o",
-                "ProxyCommand=socat - PROXY:localhost:%h:%p,proxyport=2090",
-            ],
-            "projects": [
-                {
-                    "paths": ["/home/login"],
-                },
-            ],
-        },
-    ],
 
-    "base_keymap": "Emacs",
+    "base_keymap": "VSCode",
 
     "git": {
         "inline_blame": {
@@ -103,7 +87,7 @@
     "colorize_brackets": true,
     "lsp_document_colors": "background",
     "buffer_font_weight": 420.0,
-    "show_completions_on_input": false,
+    "show_completions_on_input": true,
     "show_whitespaces": "all",
     "ensure_final_newline_on_save": false,
     "remove_trailing_whitespace_on_save": false,
@@ -124,15 +108,23 @@
         "diagnostics": false,
     },
     "terminal": {
-        "shell": {
-            "program": "bash",
-        },
+        "shell": "system",
         "font_family": "JetBrains Mono",
-        "env": {
-            "NO_FISH": "1",
-        },
     },
     "auto_install_extensions": {
         "wakatime": true,
+    },
+    "file_types": {
+        "Shell Script": ["kosh", "shit"],
+    },
+    "languages": {
+        "Shell Script": {
+            "language_servers": ["kosh", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "kosh",
+                },
+            },
+        },
     },
 }

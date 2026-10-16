@@ -91,9 +91,24 @@ require("lazy").setup({
       opts = {
         sort = { sorter = "case_sensitive" },
         view = {
-          width = function()
-            return math.floor(vim.o.columns * 0.2)
-          end,
+          cursorline = false,
+          float = {
+            enable = true,
+            open_win_config = function()
+              local window_width = math.floor(vim.o.columns * 0.5)
+              local window_height =
+                math.floor((vim.o.lines - vim.o.cmdheight) * 0.7)
+
+              return {
+                relative = "editor",
+                border = "rounded",
+                width = window_width,
+                height = window_height,
+                row = math.floor((vim.o.lines - window_height) / 2) - 1,
+                col = math.floor((vim.o.columns - window_width) / 2),
+              }
+            end,
+          },
         },
         renderer = { group_empty = true },
         git = { ignore = false },

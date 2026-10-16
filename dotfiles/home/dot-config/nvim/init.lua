@@ -13,6 +13,10 @@
 -- mercilessly horibble bullshit in vimscript and lua it's actually pretty
 -- useful and nice to use, althrough consumes as much memory as CLion now.
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_nvim_net_plugin = true
+
 -- Install lazy.nvim if not already installed.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
@@ -33,68 +37,108 @@ require("lazy").setup({
     lazy = true,
   },
 
-  -- lol
-  -- { "wakatime/vim-wakatime", lazy = false },
+  spec = {
+    -- lol
+    -- { "wakatime/vim-wakatime", lazy = false },
 
-  -- LSP and completion
-  { "neovim/nvim-lspconfig" },
-  { "saghen/blink.cmp", version = "*" },
+    -- LSP and completion
+    { "neovim/nvim-lspconfig" },
+    { "saghen/blink.cmp", version = "*" },
 
-  {
-    "dmtrKovalenko/fff.nvim",
-    -- Prefer building the Rust binary locally; only fall back to the
-    -- prebuilt-download path if cargo build fails.
-    build = function()
-      local d = require("fff.download")
-      local done, err = false, nil
-      d.build_binary(function(ok, e)
-        if not ok then
-          err = e
-        end
-        done = true
-      end)
-      vim.wait(2 * 60 * 1000, function()
-        return done
-      end, 100)
-      if err then
-        vim.notify(
-          "fff.nvim: local build failed ("
-            .. err
-            .. "); falling back to download_or_build_binary",
-          vim.log.levels.WARN
-        )
-        d.download_or_build_binary()
-      end
-    end,
+    {
+      "folke/snacks.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {
+        bigfile = {},
+        image = { enabled = false },
+        input = {},
+        notifier = { style = "compact", top_down = true },
+        words = { debounce = 200 },
+        zen = {},
+        lazygit = {},
+        picker = {
+          matcher = { frecency = true },
+          win = {
+            list = { wo = { scrolloff = 0 } },
+          },
+        },
+      },
+    },
+
+    -- Treesitter
+    {
+      "nvim-treesitter/nvim-treesitter",
+      branch = "main",
+      lazy = false,
+      build = ":TSUpdate",
+    },
+
+    -- Miscellaneous plugins
+    { "cappyzawa/trim.nvim" },
+    { "NMAC427/guess-indent.nvim" },
+    { "lewis6991/gitsigns.nvim" },
+
+    { "fennec-support/kosh.nvim", lazy = false, opts = {} },
+
+    -- Themes
+    { "EdenEast/nightfox.nvim" },
+    { "cocopon/iceberg.vim" },
+
+    -- Tools
+    {
+      "nvim-tree/nvim-tree.lua",
+      opts = {
+        sort = { sorter = "case_sensitive" },
+        view = {
+          width = function()
+            return math.floor(vim.o.columns * 0.2)
+          end,
+        },
+        renderer = { group_empty = true },
+        git = { ignore = false },
+        filters = { dotfiles = false },
+        on_attach = function(buffer)
+          local api = require("nvim-tree.api")
+
+          local function get_opts(description)
+            return {
+              desc = "nvim-tree: " .. description,
+              buffer = buffer,
+              noremap = true,
+              silent = true,
+              nowait = true,
+            }
+          end
+
+          api.config.mappings.default_on_attach(buffer)
+          vim.keymap.del("n", "<2-LeftMouse>", { buffer = buffer })
+
+          vim.keymap.set(
+            "n",
+            "<LeftRelease>",
+            api.node.open.edit,
+            get_opts("Open")
+          )
+          vim.keymap.set("n", "<CR>", function()
+            local node = api.tree.get_node_under_cursor()
+            if node ~= nil and node.type == "directory" then
+              api.tree.change_root_to_node(node)
+              return
+            end
+
+            api.node.open.edit(node)
+          end, get_opts("Enter directory or open file"))
+          vim.keymap.set("n", "T", api.node.open.tab, get_opts("Tab"))
+        end,
+      },
+    },
+    { "echasnovski/mini.align" },
+    { "echasnovski/mini.surround" },
+    { "uga-rosa/ccc.nvim" },
+
+    -- { 'lewis6991/satellite.nvim' },
   },
-
-  -- Treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    lazy = false,
-    build = ":TSUpdate",
-  },
-
-  -- Miscellaneous plugins
-  { "cappyzawa/trim.nvim" },
-  { "NMAC427/guess-indent.nvim" },
-  { "lewis6991/gitsigns.nvim" },
-
-  { "nvim-tree/nvim-tree.lua" },
-  { "fennec-support/kosh.nvim", lazy = false, opts = {} },
-
-  -- Themes
-  { "EdenEast/nightfox.nvim" },
-  { "cocopon/iceberg.vim" },
-
-  -- Tools
-  { "folke/zen-mode.nvim" },
-  { "echasnovski/mini.align" },
-  { "echasnovski/mini.surround" },
-  { "uga-rosa/ccc.nvim" },
-
-  -- { 'lewis6991/satellite.nvim' },
 })
 
 vim.cmd([[
@@ -136,7 +180,6 @@ vim.opt.colorcolumn = "80"
 vim.opt.textwidth = 0
 vim.opt.termguicolors = true
 vim.opt.pumblend = 30
-vim.opt.winblend = 30
 vim.opt.signcolumn = "yes"
 vim.opt.statusline = " "
 -- vim.opt.fillchars = { stl = '─', stlnc = '─' }
@@ -173,9 +216,7 @@ function _G.MyTabLine()
         bn = "[Quickfix]"
       else
         local tn = vim.fn.fnamemodify(vim.fn.bufname(b), ":t")
-        if tn:match("NvimTree_") then
-          bn = "[File tree]"
-        elseif bt == "prompt" or bt == "nofile" then
+        if bt == "prompt" or bt == "nofile" then
           goto continue
         elseif tn == "" then
           bn = "[New file]"
@@ -200,11 +241,7 @@ function _G.MyTabLine()
 end
 vim.opt.tabline = "%!v:lua.MyTabLine()"
 
-vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = " "
-vim.g.EasyMotion_use_migemo = 1
-vim.g.rainbow_active = true
-vim.g.lazygit_floating_window_winblend = 30
 vim.g.editorconfig = false
 
 -- OF COURSE there is some idiotic dog water that explodes your settings for
@@ -263,20 +300,15 @@ end
 vim.keymap.set("n", "<C-g>", "g<C-g>", { silent = true })
 vim.keymap.set("v", "<C-g>", "g<C-g>", { silent = true })
 
-vim.keymap.set("n", "<C-b>", ":NvimTreeFindFile<CR>", { silent = true })
-
 vim.keymap.set(
   "n",
   "<Space>e",
   ":lua vim.diagnostic.open_float()<CR>",
   { silent = true }
 )
-vim.keymap.set(
-  "n",
-  "<Space>ll",
-  ":lua vim.diagnostic.setloclist()<CR>",
-  { silent = true }
-)
+vim.keymap.set("n", "<Space>ll", function()
+  Snacks.picker.diagnostics_buffer()
+end, { desc = "Buffer diagnostics" })
 
 -- Search bindings. Very convenient and fucking stupid.
 vim.keymap.set("n", "<Esc>", ":noh<CR><ESC>", { silent = true })
@@ -306,39 +338,114 @@ vim.keymap.set(
   { silent = true }
 )
 
-local fff = require("fff")
+local function get_project_root()
+  return Snacks.git.get_root() or vim.fn.getcwd()
+end
 
--- autochdir is on, so cwd follows the open buffer. Anchor fff to the git
--- repo root (or the original cwd) so pickers index the whole project.
-local function fff_root()
-  local start = vim.fn.expand("%:p:h")
-  if start == "" then
-    start = vim.fn.getcwd()
-  end
-  local found = vim.fs.find(".git", { upward = true, path = start })[1]
-  if found then
-    return vim.fs.dirname(found)
-  end
-  return vim.fn.getcwd()
+local function do_grep_project(search_text)
+  vim.fn.setreg("/", search_text)
+  Snacks.picker.grep({
+    cwd = get_project_root(),
+    search = search_text,
+    regex = false,
+  })
 end
 
 vim.keymap.set("n", "<C-s>", function()
-  vim.fn.setreg("/", vim.fn.expand("<cword>"))
-  fff.live_grep({ cwd = fff_root(), query = vim.fn.expand("<cword>") })
-end, { silent = true })
+  do_grep_project(vim.fn.expand("<cword>"))
+end, { desc = "Grep word" })
 vim.keymap.set("v", "<C-s>", function()
   vim.cmd('normal! "0y')
-  local q = vim.fn.getreg("0")
-  vim.fn.setreg("/", q)
-  fff.live_grep({ cwd = fff_root(), query = q })
-end, { silent = true })
+  do_grep_project(vim.fn.getreg("0"))
+end, { desc = "Grep selection" })
 
-vim.keymap.set("n", "<S-Tab>", function()
-  fff.find_files({ cwd = fff_root() })
-end, { silent = true })
-vim.keymap.set("n", "<Tab>", function()
-  fff.live_grep({ cwd = fff_root() })
-end, { silent = true })
+local function do_pick(picker_name, picker_opts)
+  return function()
+    Snacks.picker[picker_name](picker_opts and picker_opts() or nil)
+  end
+end
+
+local function do_get_root_opts()
+  return { cwd = get_project_root() }
+end
+
+vim.keymap.set("n", "<C-b>", function()
+  local api = require("nvim-tree.api")
+  if api.tree.is_visible() then
+    api.tree.find_file({ focus = true })
+    return
+  end
+
+  api.tree.open({ path = get_project_root(), find_file = true })
+end, { desc = "File tree" })
+vim.keymap.set("n", "<Space>z", function()
+  Snacks.zen()
+end, { desc = "Zen mode" })
+vim.keymap.set("n", "<Space>Z", function()
+  Snacks.zen.zoom()
+end, { desc = "Zoom window" })
+vim.keymap.set("n", "<Space>n", function()
+  Snacks.notifier.show_history()
+end, { desc = "Notification history" })
+vim.keymap.set("n", "<Space>gg", function()
+  Snacks.lazygit({ cwd = get_project_root() })
+end, { desc = "Lazygit" })
+vim.keymap.set("n", "]]", function()
+  Snacks.words.jump(vim.v.count1)
+end, { desc = "Next reference" })
+vim.keymap.set("n", "[[", function()
+  Snacks.words.jump(-vim.v.count1)
+end, { desc = "Previous reference" })
+vim.keymap.set("n", "<C-p>", do_pick("commands"), { desc = "Commands" })
+vim.keymap.set("n", "<Space>sC", do_pick("commands"), { desc = "Commands" })
+vim.keymap.set(
+  "n",
+  "<Space>:",
+  do_pick("command_history"),
+  { desc = "Command history" }
+)
+vim.keymap.set("n", "<Space>sk", do_pick("keymaps"), { desc = "Keymaps" })
+vim.keymap.set("n", "<Space>sh", do_pick("help"), { desc = "Help pages" })
+vim.keymap.set("n", "<Space>sp", do_pick("pickers"), { desc = "Pickers" })
+vim.keymap.set("n", "<Space>sR", do_pick("resume"), { desc = "Resume picker" })
+vim.keymap.set(
+  "n",
+  "<Space>sd",
+  do_pick("diagnostics"),
+  { desc = "Diagnostics" }
+)
+vim.keymap.set(
+  "n",
+  "<Space>ss",
+  do_pick("lsp_symbols"),
+  { desc = "LSP symbols" }
+)
+vim.keymap.set(
+  "n",
+  "<Tab>",
+  do_pick("files", do_get_root_opts),
+  { desc = "Find files" }
+)
+vim.keymap.set(
+  "n",
+  "<Space>fg",
+  do_pick("git_files", do_get_root_opts),
+  { desc = "Find git files" }
+)
+vim.keymap.set("n", "<Space>fr", do_pick("recent"), { desc = "Recent files" })
+vim.keymap.set("n", "<Space>,", do_pick("buffers"), { desc = "Buffers" })
+vim.keymap.set(
+  "n",
+  "<Space><Tab>",
+  do_pick("grep", do_get_root_opts),
+  { desc = "Grep" }
+)
+vim.keymap.set(
+  { "n", "x" },
+  "<Space>sw",
+  do_pick("grep_word", do_get_root_opts),
+  { desc = "Grep word" }
+)
 
 vim.keymap.set("n", "<Space>y", '"+y')
 vim.keymap.set("n", "<Space>p", '"+p')
@@ -408,7 +515,8 @@ vim.keymap.set("n", "m", "O<ESC>")
 vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter" }, {
   group = user_augroup,
   callback = function()
-    if vim.bo.buftype ~= "nofile" then
+    local is_floating = vim.api.nvim_win_get_config(0).relative ~= ""
+    if vim.bo.buftype ~= "nofile" and not is_floating then
       vim.opt_local.statusline = "%.f:%l:%c%=[%{mode(1)}]%=%=%{&filetype} %P"
     end
   end,
@@ -433,11 +541,11 @@ pcall(
 
 vim.o.background = "dark"
 -- vim.o.background = "light"
--- vim.cmd.colorscheme "duskfox"
+vim.cmd.colorscheme("duskfox")
 -- vim.cmd.colorscheme "carbonfox"
 -- vim.cmd.colorscheme 'dawnfox'
 -- vim.cmd.colorscheme 'nordfox'
-vim.cmd.colorscheme 'nightfox'
+-- vim.cmd.colorscheme("nightfox")
 -- vim.cmd.colorscheme 'kanagawa-lotus'
 
 local function get_bg_color(highlight_name)
@@ -485,7 +593,6 @@ vim.api.nvim_set_hl(0, "ColorColumn", { link = "CursorColumn" })
 vim.api.nvim_set_hl(0, "CurSearch", { link = "Search" })
 vim.api.nvim_set_hl(0, "SignColumn", { link = "LineNr" })
 vim.api.nvim_set_hl(0, "MatchParen", { bg = "gray", fg = "pink" })
-vim.api.nvim_set_hl(0, "TreesitterContext", { link = "SignColumn" })
 vim.api.nvim_set_hl(0, "Winbar", { link = "SignColumn" })
 
 vim.api.nvim_set_hl(
@@ -509,16 +616,13 @@ vim.api.nvim_set_hl(
 )
 vim.api.nvim_set_hl(0, "VertSplit", { link = "WinSeparator" })
 vim.api.nvim_set_hl(0, "NvimTreeStatusLine", { link = "StatusLineNC" })
-vim.api.nvim_set_hl(0, "FloatBorder", { link = "Whitespace" })
-vim.api.nvim_set_hl(0, "FTerm", { link = "Normal" })
-vim.api.nvim_set_hl(0, "LazyGitFloat", { link = "Normal" })
-vim.api.nvim_set_hl(0, "LazyGitBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", { link = "VertSplit" })
+vim.api.nvim_set_hl(0, "FloatBorder", { link = "Whitespace" })
 
 local should_enable_transparent_background = false
 
 if should_enable_transparent_background then
-vim.cmd([[
+  vim.cmd([[
   highlight Normal guibg=none
   highlight NormalNC guibg=none
   highlight NonText guibg=none
@@ -554,7 +658,10 @@ treesitter.install({ "svelte" })
 vim.api.nvim_create_autocmd("FileType", {
   group = user_augroup,
   callback = function(args)
-    if vim.api.nvim_buf_line_count(args.buf) > 3333 then
+    if
+      vim.bo[args.buf].filetype == "bigfile"
+      or vim.api.nvim_buf_line_count(args.buf) > 3333
+    then
       return
     end
     local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
@@ -606,111 +713,28 @@ require("mini.align").setup({})
 
 require("trim").setup({ trim_on_write = false })
 
-fff.setup({})
-
-function _G.live_grep_from_project_git_root(query)
-  fff.live_grep({ cwd = fff_root(), query = query })
-end
-
-local nvimtreeapi = require("nvim-tree.api")
-
-local function open_tab_silent(node)
-  nvimtreeapi.node.open.tab(node)
-end
-
-local function why_is_this_plugin_author_is_not_ashamed_of_breathing_air(bufnr)
-  local function opts(desc)
-    return {
-      desc = "nvim-tree: " .. desc,
-      buffer = bufnr,
-      noremap = true,
-      silent = true,
-      nowait = true,
-    }
-  end
-
-  nvimtreeapi.config.mappings.default_on_attach(bufnr)
-
-  vim.keymap.set("n", "?", nvimtreeapi.tree.toggle_help, opts("Help"))
-  vim.keymap.set("n", "T", open_tab_silent, opts("Tab"))
-end
-
-local HEIGHT_RATIO = 0.8
-local WIDTH_RATIO = 0.5
-
-local nvimtree_enable_float = false
-
 vim.api.nvim_create_autocmd("QuitPre", {
   group = user_augroup,
   callback = function()
-    local tree_wins = {}
-    local floating_wins = {}
-    local wins = vim.api.nvim_list_wins()
-    for _, w in ipairs(wins) do
-      local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
-      if bufname:match("NvimTree_") ~= nil then
-        table.insert(tree_wins, w)
-      end
-      if vim.api.nvim_win_get_config(w).relative ~= "" then
-        table.insert(floating_wins, w)
+    local tree_windows = {}
+    local editor_window_count = 0
+    for _, window in ipairs(vim.api.nvim_list_wins()) do
+      local buffer = vim.api.nvim_win_get_buf(window)
+      local is_floating = vim.api.nvim_win_get_config(window).relative ~= ""
+      if vim.bo[buffer].filetype == "NvimTree" then
+        table.insert(tree_windows, window)
+      elseif not is_floating then
+        editor_window_count = editor_window_count + 1
       end
     end
-    if 1 == #wins - #floating_wins - #tree_wins then
-      for _, w in ipairs(tree_wins) do
-        vim.api.nvim_win_close(w, true)
+
+    if editor_window_count == 1 then
+      for _, window in ipairs(tree_windows) do
+        vim.api.nvim_win_close(window, true)
       end
     end
   end,
 })
-
-local nvimtree = require("nvim-tree")
-nvimtree.setup({
-  sort = {
-    sorter = "case_sensitive",
-  },
-  view = {
-    float = {
-      enable = nvimtree_enable_float,
-      open_win_config = function()
-        local screen_w = vim.o.columns
-        local screen_h = vim.o.lines - vim.o.cmdheight
-        local window_w = screen_w * WIDTH_RATIO
-        local window_h = screen_h * HEIGHT_RATIO
-        local window_w_int = math.floor(window_w)
-        local window_h_int = math.floor(window_h)
-        local center_x = (screen_w - window_w) / 2
-        local center_y = ((vim.o.lines - window_h) / 2) - vim.o.cmdheight
-        return {
-          border = "rounded",
-          relative = "editor",
-          row = center_y,
-          col = center_x,
-          width = window_w_int,
-          height = window_h_int,
-        }
-      end,
-    },
-    width = function()
-      if nvimtree_enable_float then
-        return math.floor(vim.o.columns * WIDTH_RATIO)
-      else
-        return math.floor(vim.o.columns * 0.2)
-      end
-    end,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  git = {
-    ignore = false,
-  },
-  filters = {
-    dotfiles = false,
-  },
-  on_attach = why_is_this_plugin_author_is_not_ashamed_of_breathing_air,
-})
-
-vim.g.completion_trigger_character_length = 4
 
 -- this eats memory and makes lsp do weird things. my log was 1.2 GiB =D
 vim.lsp.log.set_level("error")
@@ -831,18 +855,22 @@ if enable_lsp then
       vim.keymap.set("n", "<C-k>", vim.lsp.buf.hover, opts)
       vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
 
-      vim.keymap.set("n", "<Space>ll", vim.diagnostic.setloclist, opts)
-      vim.keymap.set("n", "<Space>e", vim.diagnostic.open_float, opts)
+      local nowait_opts = { buffer = ev.buf, nowait = true }
 
-      vim.keymap.set("n", "<Space>gd", vim.lsp.buf.definition, opts)
-      vim.keymap.set("n", "<Space>gi", vim.lsp.buf.implementation, opts)
-      vim.keymap.set("n", "<Space>gs", vim.lsp.buf.document_symbol, opts)
-      vim.keymap.set("n", "<Space>gS", vim.lsp.buf.workspace_symbol, opts)
-      vim.keymap.set("n", "<Space>gr", vim.lsp.buf.references, opts)
+      vim.keymap.set("n", "<Space>gd", Snacks.picker.lsp_definitions, opts)
+      vim.keymap.set("n", "<Space>gi", Snacks.picker.lsp_implementations, opts)
+      vim.keymap.set("n", "<Space>gs", Snacks.picker.lsp_symbols, opts)
+      vim.keymap.set(
+        "n",
+        "<Space>gS",
+        Snacks.picker.lsp_workspace_symbols,
+        opts
+      )
+      vim.keymap.set("n", "<Space>gr", Snacks.picker.lsp_references, opts)
       vim.keymap.set("n", "<space>gt", vim.lsp.buf.typehierarchy, opts)
 
-      vim.keymap.set("n", "<Space>co", vim.lsp.buf.outgoing_calls, opts)
-      vim.keymap.set("n", "<Space>ci", vim.lsp.buf.incoming_calls, opts)
+      vim.keymap.set("n", "<Space>co", Snacks.picker.lsp_outgoing_calls, opts)
+      vim.keymap.set("n", "<Space>ci", Snacks.picker.lsp_incoming_calls, opts)
 
       vim.keymap.set("n", "<Space>wc", vim.lsp.buf.add_workspace_folder, opts)
       vim.keymap.set(
@@ -856,10 +884,10 @@ if enable_lsp then
         vim.print(vim.lsp.buf.list_workspace_folders())
       end, opts)
 
-      vim.keymap.set("n", "<Space>d", vim.lsp.buf.type_definition, opts)
+      vim.keymap.set("n", "<Space>d", Snacks.picker.lsp_type_definitions, opts)
       vim.keymap.set("n", "<Space>rr", vim.lsp.buf.rename, opts)
       vim.keymap.set({ "n", "v" }, "<Space>ca", vim.lsp.buf.code_action, opts)
-      vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+      vim.keymap.set("n", "gr", Snacks.picker.lsp_references, nowait_opts)
 
       vim.keymap.set("n", "<Space>ff", function()
         vim.lsp.buf.format({ async = true })

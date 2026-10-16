@@ -13,37 +13,57 @@
 -- mercilessly horibble bullshit in vimscript and lua it's actually pretty
 -- useful and nice to use, althrough consumes as much memory as CLion now.
 
+vim.g.mapleader = " "
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_nvim_net_plugin = true
+vim.g.loaded_sql_completion = 1
 
--- Install lazy.nvim if not already installed.
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+
+local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazy_path) then
+  vim
+    .system({
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "--branch=stable",
+      "https://github.com/folke/lazy.nvim.git",
+      lazy_path,
+    })
+    :wait()
 end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(lazy_path)
 
--- Load plugins
 require("lazy").setup({
   defaults = {
     lazy = true,
   },
 
-  spec = {
-    -- lol
-    -- { "wakatime/vim-wakatime", lazy = false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "editorconfig",
+        "gzip",
+        "net",
+        "netrwPlugin",
+        "rplugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
 
+  spec = {
     -- LSP and completion
-    { "neovim/nvim-lspconfig" },
-    { "saghen/blink.cmp", version = "*" },
+    { "neovim/nvim-lspconfig", lazy = false },
+    { "saghen/blink.cmp", version = "*", lazy = false },
 
     {
       "folke/snacks.nvim",
@@ -75,9 +95,49 @@ require("lazy").setup({
     },
 
     -- Miscellaneous plugins
-    { "cappyzawa/trim.nvim" },
-    { "NMAC427/guess-indent.nvim" },
-    { "lewis6991/gitsigns.nvim" },
+    {
+      "cappyzawa/trim.nvim",
+      cmd = { "Trim", "TrimToggle" },
+      opts = { trim_on_write = false },
+    },
+    {
+      "NMAC427/guess-indent.nvim",
+      event = { "BufReadPre", "BufNewFile" },
+      opts = {
+        auto_cmd = true,
+        on_tab_options = {
+          ["expandtab"] = false,
+          ["tabstop"] = 4,
+          ["softtabstop"] = 0,
+          ["shiftwidth"] = 0,
+        },
+        on_space_options = {
+          ["expandtab"] = true,
+          ["tabstop"] = "detected",
+          ["softtabstop"] = "detected",
+          ["shiftwidth"] = "detected",
+        },
+      },
+    },
+    {
+      "lewis6991/gitsigns.nvim",
+      event = "VeryLazy",
+      opts = {},
+      keys = {
+        {
+          "<C-c>c",
+          function()
+            require("gitsigns").blame_line()
+          end,
+        },
+        {
+          "<C-c>a",
+          function()
+            require("gitsigns").blame()
+          end,
+        },
+      },
+    },
 
     { "fennec-support/kosh.nvim", lazy = false, opts = {} },
 
@@ -135,31 +195,49 @@ require("lazy").setup({
             api.node.open.edit,
             get_opts("Open")
           )
-          vim.keymap.set("n", "<CR>", function()
-            local node = api.tree.get_node_under_cursor()
-            if node ~= nil and node.type == "directory" then
-              api.tree.change_root_to_node(node)
-              return
-            end
-
-            api.node.open.edit(node)
-          end, get_opts("Enter directory or open file"))
+          vim.keymap.set(
+            "n",
+            "<CR>",
+            api.node.open.preview,
+            get_opts("Open Preview")
+          )
           vim.keymap.set("n", "T", api.node.open.tab, get_opts("Tab"))
         end,
       },
     },
-    { "echasnovski/mini.align" },
-    { "echasnovski/mini.surround" },
-    { "uga-rosa/ccc.nvim" },
+    { "echasnovski/mini.align", event = "VeryLazy", opts = {} },
+    { "echasnovski/mini.surround", event = "VeryLazy", opts = {} },
+    {
+      "uga-rosa/ccc.nvim",
+      event = "VeryLazy",
+      opts = function()
+        local ccc = require("ccc")
 
-    -- { 'lewis6991/satellite.nvim' },
+        return {
+          inputs = {
+            ccc.input.hsl,
+            ccc.input.rgb,
+          },
+          highlighter = {
+            auto_enable = true,
+            lsp = false,
+          },
+          virtual_symbol = "■ ",
+          highlight_mode = "bg",
+        }
+      end,
+      config = function(_, opts)
+        require("ccc").setup(opts)
+        vim.api.nvim_exec_autocmds("BufEnter", {
+          group = "ccc-highlighter-auto-enable",
+          buffer = vim.api.nvim_get_current_buf(),
+        })
+      end,
+    },
   },
 })
 
-vim.cmd([[
-  syntax on
-  filetype plugin indent off
-]])
+vim.cmd("filetype plugin indent off")
 
 -- completion's height
 vim.opt.pumheight = 6
@@ -167,97 +245,82 @@ vim.opt.pumheight = 6
 vim.opt.lazyredraw = true
 vim.opt.wrap = false
 vim.opt.scrolloff = 4
-vim.opt.autoindent = true
 vim.opt.smartindent = true
-vim.opt.fileformat = "unix"
 vim.opt.expandtab = true
-vim.opt.smarttab = true
--- vim.opt.guioptions = 'mT'
-vim.opt.encoding = "UTF-8"
 vim.opt.number = true
-vim.opt.incsearch = true
-vim.opt.hlsearch = true
 vim.opt.autochdir = true
 vim.opt.list = true
-vim.opt.showmode = true
 vim.opt.cmdheight = 0
 vim.opt.cinoptions = "l1"
-vim.opt.listchars = { tab = "┊ ", space = "·" }
--- vim.opt.listchars = { tab = '┊ ', space = '·', eol = '↵' }
+vim.opt.listchars = { tab = "┊ ", space = "⸱" }
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.clipboard = "unnamed"
-vim.opt.cursorline = false
--- vim.opt.cursorline = true
-vim.opt.cursorlineopt = "both"
 vim.opt.omnifunc = "syntaxcomplete#Complete"
 vim.opt.colorcolumn = "80"
-vim.opt.textwidth = 0
 vim.opt.termguicolors = true
 vim.opt.pumblend = 30
 vim.opt.signcolumn = "yes"
 vim.opt.statusline = " "
--- vim.opt.fillchars = { stl = '─', stlnc = '─' }
 vim.opt.fillchars = { stl = " ", stlnc = " " }
-vim.opt.laststatus = 2
-vim.opt.winbar = ""
 vim.opt.guicursor = "n-sm:block,i-c-ci-ve:ver25,r-cr-o-v:hor20"
--- vim.opt.guicursor='n-sm:block,i-c-ci-ve:block,r-cr-o-v:hor20'
 vim.opt.swapfile = false
 vim.opt.redrawtime = 1111
--- vim.opt.keymap = 'russian-jcuken'
-
--- for ghostty, until the scroll multiplication is fixed
--- vim.opt.mousescroll = 'ver:1,hor:2'
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 0
 
 -- Stop fucking annoying labels from jumping around when expanded from relative
 -- to full paths in the tabline when focused/unfocused. Another one of a
 -- thousand and one setting designed for you to waste time on.
 function _G.MyTabLine()
-  local s = ""
+  local tabline_parts = {}
   local tab_count = vim.fn.tabpagenr("$")
   local current_tab = vim.fn.tabpagenr()
-  for t = 1, tab_count do
-    s = s .. (t == current_tab and "%#TabLineSel#" or "%#TabLine#")
-    s = s .. "%" .. t .. "T " .. t .. " "
-    local n = ""
-    local bc = 0
-    for _, b in ipairs(vim.fn.tabpagebuflist(t)) do
-      local bn = ""
-      local bt = vim.fn.getbufvar(b, "&buftype")
-      if bt == "help" then
-        bn = "[Help]" .. vim.fn.fnamemodify(vim.fn.bufname(b), ":t:s/.txt$//")
-      elseif bt == "quickfix" then
-        bn = "[Quickfix]"
-      else
-        local tn = vim.fn.fnamemodify(vim.fn.bufname(b), ":t")
-        if bt == "prompt" or bt == "nofile" then
-          goto continue
-        elseif tn == "" then
-          bn = "[New file]"
-        else
-          bn = tn
+
+  for tab = 1, tab_count do
+    table.insert(
+      tabline_parts,
+      tab == current_tab and "%#TabLineSel#" or "%#TabLine#"
+    )
+    table.insert(tabline_parts, "%" .. tab .. "T " .. tab .. " ")
+
+    local buffer_labels = {}
+    for _, buffer in ipairs(vim.fn.tabpagebuflist(tab)) do
+      local buffer_type = vim.bo[buffer].buftype
+      local buffer_basename =
+        vim.fs.basename(vim.api.nvim_buf_get_name(buffer))
+      local buffer_label = nil
+
+      if buffer_type == "help" then
+        buffer_label = "[Help]" .. buffer_basename:gsub("%.txt$", "")
+      elseif buffer_type == "quickfix" then
+        buffer_label = "[Quickfix]"
+      elseif buffer_type ~= "prompt" and buffer_type ~= "nofile" then
+        buffer_label = buffer_basename == "" and "[New file]"
+          or buffer_basename
+      end
+
+      if buffer_label ~= nil then
+        if vim.bo[buffer].modified then
+          buffer_label = buffer_label .. " (modified)"
         end
+
+        table.insert(buffer_labels, buffer_label)
       end
-      if vim.fn.getbufvar(b, "&modified") == 1 then
-        bn = bn .. " (modified)"
-      end
-      n = n .. (bc > 0 and ", " or "") .. bn
-      bc = bc + 1
-      ::continue::
     end
-    s = s .. n .. " "
+
+    table.insert(tabline_parts, table.concat(buffer_labels, ", ") .. " ")
   end
-  s = s .. "%#TabLineFill#%T"
+
+  table.insert(tabline_parts, "%#TabLineFill#%T")
   if tab_count > 1 then
-    s = s .. "%=%#TabLineFill#%999X"
+    table.insert(tabline_parts, "%=%#TabLineFill#%999X")
   end
-  return s
+
+  return table.concat(tabline_parts)
 end
 vim.opt.tabline = "%!v:lua.MyTabLine()"
-
-vim.g.mapleader = " "
-vim.g.editorconfig = false
 
 -- OF COURSE there is some idiotic dog water that explodes your settings for
 -- no reason. OF COURSE I wasted 2 hours trying to understand why this shit
@@ -272,16 +335,6 @@ vim.g.sass_recommended_style = 0
 vim.g.meson_recommended_style = 0
 
 local user_augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
-
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_gzip = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_tutor_mode_plugin = 1
-vim.g.loaded_sql_completion = 1
-
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_node_provider = 0
-vim.g.loaded_perl_provider = 0
 
 -- Neovide :3
 if vim.g.neovide then
@@ -312,29 +365,17 @@ if vim.g.neovide then
 end
 
 -- Key mappings
-vim.keymap.set("n", "<C-g>", "g<C-g>", { silent = true })
-vim.keymap.set("v", "<C-g>", "g<C-g>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<C-g>", "g<C-g>", { silent = true })
 
-vim.keymap.set(
-  "n",
-  "<Space>e",
-  ":lua vim.diagnostic.open_float()<CR>",
-  { silent = true }
-)
+vim.keymap.set("n", "<Space>e", vim.diagnostic.open_float, { silent = true })
 vim.keymap.set("n", "<Space>ll", function()
   Snacks.picker.diagnostics_buffer()
 end, { desc = "Buffer diagnostics" })
 
 -- Search bindings. Very convenient and fucking stupid.
-vim.keymap.set("n", "<Esc>", ":noh<CR><ESC>", { silent = true })
+vim.keymap.set("n", "<Esc>", "<Cmd>noh<CR><Esc>", { silent = true })
 vim.keymap.set(
-  "n",
-  "?",
-  ':silent setl hls | let @/ = input("/")<CR>',
-  { silent = true }
-)
-vim.keymap.set(
-  "v",
+  { "n", "v" },
   "?",
   ':silent setl hls | let @/ = input("/")<CR>',
   { silent = true }
@@ -462,30 +503,24 @@ vim.keymap.set(
   { desc = "Grep word" }
 )
 
-vim.keymap.set("n", "<Space>y", '"+y')
-vim.keymap.set("n", "<Space>p", '"+p')
-vim.keymap.set("v", "<Space>y", '"+y')
-vim.keymap.set("v", "<Space>p", '"+p')
+vim.keymap.set({ "n", "v" }, "<Space>y", '"+y')
+vim.keymap.set({ "n", "v" }, "<Space>p", '"+p')
 
-vim.keymap.set("v", "<C-Right>", "w")
-vim.keymap.set("v", "<C-Left>", "b")
-vim.keymap.set("n", "<C-Right>", "w")
-vim.keymap.set("n", "<C-Left>", "b")
+vim.keymap.set({ "n", "v" }, "<C-Right>", "w")
+vim.keymap.set({ "n", "v" }, "<C-Left>", "b")
 
-vim.keymap.set("n", "<C-Up>", "{")
-vim.keymap.set("n", "<C-Down>", "}")
+vim.keymap.set({ "n", "v" }, "<C-Up>", "{")
+vim.keymap.set({ "n", "v" }, "<C-Down>", "}")
 vim.keymap.set("i", "<C-Up>", "<C-o>{")
 vim.keymap.set("i", "<C-Down>", "<C-o>}")
-vim.keymap.set("v", "<C-Up>", "{")
-vim.keymap.set("v", "<C-Down>", "}")
 
 vim.keymap.set("n", "<C-o>", "<Nop>", { silent = true })
 
 -- Move lines with ALT + up/down
-vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==")
-vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==")
-vim.keymap.set("i", "<A-Down>", "<Esc>:m .+1<CR>==gi")
-vim.keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi")
+vim.keymap.set("n", "<A-Down>", "<Cmd>m .+1<CR>==")
+vim.keymap.set("n", "<A-Up>", "<Cmd>m .-2<CR>==")
+vim.keymap.set("i", "<A-Down>", "<Esc><Cmd>m .+1<CR>==gi")
+vim.keymap.set("i", "<A-Up>", "<Esc><Cmd>m .-2<CR>==gi")
 
 -- Emacs' keys to jump to beginning/end of the line
 vim.keymap.set("i", "<C-e>", "<End>")
@@ -526,6 +561,8 @@ vim.keymap.set("v", "в", "d")
 
 vim.keymap.set("n", "m", "O<ESC>")
 
+vim.keymap.set("n", "<C-h>", "<Cmd>CccPick<CR>")
+
 -- Don't show status on nofile buffers
 vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter" }, {
   group = user_augroup,
@@ -537,14 +574,6 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter" }, {
   end,
 })
 
--- Until it's fixed
--- vim.api.nvim_create_autocmd("InsertEnter", {
---   group = user_augroup,
---   callback = function()
---     vim.cmd('silent set cmdheight=0')
---   end,
--- })
-
 -- Some terminals re-send an OSC 11 background report on resize. The built-in
 -- TermResponse handler would then flip 'background' and re-source the
 -- colorscheme, wiping the manual highlight overrides below. The group exists
@@ -555,32 +584,12 @@ pcall(
 )
 
 vim.o.background = "dark"
--- vim.o.background = "light"
 vim.cmd.colorscheme("duskfox")
--- vim.cmd.colorscheme "carbonfox"
--- vim.cmd.colorscheme 'dawnfox'
--- vim.cmd.colorscheme 'nordfox'
--- vim.cmd.colorscheme("nightfox")
--- vim.cmd.colorscheme 'kanagawa-lotus'
 
-local function get_bg_color(highlight_name)
-  local success, hl = pcall(function()
-    return vim.api.nvim_get_hl(0, { name = highlight_name })
-  end)
-  if not success then
-    return nil
-  end
-  return hl.bg and string.format("#%06x", hl.bg) or nil
-end
-
-local function get_fg_color(highlight_name)
-  local success, hl = pcall(function()
-    return vim.api.nvim_get_hl(0, { name = highlight_name })
-  end)
-  if not success then
-    return nil
-  end
-  return hl.fg and string.format("#%06x", hl.fg) or nil
+local function get_highlight_color(highlight_name, attribute_name)
+  local color =
+    vim.api.nvim_get_hl(0, { name = highlight_name })[attribute_name]
+  return color and string.format("#%06x", color) or nil
 end
 
 vim.api.nvim_set_hl(
@@ -610,28 +619,21 @@ vim.api.nvim_set_hl(0, "SignColumn", { link = "LineNr" })
 vim.api.nvim_set_hl(0, "MatchParen", { bg = "gray", fg = "pink" })
 vim.api.nvim_set_hl(0, "Winbar", { link = "SignColumn" })
 
-vim.api.nvim_set_hl(
-  0,
-  "TabLine",
-  { bg = get_bg_color("TabLineFill"), fg = get_fg_color("Conceal") }
-)
+vim.api.nvim_set_hl(0, "TabLine", {
+  bg = get_highlight_color("TabLineFill", "bg"),
+  fg = get_highlight_color("Conceal", "fg"),
+})
 vim.api.nvim_set_hl(0, "TabLineSel", { link = "SignColumn" })
--- vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Conceal' })
--- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Whitespace' })
-vim.api.nvim_set_hl(
-  0,
-  "StatusLine",
-  { bg = get_bg_color("NvimTreeNormal"), fg = get_fg_color("Conceal") }
-)
+vim.api.nvim_set_hl(0, "StatusLine", {
+  bg = get_highlight_color("NvimTreeNormal", "bg"),
+  fg = get_highlight_color("Conceal", "fg"),
+})
 vim.api.nvim_set_hl(0, "StatusLineNC", { link = "StatusLine" })
-vim.api.nvim_set_hl(
-  0,
-  "WinSeparator",
-  { bg = get_bg_color("NvimTreeNormal"), fg = get_bg_color("NvimTreeNormal") }
-)
+vim.api.nvim_set_hl(0, "WinSeparator", {
+  bg = get_highlight_color("NvimTreeNormal", "bg"),
+  fg = get_highlight_color("NvimTreeNormal", "bg"),
+})
 vim.api.nvim_set_hl(0, "VertSplit", { link = "WinSeparator" })
-vim.api.nvim_set_hl(0, "NvimTreeStatusLine", { link = "StatusLineNC" })
-vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", { link = "VertSplit" })
 vim.api.nvim_set_hl(0, "FloatBorder", { link = "Whitespace" })
 
 local should_enable_transparent_background = false
@@ -648,27 +650,9 @@ if should_enable_transparent_background then
 ]])
 end
 
-local ccc = require("ccc")
-ccc.setup({
-  inputs = {
-    ccc.input.hsl,
-    ccc.input.rgb,
-  },
-  highlighter = {
-    auto_enable = true,
-    lsp = true,
-  },
-  virtual_symbol = "■ ",
-  highlight_mode = "bg",
-})
-
-vim.keymap.set("n", "<C-h>", function()
-  vim.cmd([[:CccPick]])
-end)
-
 local treesitter = require("nvim-treesitter")
-treesitter.setup({})
-treesitter.install({ "svelte" })
+local treesitter_available_languages = nil
+local treesitter_installed_languages = nil
 
 vim.api.nvim_create_autocmd("FileType", {
   group = user_augroup,
@@ -679,95 +663,36 @@ vim.api.nvim_create_autocmd("FileType", {
     then
       return
     end
+
+    if treesitter_available_languages == nil then
+      treesitter_available_languages = treesitter.get_available()
+      treesitter_installed_languages = treesitter.get_installed("parsers")
+    end
+
     local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
     if
       lang
-      and vim.list_contains(treesitter.get_available(), lang)
-      and not vim.list_contains(treesitter.get_installed("parsers"), lang)
+      and vim.list_contains(treesitter_available_languages, lang)
+      and not vim.list_contains(treesitter_installed_languages, lang)
     then
+      table.insert(treesitter_installed_languages, lang)
       treesitter.install({ lang })
     end
+
     pcall(vim.treesitter.start)
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })
 
-local function trans_border()
+local function get_float_window_opts()
   return { border = "solid", winblend = 30 }
 end
-
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 0
-
-local guessindent = require("guess-indent")
-guessindent.setup({
-  auto_cmd = true,
-  on_tab_options = {
-    ["expandtab"] = false,
-    ["tabstop"] = 4,
-    ["softtabstop"] = 0,
-    ["shiftwidth"] = 0,
-  },
-  on_space_options = {
-    ["expandtab"] = true,
-    ["tabstop"] = "detected",
-    ["softtabstop"] = "detected",
-    ["shiftwidth"] = "detected",
-  },
-})
-
-local gitsigns = require("gitsigns")
-gitsigns.setup({})
-
-vim.keymap.set("n", "<C-c>c", gitsigns.blame_line)
-vim.keymap.set("n", "<C-c>a", gitsigns.blame)
-
-require("mini.surround").setup({})
-require("mini.align").setup({})
-
-require("trim").setup({ trim_on_write = false })
-
-vim.api.nvim_create_autocmd("QuitPre", {
-  group = user_augroup,
-  callback = function()
-    local tree_windows = {}
-    local editor_window_count = 0
-    for _, window in ipairs(vim.api.nvim_list_wins()) do
-      local buffer = vim.api.nvim_win_get_buf(window)
-      local is_floating = vim.api.nvim_win_get_config(window).relative ~= ""
-      if vim.bo[buffer].filetype == "NvimTree" then
-        table.insert(tree_windows, window)
-      elseif not is_floating then
-        editor_window_count = editor_window_count + 1
-      end
-    end
-
-    if editor_window_count == 1 then
-      for _, window in ipairs(tree_windows) do
-        vim.api.nvim_win_close(window, true)
-      end
-    end
-  end,
-})
 
 -- this eats memory and makes lsp do weird things. my log was 1.2 GiB =D
 vim.lsp.log.set_level("error")
 
-local hover_opts = trans_border()
-vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx)
-  return vim.lsp.handlers.hover(err, result, ctx, hover_opts)
-end
-
-local signature_opts = trans_border()
-vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx)
-  return vim.lsp.handlers.signature_help(err, result, ctx, signature_opts)
-end
-
 vim.diagnostic.config({
   virtual_text = true,
-  update_in_insert = false,
-  signs = true,
   float = {
     border = "rounded",
     scope = "line",
@@ -783,92 +708,59 @@ vim.diagnostic.config({
   },
 })
 
-local function default_on_init(client)
-  client.server_capabilities.hover = true
-  client.server_capabilities.signature_help = true
-end
+local should_enable_lsp = true
 
-local default_flags = {
-  debounce_text_changes = 150,
-}
-
-local default_telemetry = {
-  enable = false,
-}
-
-local default_servers = {
-  -- "biome",
-  "ts_ls",
-  "svelte",
-  -- "eslint",
-  "pylsp",
-  "ruff",
-  "zls",
-  -- "clangd",
-  "rust_analyzer",
-  -- "texlab",
-  "gopls",
-  "powershell_es",
-  "tinymist",
-  "ansiblels",
-  "yamlls",
-}
-
-local enable_lsp = true
-
-if enable_lsp then
-  local lspconfig = vim.lsp.config
-  local lspconfigutil = require("lspconfig.util")
-  local blink_capabilities = require("blink.cmp").get_lsp_capabilities()
-
-  vim.lsp.enable("lua_ls", {
-    on_init = default_on_init,
-    capabilities = blink_capabilities,
-    telemetry = default_telemetry,
-    flags = default_flags,
+if should_enable_lsp then
+  vim.lsp.config("lua_ls", {
     settings = {
       Lua = {
         diagnostics = {
-          globals = {
-            "vim",
-            "require",
-          },
+          globals = { "vim" },
         },
       },
     },
-    workspace = {
-      library = vim.api.nvim_get_runtime_file("", true),
-    },
   })
 
-  lspconfig("powershell_es", {
+  vim.lsp.config("powershell_es", {
     bundle_path = vim.env.HOME .. "/External/powershell-eds",
   })
 
-  for _, lsp in ipairs(default_servers) do
-    vim.lsp.enable(lsp, {
-      on_init = default_on_init,
-      capabilities = blink_capabilities,
-      flags = default_flags,
-      telemetry = default_telemetry,
-      root_dir = lspconfigutil.root_pattern(".git", "Makefile"),
-    })
-  end
+  vim.lsp.enable({
+    "lua_ls",
+    "ts_ls",
+    "svelte",
+    "pylsp",
+    "ruff",
+    "zls",
+    "rust_analyzer",
+    "gopls",
+    "powershell_es",
+    "tinymist",
+    "ansiblels",
+    "yamlls",
+  })
 
   vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    group = user_augroup,
     callback = function(ev)
       vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
       local client = vim.lsp.get_client_by_id(ev.data.client_id)
-      if client and client.server_capabilities.inlayHintProvider then
+      if
+        client ~= nil
+        and client:supports_method("textDocument/inlayHint", ev.buf)
+      then
         vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
       end
 
       local opts = { buffer = ev.buf }
 
-      vim.keymap.set("n", "<C-k>", vim.lsp.buf.hover, opts)
-      vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
+      vim.keymap.set("n", "<C-k>", function()
+        vim.lsp.buf.hover(get_float_window_opts())
+      end, opts)
+      vim.keymap.set("i", "<C-k>", function()
+        vim.lsp.buf.signature_help(get_float_window_opts())
+      end, opts)
 
       local nowait_opts = { buffer = ev.buf, nowait = true }
 
@@ -975,7 +867,7 @@ if enable_lsp then
     snippets = { preset = "default" },
     signature = {
       enabled = true,
-      window = trans_border(),
+      window = get_float_window_opts(),
     },
     sources = {
       default = { "lsp", "path", "snippets", "buffer" },
@@ -1003,7 +895,7 @@ if enable_lsp then
         selection = { preselect = false, auto_insert = false },
       },
       accept = { auto_brackets = { enabled = false } },
-      menu = vim.tbl_extend("force", trans_border(), {
+      menu = vim.tbl_extend("force", get_float_window_opts(), {
         auto_show = false,
         draw = {
           columns = {
@@ -1019,7 +911,7 @@ if enable_lsp then
       documentation = {
         auto_show = true,
         auto_show_delay_ms = 150,
-        window = trans_border(),
+        window = get_float_window_opts(),
       },
       ghost_text = {
         enabled = true,

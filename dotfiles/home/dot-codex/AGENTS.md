@@ -30,7 +30,8 @@ Reread this file and the matching guidance file before every planning and
 implementation step. Do not trust memory. Before you act, name which rule
 applies and obey it by the book.
 
-@ means relative this this very file, your configuration dir.
+@ means relative this this very file, your configuration dir. @guidance is most
+likely located at ~/.codex/guidance.
 
 - Writing or editing code -> 
   @guidance/code.md
@@ -46,7 +47,8 @@ applies and obey it by the book.
 - Drafting a comment to paste on someone else's PR ->
   @guidance/review-comments.md
 - Reviewing code or running a sweep over the codebase ->
-  @guidance/code-review.md, @guidance/test-review.md, @guidance/prose-review.md
+  @guidance/code-review.md, @guidance/test-review.md, @guidance/prose-review.md,
+  @guidance/comment-review.md
 - Writing, reviewing, or removing tests ->
   @guidance/test.md
 

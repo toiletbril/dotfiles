@@ -1,0 +1,28 @@
+symbolPreset: unicode
+composer:
+  shape: rail
+theme:
+  light: light
+  dark: dracula
+update:
+  auto: false
+setupVersion: 3
+speech:
+  enhanced: false
+modelRoles:
+  default: litellm/gpt-6.1-sol:medium
+  plan: litellm/gpt-6.1-sol:xhigh
+defaultThinkingLevel: medium
+personality: friendly
+tools:
+  approvalMode: yolo
+memory:
+  backend: local
+power:
+  sleepPrevention: idle
+task:
+  maxConcurrency: 32
+tui:
+  vimMode: false
+statusLine:
+  preset: full

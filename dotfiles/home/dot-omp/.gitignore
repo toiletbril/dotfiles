@@ -1,0 +1,7 @@
+*
+!.gitignore
+!agent/
+!agent/config.yml
+!agent/AGENTS.md
+!agent/guidance
+!agent/skills

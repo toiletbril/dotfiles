@@ -1,0 +1,10 @@
+/*
+!/.gitignore
+!/CLAUDE.md
+!/guidance
+!/settings.json
+!/rules/
+!/skills/
+!/commands/
+!/agents/
+/skills/synced/
